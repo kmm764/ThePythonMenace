@@ -7,6 +7,7 @@ class Hero:
     def __init__(self):
         self.x=0
         self.y=0
+        self.Img = pygame.image.load('bloomy.png')
     def move_x(self,dir):
         """
         Method that move the hero in the x axis
