@@ -16,7 +16,9 @@ class Zombie(pygame.sprite.Sprite):
         super().__init__()
         #image and rect are the attributes used by the methods of the superclass sprite
         self.image = pygame.image.load('coni.png')
-        self.rect = pygame.math.Vector2(x,y)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
         self.vel = pygame.math.Vector2(0.0, 0.0) #inicialize the velocity vector to 0,0
 
 
@@ -31,7 +33,7 @@ class Zombie(pygame.sprite.Sprite):
             Method that update the direction of the velocity vector of the zombie towards the hero
             :param vec: new vector velocity
         """
-        vel = positionHero - self.rect
+        vel = pygame.math.Vector2(positionHero.x - self.rect.x, positionHero.y - self.rect.y)
         if vel != (0.,0.):
         #if the new velocity vector is different from (0,0) we need to turn it into a unit vector to get only the direction of the movement
             self.vel = vel.normalize()
@@ -44,15 +46,14 @@ class Zombie(pygame.sprite.Sprite):
             :param t --> time passed in seconds from the last call
         """
         self.setVel(positionHero)
-        print(positionHero)
-        print(t)
-        print(self.vel)
-        newpos = self.rect+self.vel*self.speed*t #calculates the new position vector
+
+        # calculates the new position vector, to do so, the attibute rect is turned into a 2d vector to make easier the operations
+        newpos = pygame.math.Vector2(self.rect.x, self.rect.y)+self.vel*self.speed*t
         #once the new position is calculated,, we make sure that it is inside the boundaries of the screen
         newpos.x= clamp(newpos.x,Zombie.pos_min_x,Zombie.pos_max_x)
         newpos.y= clamp(newpos.y, Zombie.pos_min_y, Zombie.pos_max_y)
-        print(newpos)
-        self.rect=newpos
+        self.rect.x = newpos.x
+        self.rect.y = newpos.y
 
 def clamp(n, minn, maxn):
     """
