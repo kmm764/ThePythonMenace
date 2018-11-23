@@ -17,10 +17,14 @@ HEIGHT = 600
 img_width = 60
 img_height = 60
 FPS = 30  # frames per second setting
+vel_x, vel_y = 0., 0. #inicializes the x and y components of the velocity vector of the hero
+lasthit_time=2.0 #inicializes the time variable that we are going to use to limit the collisions between the hero and the zombies
 fpsClock = pygame.time.Clock()  #this object will make sure our program runs at a certain maximum FPS
 
 displayObj = pygame.display.set_mode((WIDTH, HEIGHT)) #creates the object that display the screen
 pygame.display.set_caption('Game')
+background_image = pygame.image.load("background.jpeg").convert()
+
 
 WHITE = (255, 255, 255)
 
@@ -34,17 +38,17 @@ crewZombies = pygame.sprite.Group()
 pygame.key.set_repeat(1, 10) #to handle the "holding key" event
 
 pygame.display.flip()
-vel_x, vel_y = 0., 0. #inicializes the x and y components of the velocity vector of the hero
-lasthit_time=2.0 #inicializes the time variable that we are going to use to limit the collisions between the hero and the zombies
-while True:  # the main game loop
 
+while True:  # the main game loop
+    displayObj.blit(background_image, [0, 0])
     if random.randrange(0, 100) < 1:  #here, a probability of 1% is assigned to the appearance of a new zombie
         #if a new zombie instance is created, it is added to the sprite group
         crewZombies.add(Zombie(random.randrange(0, WIDTH-img_width), random.randrange(0, HEIGHT-img_height)))
-    displayObj.fill(WHITE)  # set the background to white
+    #displayObj.fill(WHITE)  # set the background to white
     ourHero.display(displayObj)  # the hero is displayed
     lives_counter = myfont.render('LIVES: '+str(ourHero.lives), False, (0,0,0))
     displayObj.blit(lives_counter, (WIDTH - 180,0))
+
 
     crewZombies.draw(displayObj) # the zombies of the group are displayed
 

@@ -15,7 +15,7 @@ class Zombie(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         #image and rect are the attributes used by the methods of the superclass sprite
-        self.image = pygame.image.load('coni.png')
+        self.image = pygame.image.load('zombie.jpeg')
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
