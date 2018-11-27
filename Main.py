@@ -90,6 +90,9 @@ while True:  # the main game loop
                 vel_y = -1.
             if event.key in (K_DOWN, K_s):
                 vel_y = 1.
+        if event.type == K_j:
+            ourHero.rot_speed = -250
+
         # once the keys have been read, the method setVel is called to modify the velocity of the hero
         ourHero.setVel(pygame.math.Vector2(vel_x, vel_y))
 
@@ -99,7 +102,7 @@ while True:  # the main game loop
     # converts the time to seconds
     time_passed_s = time_passed_ms / 1000.0
     #call the hero method to update its position, based on the time passed and its velocity
-    ourHero.setPos(time_passed_s)
+    ourHero.update()
     #the function update of the sprite group basically calls the update function of each sprite of the group
     #so the zombies update method changes its position, based on the position of the hero the time passed
     crewZombies.update(ourHero.rect, time_passed_s)

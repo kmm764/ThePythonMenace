@@ -1,5 +1,6 @@
 import pygame, sys
 from pygame.locals import *
+Hero_IMG = pygame.image.load("hero.png")
 
 
 class Hero(pygame.sprite.Sprite):
@@ -11,14 +12,21 @@ class Hero(pygame.sprite.Sprite):
     pos_min_x=0
     pos_min_y=0
     lives = 3
+    FPS = 30
+    fpsClock = pygame.time.Clock()
+    time_passed_ms = fpsClock.tick(FPS)
+    time_passed_s = time_passed_ms / 1000.0
+
 
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load('hero.jpeg')
+        self.image = Hero_IMG
         self.rect = self.image.get_rect()
         self.rect.x = 0.0
         self. rect.y = 0.0
         self.vel = pygame.math.Vector2(0.0, 0.0) #inicialize the velocity vector to 0,0
+        self.rot = 0
+        self.rot_speed = 0
 
     def display(self, displayObj):
         """
@@ -33,6 +41,8 @@ class Hero(pygame.sprite.Sprite):
             :param t --> time passed in seconds from the last call
         """
         #Here, the new position vector is calculated. The attibute rect is turned into a 2d vector class to make easier the operations
+
+
         newpos =  pygame.math.Vector2(self.rect.x, self.rect.y)+self.vel*self.speed*t
 
         #once the new position is calculated,, we make sure that it is inside the boundaries of the screen
@@ -53,6 +63,12 @@ class Hero(pygame.sprite.Sprite):
         else:
         #if the new velocity vector is (0,0)
             self.vel=vec
+
+    def update(self):
+        self.rot_speed = self.rot_speed -20
+        self.rot = (self.rot + self.rot_speed * self.time_passed_s) % 360
+        self.image = pygame.transform.rotate(Hero_IMG, self.rot)
+        self.setPos(self.time_passed_s)
 
 
 def clamp(n, minn, maxn):
