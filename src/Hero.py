@@ -1,7 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 Hero_IMG = pygame.image.load("hero.png")
-
+import math
 
 class Hero(pygame.sprite.Sprite):
     speed=100 #set the module of velocity
@@ -17,13 +17,7 @@ class Hero(pygame.sprite.Sprite):
     time_passed_ms = fpsClock.tick(FPS)
     time_passed_s = time_passed_ms / 1000.0
 
-    def get_rot_keys(self):
-        self.rot_speed = 0
-        keys = pygame.key.get_pressed()
-        if keys[pygame .K_j]:
-            self.rot_speed = -250
-        if keys[pygame.K_k]:
-            self.rot_speed = 250
+
 
     def __init__(self):
         super().__init__()
@@ -34,6 +28,20 @@ class Hero(pygame.sprite.Sprite):
         self.vel = pygame.math.Vector2(0.0, 0.0) #inicialize the velocity vector to 0,0
         self.rot = 0
         self.rot_speed = 0
+        self.angle = 0
+
+    def get_rot_mouse(self):
+
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        rel_x, rel_y = mouse_x - self.rect.x, mouse_y - self.rect.y
+        self.angle = (180 / math.pi) * -math.atan2(rel_y, rel_x)
+
+        #self.rot_speed = 0
+        #keys = pygame.key.get_pressed()
+        #if keys[pygame .K_j]:
+            #self.rot_speed = -250
+        #if keys[pygame.K_k]:
+            #self.rot_speed = 250
 
 
     def display(self, displayObj):
@@ -74,9 +82,9 @@ class Hero(pygame.sprite.Sprite):
             self.vel=vec
 
     def update(self):
-        self.get_rot_keys()
+        self.get_rot_mouse()
         self.rot = (self.rot + self.rot_speed * self.time_passed_s) % 360
-        self.image = pygame.transform.rotate(Hero_IMG, self.rot)
+        self.image = pygame.transform.rotate(Hero_IMG, self.angle)
 
         self.setPos(self.time_passed_s)
 
