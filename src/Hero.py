@@ -29,7 +29,7 @@ class Hero(pygame.sprite.Sprite):
         self.rot = 0
         self.rot_speed = 0
         self.angle = 0
-
+        self.pos = self.rect
     def get_rot_mouse(self):
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -64,7 +64,7 @@ class Hero(pygame.sprite.Sprite):
         #once the new position is calculated,, we make sure that it is inside the boundaries of the screen
         newpos.x=clamp(newpos.x,Hero.pos_min_x,Hero.pos_max_x)
         newpos.y=clamp(newpos.y, Hero.pos_min_y, Hero.pos_max_y)
-
+        self.pos = newpos
         self.rect.x = newpos.x
         self.rect.y = newpos.y
 
@@ -85,6 +85,7 @@ class Hero(pygame.sprite.Sprite):
         self.get_rot_mouse()
         self.rot = (self.rot + self.rot_speed * self.time_passed_s) % 360
         self.image = pygame.transform.rotate(Hero_IMG, self.angle)
+        self.rect = self.image.get_rect(center=self.rect.center)
 
         self.setPos(self.time_passed_s)
 
