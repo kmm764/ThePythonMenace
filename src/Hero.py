@@ -17,16 +17,24 @@ class Hero(pygame.sprite.Sprite):
     time_passed_ms = fpsClock.tick(FPS)
     time_passed_s = time_passed_ms / 1000.0
 
+    def get_rot_keys(self):
+        self.rot_speed = 0
+        keys = pygame.key.get_pressed()
+        if keys[pygame .K_j]:
+            self.rot_speed = -250
+        if keys[pygame.K_k]:
+            self.rot_speed = 250
 
     def __init__(self):
         super().__init__()
         self.image = Hero_IMG
         self.rect = self.image.get_rect()
-        self.rect.x = 0.0
-        self. rect.y = 0.0
+        self.rect.x = 50.0
+        self. rect.y = 50.0
         self.vel = pygame.math.Vector2(0.0, 0.0) #inicialize the velocity vector to 0,0
         self.rot = 0
         self.rot_speed = 0
+
 
     def display(self, displayObj):
         """
@@ -48,6 +56,7 @@ class Hero(pygame.sprite.Sprite):
         #once the new position is calculated,, we make sure that it is inside the boundaries of the screen
         newpos.x=clamp(newpos.x,Hero.pos_min_x,Hero.pos_max_x)
         newpos.y=clamp(newpos.y, Hero.pos_min_y, Hero.pos_max_y)
+
         self.rect.x = newpos.x
         self.rect.y = newpos.y
 
@@ -65,9 +74,10 @@ class Hero(pygame.sprite.Sprite):
             self.vel=vec
 
     def update(self):
-        self.rot_speed = self.rot_speed -20
+        self.get_rot_keys()
         self.rot = (self.rot + self.rot_speed * self.time_passed_s) % 360
         self.image = pygame.transform.rotate(Hero_IMG, self.rot)
+
         self.setPos(self.time_passed_s)
 
 

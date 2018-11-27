@@ -12,6 +12,7 @@ class Zombie(pygame.sprite.Sprite):
     pos_min_x=0
     pos_min_y=0
 
+
     def __init__(self, x, y):
         super().__init__()
         #image and rect are the attributes used by the methods of the superclass sprite
