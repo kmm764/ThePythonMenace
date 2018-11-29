@@ -6,6 +6,7 @@ import random
 # from src.Game import Game
 from src.Hero import Hero
 from src.Zombie import Zombie
+from src.Bullet import Bullet
 
 
 pygame.init()
@@ -33,6 +34,7 @@ ourHero = Hero()
 
 #here we create a sprite group to make easier to manage our zombies instances
 crewZombies = pygame.sprite.Group()
+groupBullets = pygame.sprite.Group()
 
 
 pygame.key.set_repeat(1, 10) #to handle the "holding key" event
@@ -41,7 +43,7 @@ pygame.display.flip()
 
 while True:  # the main game loop
     displayObj.blit(background_image, [0, 0])
-    if random.randrange(0, 100) < 1:  #here, a probability of 1% is assigned to the appearance of a new zombie
+    if random.randrange(0, 100) < 5:  #here, a probability of 5% is assigned to the appearance of a new zombie
         #if a new zombie instance is created, it is added to the sprite group
         crewZombies.add(Zombie(random.randrange(0, WIDTH-img_width), random.randrange(0, HEIGHT-img_height)))
     #displayObj.fill(WHITE)  # set the background to white
@@ -51,6 +53,7 @@ while True:  # the main game loop
 
 
     crewZombies.draw(displayObj) # the zombies of the group are displayed
+    groupBullets.draw(displayObj)
 
     #here we check if it has been any collision between any sprite of the group crewZombies and the hero
     hero_zombies_collision = pygame.sprite.spritecollide(ourHero, crewZombies, False)
@@ -61,7 +64,13 @@ while True:  # the main game loop
         if lasthit_time >= 2.0:
             ourHero.lives -= 1 #here our hero loses one life per zombie in the collisions list
             lasthit_time=0.0 #set the time from the last collision to hero
-
+    # here we check the collision between the bullets and the zombies, if they collision, the zombies deleted from the groups
+    if len(groupBullets.sprites())>0:
+        for bul in groupBullets:
+            bullet_zombies_collision = pygame.sprite.spritecollide(bul, crewZombies, True)
+            # if there is a collision the bullets is also deleted from the group
+            if len(bullet_zombies_collision) > 0:
+                bul.kill()
 
     hero_zombies_collision.clear()
 
@@ -91,13 +100,19 @@ while True:  # the main game loop
             if event.key in (K_DOWN, K_s):
                 vel_y = 1.
         if event.type == K_j:
-            ourHero.rot_speed = -250
+            ourHero.rot_speed = -250 #??????????????????????????????????????????
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                groupBullets.add(Bullet(ourHero.rect))
+
+
 
         # once the keys have been read, the method setVel is called to modify the velocity of the hero
         ourHero.setVel(pygame.math.Vector2(vel_x, vel_y))
 
     # sets the frames per second to our clock object and store the time passed from the last call in time_passed_ms
     time_passed_ms = fpsClock.tick(FPS)
+
 
     # converts the time to seconds
     time_passed_s = time_passed_ms / 1000.0
@@ -106,6 +121,7 @@ while True:  # the main game loop
     #the function update of the sprite group basically calls the update function of each sprite of the group
     #so the zombies update method changes its position, based on the position of the hero the time passed
     crewZombies.update(ourHero.rect, time_passed_s)
+    groupBullets.update(time_passed_s)
 
     pygame.display.flip() #DO WE NEED BOTH OS THESE?!!!! update the screen with what we've drawn
     pygame.display.update() #updates the state of the game

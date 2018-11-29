@@ -4,9 +4,9 @@ from pygame.locals import *
 import math
 
 class Hero(pygame.sprite.Sprite):
-    speed=100 #set the module of velocity
 
     # set the max and min position in each axis to prevent the hero from go outside the boundaries of the screen
+    speed = 100  # set the module of velocity
     pos_max_x=940
     pos_max_y=540
     pos_min_x=0
@@ -27,11 +27,18 @@ class Hero(pygame.sprite.Sprite):
         self.rot_speed = 0
         self.angle = 0
         self.pos = self.rect
+        self.orientation = pygame.math.Vector2(1.0, 0.0) #inicialize the orientation vector to 0,0
     def get_rot_mouse(self):
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
         rel_x, rel_y = mouse_x - self.rect.x, mouse_y - self.rect.y
         self.angle = (180 / math.pi) * -math.atan2(rel_y, rel_x)
+
+        # we change the orientation of the vector
+        if self.orientation.rotate(self.angle)!= (0.0,0.0):
+            self.orientation = self.orientation.rotate(-self.angle)
+
+
 
         #self.rot_speed = 0
         #keys = pygame.key.get_pressed()
