@@ -23,7 +23,7 @@ fpsClock = pygame.time.Clock()  #this object will make sure our program runs at 
 
 displayObj = pygame.display.set_mode((WIDTH, HEIGHT)) #creates the object that display the screen
 pygame.display.set_caption('Game')
-background_image = pygame.image.load("background.jpeg").convert()
+background_image = pygame.image.load("background.jpg").convert()
 
 
 WHITE = (255, 255, 255)
@@ -102,7 +102,7 @@ while True:  # the main game loop
     # converts the time to seconds
     time_passed_s = time_passed_ms / 1000.0
     #call the hero method to update its position, based on the time passed and its velocity
-    ourHero.update()
+    ourHero.update(time_passed_s)
     #the function update of the sprite group basically calls the update function of each sprite of the group
     #so the zombies update method changes its position, based on the position of the hero the time passed
     crewZombies.update(ourHero.rect, time_passed_s)

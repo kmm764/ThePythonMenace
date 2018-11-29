@@ -1,6 +1,6 @@
 import pygame, sys
 from pygame.locals import *
-Hero_IMG = pygame.image.load("hero.png")
+
 import math
 
 class Hero(pygame.sprite.Sprite):
@@ -12,19 +12,16 @@ class Hero(pygame.sprite.Sprite):
     pos_min_x=0
     pos_min_y=0
     lives = 3
-    FPS = 30
-    fpsClock = pygame.time.Clock()
-    time_passed_ms = fpsClock.tick(FPS)
-    time_passed_s = time_passed_ms / 1000.0
+    hero_IMG = pygame.image.load("heroRight.png")
 
 
 
     def __init__(self):
         super().__init__()
-        self.image = Hero_IMG
+        self.image = Hero.hero_IMG
         self.rect = self.image.get_rect()
-        self.rect.x = 50.0
-        self. rect.y = 50.0
+        self.rect.x = 0
+        self. rect.y = 0
         self.vel = pygame.math.Vector2(0.0, 0.0) #inicialize the velocity vector to 0,0
         self.rot = 0
         self.rot_speed = 0
@@ -81,13 +78,13 @@ class Hero(pygame.sprite.Sprite):
         #if the new velocity vector is (0,0)
             self.vel=vec
 
-    def update(self):
+    def update(self,t):
         self.get_rot_mouse()
-        self.rot = (self.rot + self.rot_speed * self.time_passed_s) % 360
-        self.image = pygame.transform.rotate(Hero_IMG, self.angle)
+        self.rot = (self.rot + self.rot_speed * t) % 360
+        self.image = pygame.transform.rotate(Hero.hero_IMG, self.angle)
         self.rect = self.image.get_rect(center=self.rect.center)
 
-        self.setPos(self.time_passed_s)
+        self.setPos(t)
 
 
 def clamp(n, minn, maxn):
