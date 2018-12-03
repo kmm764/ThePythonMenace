@@ -8,6 +8,7 @@ import os
 from src.Hero import Hero
 from src.Zombie import Zombie
 from src.Bullet import Bullet
+from src.Game import Game
 
 
 pygame.init()
@@ -29,6 +30,16 @@ background_image = pygame.image.load("background.jpg").convert()
 
 
 WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+
+play_mode = False;
+
+# create an object of the class Game
+game = Game(myfont)
+# show start screen
+play_mode = game.show_start_screen(displayObj)
+print(play_mode)
 
 #creates an object of the class Hero
 ourHero = Hero()
@@ -37,14 +48,13 @@ ourHero = Hero()
 crewZombies = pygame.sprite.Group()
 groupBullets = pygame.sprite.Group()
 
-
 pygame.key.set_repeat(1, 10) #to handle the "holding key" event
 
 pygame.display.flip()
 
-while True:  # the main game loop
+while play_mode:  # the main game loop
     displayObj.blit(background_image, [0, 0])
-    if random.randrange(0, 100) < 1:  #here, a probability of 1% is assigned to the appearance of a new zombie
+    if random.randrange(0, 100) < 5:  #here, a probability of 5% is assigned to the appearance of a new zombie
         #if a new zombie instance is created, it is added to the sprite group
         crewZombies.add(Zombie(random.randrange(0, WIDTH-img_width), random.randrange(0, HEIGHT-img_height)))
     #displayObj.fill(WHITE)  # set the background to white
@@ -65,6 +75,11 @@ while True:  # the main game loop
         if lasthit_time >= 2.0:
             ourHero.lives -= 1 #here our hero loses one life per zombie in the collisions list
             lasthit_time=0.0 #set the time from the last collision to hero
+            if ourHero.lives == 0: # If Hero dies show Game Over screen
+                game.show_over_screen(displayObj)
+                ourHero.lives = 3 # hero's life back to 3
+                
+                
     # here we check the collision between the bullets and the zombies, if they collision, the zombies deleted from the groups
     if len(groupBullets.sprites())>0:
         for bul in groupBullets:
@@ -79,8 +94,9 @@ while True:  # the main game loop
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit() # ends pygame
-            os._exit(0) # ends for MacOS
+            os._exit(0)
             sys.exit()  # ends the program
+            
         if event.type == KEYUP:
             # handles if a key is released
             if event.key in (K_LEFT, K_a):
@@ -114,7 +130,6 @@ while True:  # the main game loop
 
     # sets the frames per second to our clock object and store the time passed from the last call in time_passed_ms
     time_passed_ms = fpsClock.tick(FPS)
-
 
     # converts the time to seconds
     time_passed_s = time_passed_ms / 1000.0
