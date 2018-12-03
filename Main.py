@@ -43,7 +43,7 @@ pygame.display.flip()
 
 while True:  # the main game loop
     displayObj.blit(background_image, [0, 0])
-    if random.randrange(0, 100) < 5:  #here, a probability of 5% is assigned to the appearance of a new zombie
+    if random.randrange(0, 100) < 1:  #here, a probability of 1% is assigned to the appearance of a new zombie
         #if a new zombie instance is created, it is added to the sprite group
         crewZombies.add(Zombie(random.randrange(0, WIDTH-img_width), random.randrange(0, HEIGHT-img_height)))
     #displayObj.fill(WHITE)  # set the background to white

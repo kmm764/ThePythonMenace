@@ -12,9 +12,10 @@ class Bullet(pygame.sprite.Sprite):
         
         super().__init__()
         #image and rect are the attributes used by the methods of the superclass sprite
-        self.image = pygame.image.load('bulletRight.png')
+        self.image = pygame.image.load('bullet.png')
         self.rect = self.image.get_rect()
-        self.rect = positionHero
+        self.rect.x = positionHero.x+60
+        self.rect.y = positionHero.y + 60
         #here we set the velocity towards the position of the mouse
         mouse_x, mouse_y = pygame.mouse.get_pos()
         vel = pygame.math.Vector2(mouse_x - self.rect.x, mouse_y - self.rect.y)
