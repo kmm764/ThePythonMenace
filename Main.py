@@ -1,6 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 import random
+import os
 
 
 # from src.Game import Game
@@ -78,6 +79,7 @@ while True:  # the main game loop
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit() # ends pygame
+            os._exit(0) # ends for MacOS
             sys.exit()  # ends the program
         if event.type == KEYUP:
             # handles if a key is released
