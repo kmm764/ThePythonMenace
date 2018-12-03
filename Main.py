@@ -32,14 +32,18 @@ background_image = pygame.image.load("background.jpg").convert()
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
+YELLOW = (255, 255, 0)
 
-play_mode = False;
+play_mode = False
+menu_mode = False
 
 # create an object of the class Game
-game = Game(myfont)
+game = Game()
 # show start screen
-play_mode = game.show_start_screen(displayObj)
-print(play_mode)
+menu_mode = game.show_start_screen(displayObj)
+
+# show the menu
+play_mode = game.menu(displayObj)
 
 #creates an object of the class Hero
 ourHero = Hero()
