@@ -48,12 +48,68 @@ class Game:
                 :param  screen  --> Object display where the start screen will be display on
                         score --> score of the current game to be store
         """
-        print("Final score:")
-        print(score)
         screen.fill(BLACK)
-        self.draw_text("GAME OVER", RED, WIDTH/4, HEIGHT/2, screen, True)
+        self.draw_text("GAME OVER", RED, 40, HEIGHT/2, screen, True)
+        self.draw_text("press S to save your score", RED, 40, HEIGHT / 2 + 100, screen, True)
         pygame.display.flip()
-        return self.wait_for_key_start()
+        if self.wait_for_key_over()== "save":
+            print("here")
+            name = self.input_name_screen(screen)
+            print(name)
+            ranking_update(score,name)
+            screen.fill(BLACK)
+            self.draw_text("Ranking", RED, WIDTH / 8, HEIGHT / 5, screen, True)
+            self.ranking_draw(screen)
+            self.draw_text("Press C to play again", YELLOW, WIDTH / 5, HEIGHT / 3 + 300, screen, False)
+            pygame.display.flip()
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()  # ends pygame
+                        os._exit(0)
+                        sys.exit()  # ends the program
+                        return False
+                    if event.type == pygame.KEYUP:
+                        if event.key == K_c:
+                            return True
+
+
+    def wait_for_key_over(self):
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit() # ends pygame
+                    os._exit(0)
+                    sys.exit()  # ends the program
+                    return False
+                if event.type == pygame.KEYUP:
+                    if event.key == K_s:
+                        print("s pressed")
+                        return "save"
+
+    def input_name_screen(self, screen):
+        screen.fill(BLACK)
+        print("name")
+        name_input = ""
+        while True:
+            self.draw_text("Input your name and press enter", RED, 40, HEIGHT / 6, screen, True)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()  # ends pygame
+                    os._exit(0)
+                    sys.exit()  # ends the program
+                    return
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        return name_input
+                    elif event.key == pygame.K_BACKSPACE:
+                        name_input = name_input[:-1]
+                        screen.fill(BLACK)
+                    else:
+                        name_input += event.unicode
+                        screen.fill(BLACK)
+            self.draw_text(name_input, WHITE, WIDTH / 5 * 2, HEIGHT / 3, screen, False)
+            pygame.display.flip()
     
     def menu(self, screen):
 
@@ -81,7 +137,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit() # ends pygame
-                    os.exit(0)
+                    os._exit(0)
                     sys.exit()  # ends the program
                     return
                 if event.type == pygame.KEYDOWN:
@@ -139,9 +195,9 @@ class Game:
         file_scores_r.close()
         file_names_r.close()
         if len(scores)<=3:
-            k=len(scores)
+            k = len(scores)
         else:
-            k=Game.top_ranking
+            k = Game.top_ranking
         for i in range(0,k):
             txt=names[i]+" - "+str(scores[i])
             print(txt)
@@ -199,8 +255,8 @@ class Game:
                         else:
                             self.ranking(screen)
                     self.options_draw(screen)
-                    
-    
+
+
     def wait_for_key_start(self):
 
         while True:
@@ -223,3 +279,86 @@ class Game:
         text_rect = text_surface.get_rect()
         text_rect.midtop = (x, y)
         screen.blit(text_surface, (x,y))
+
+
+def ranking_update(newscore, newname):
+    """
+        This function save the name and the score in two files "names" and "scores", and order the lines from higher to lower score
+    :param newscore: score obtained in the last game
+    :param newname: name introduced by the user
+    """
+    # if the files do not exist we create them and write on the the name and score directly
+    try:
+        print("Abiertos lectura 1")
+        file_scores_r = open("Ranking/scores.txt", 'r')
+        file_names_r = open("Ranking/names.txt", 'r')
+    except FileNotFoundError:
+        print("Abiertos escritura 1")
+        file_scores_w = open("Ranking/scores.txt", 'a+')
+        file_names_w = open("Ranking/names.txt", 'a+')
+        file_scores_w.write(str(newscore) + "\n")
+        file_names_w.write(newname + "\n")
+        print("Cerrados escritura 1")
+        file_scores_w.close()
+        file_names_w.close()
+        return
+
+    scores = []
+    names = []
+    newindex = []
+    i = 0
+    newscore_pos = -1
+    for lines in file_scores_r.readlines():  # WE STORE THE POINTS
+        scores += [lines]
+    for lines in file_names_r.readlines():  # WE STORE THE NAMES
+        names += [lines]
+    # CLEAN THE LISTS
+    for i in range(0, len(names)):
+        names[i] = names[i][:len(names[i]) - 1]
+
+    for i in range(0, len(scores)):
+        scores[i] = int(scores[i][:len(scores[i]) - 1])
+        print(scores[i])
+        if newscore > scores[i]:
+            print(i)
+            print(newscore_pos)
+            # we make sure we only fix the position of the new score once
+            if newscore_pos == -1:
+                newscore_pos = i
+            newindex += [i + 1]  # new scorw position
+        else:
+            newindex += [i]  # new order for the current data in the file
+    print("Cerrados lectura 3")
+    file_scores_r.close()
+    file_names_r.close()
+    newscores = [0] * (len(scores) + 1)
+    newnames = [0] * (len(scores) + 1)
+    print(newscore)
+    print(newscore_pos)
+    if newscore_pos != -1:
+        # we reorder the names and the scores
+        newscores[newscore_pos] = str(newscore) + "\n"
+        newnames[newscore_pos] = newname + "\n"
+        for i in range(0, len(scores)):
+            newscores[newindex[i]] = str(scores[i]) + "\n"
+            newnames[newindex[i]] = names[i] + "\n"
+
+        # we open the files to overwrite the content in mode "w"
+        print("Abiertos escritura 3")
+        file_scores_w = open("Ranking/scores.txt", 'w')
+        file_names_w = open("Ranking/names.txt", 'w')
+        file_scores_w.writelines(newscores)
+        file_names_w.writelines(newnames)
+        print("Cerrados escritura 3")
+        file_scores_w.close()
+        file_names_w.close()
+    else:
+        if len(scores) < 3:
+            file_scores_w = open("Ranking/scores.txt", 'a+')
+            file_names_w = open("Ranking/names.txt", 'a+')
+            print("Abiertos escritura 2")
+            file_scores_w.write(str(newscore) + "\n")
+            file_names_w.write(newname + "\n")
+            print("Cerrados escritura 2")
+            file_scores_w.close()
+            file_names_w.close()

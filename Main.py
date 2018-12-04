@@ -60,7 +60,7 @@ crewZombies = pygame.sprite.Group()
 groupBullets = pygame.sprite.Group()
 ourWall = pygame.sprite.Group()
 
-pygame.key.set_repeat(1, 10) #to handle the "holding key" event
+#pygame.key.set_repeat(1, 10) #to handle the "holding key" event
 
 pygame.display.flip()
 
