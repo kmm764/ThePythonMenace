@@ -107,9 +107,13 @@ while play_mode:  # the main game loop
     if len(groupBullets.sprites())>0:
         for bul in groupBullets:
             bullet_zombies_collision = pygame.sprite.spritecollide(bul, crewZombies, True)
+            bullet_wall_collision = pygame.sprite.spritecollide(bul, ourWall, True)
             # if there is a collision the bullets is also deleted from the group
+            if len(bullet_wall_collision) > 0:
+                bul.kill()
             if len(bullet_zombies_collision) > 0:
                 bul.kill()
+
 
     hero_zombies_collision.clear()
 
@@ -161,6 +165,7 @@ while play_mode:  # the main game loop
             elif vel_y >0:
                 ourHero.rect.bottom = hero_wall_collision[0].rect.top - 10
                 #vel_y = -1
+
 
 
 
