@@ -9,6 +9,7 @@ from src.Hero import Hero
 from src.Zombie import Zombie
 from src.Bullet import Bullet
 from src.Game import Game
+from Wall import Walls
 
 
 pygame.init()
@@ -19,7 +20,7 @@ WIDTH = 1024
 HEIGHT = 768
 img_width = 60
 img_height = 60
-Tile_size = 32
+Tile_size = 64
 GridWidth = WIDTH/Tile_size
 GridHeight = HEIGHT/Tile_size
 
@@ -56,24 +57,33 @@ ourHero = Hero()
 #here we create a sprite group to make easier to manage our zombies instances
 crewZombies = pygame.sprite.Group()
 groupBullets = pygame.sprite.Group()
+ourWall = pygame.sprite.Group()
 
 pygame.key.set_repeat(1, 10) #to handle the "holding key" event
 
 pygame.display.flip()
 
 while play_mode:  # the main game loop
+
     displayObj.blit(background_image, [0, 0])
+
     if random.randrange(0, 100) < 5:  #here, a probability of 5% is assigned to the appearance of a new zombie
         #if a new zombie instance is created, it is added to the sprite group
         crewZombies.add(Zombie(random.randrange(0, WIDTH-img_width), random.randrange(0, HEIGHT-img_height)))
     #displayObj.fill(WHITE)  # set the background to white
     ourHero.display(displayObj)  # the hero is displayed
+
     lives_counter = myfont.render('LIVES: '+str(ourHero.lives), False, (0,0,0))
     displayObj.blit(lives_counter, (WIDTH - 180,0))
 
 
     crewZombies.draw(displayObj) # the zombies of the group are displayed
     groupBullets.draw(displayObj)
+    ourWall.draw(displayObj)
+
+    for x in range(5,10):
+        ourWall.add(Walls(x,3,Tile_size))
+
 
     #here we check if it has been any collision between any sprite of the group crewZombies and the hero
     hero_zombies_collision = pygame.sprite.spritecollide(ourHero, crewZombies, False)
@@ -143,11 +153,12 @@ while play_mode:  # the main game loop
     # converts the time to seconds
     time_passed_s = time_passed_ms / 1000.0
     #call the hero method to update its position, based on the time passed and its velocity
-    ourHero.update(time_passed_s)
+
     #the function update of the sprite group basically calls the update function of each sprite of the group
     #so the zombies update method changes its position, based on the position of the hero the time passed
     crewZombies.update(ourHero.rect, time_passed_s)
     groupBullets.update(time_passed_s)
+    ourHero.update(time_passed_s)
 
     for x in range(0 , WIDTH, Tile_size):
         pygame.draw.line(background_image, RED, (x,0),(x,HEIGHT))
