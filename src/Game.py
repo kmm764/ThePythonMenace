@@ -4,8 +4,8 @@ from pygame.locals import *
 
 
 
-WIDTH = 1000
-HEIGHT = 600
+WIDTH = 1024
+HEIGHT = 768
 img_width = 60
 img_height = 60
 FPS = 30  # frames per second setting
@@ -28,13 +28,17 @@ class Game:
     def show_start_screen(self, screen):
         screen.fill(BLACK)
         #self.text_surface = myfont.render('Our Pygame', False, WHITE)
-        self.draw_text("Our Pygame", 48, WHITE, WIDTH/3, HEIGHT/5, screen, False)
-        self.draw_text("Shoot the zombies and escape", 22, WHITE, WIDTH/5, HEIGHT/5+100, screen, False)
-        self.draw_text("Press a key to play", 22, WHITE, WIDTH/3, HEIGHT/5 + 200, screen, False)
+        img_ini = pygame.image.load("start_screen_game.jpg")
+        screen.blit(img_ini, (0, 0))
+        #self.draw_text("Our Pygame", 48, WHITE, WIDTH/3, HEIGHT/5, screen, False)
+        #self.draw_text("Shoot the zombies and escape", 22, WHITE, WIDTH/5, HEIGHT/5+100, screen, False)
+        #self.draw_text("Press a key to play", 22, WHITE, WIDTH/3, HEIGHT/5 + 200, screen, False)
         pygame.display.flip()
         return self.wait_for_key_start()
     
-    def show_over_screen(self, screen):
+    def show_over_screen(self, screen, score):
+        print("Final score:")
+        print(score)
         screen.fill(BLACK)
         self.draw_text("GAME OVER", 22, RED, WIDTH/4, HEIGHT/2, screen, True)
         pygame.display.flip()
@@ -94,10 +98,11 @@ class Game:
             
     
     def options_draw(self, screen):
-        screen.fill(BLACK)
-        self.draw_text("MENU", 100, RED, WIDTH/8, HEIGHT/5, screen,True)
+        img_menu = pygame.image.load("menu_screen_game.jpg")
+        screen.blit(img_menu, (0, 0))
+        #self.draw_text("MENU", 100, RED, WIDTH/8, HEIGHT/5, screen,True)
         if self.option==1:
-            self.draw_text("PLAY", 40, YELLOW, WIDTH/3*2, HEIGHT/3, screen,True)
+            self.draw_text("PLAY", 40, YELLOW, 40, HEIGHT/2, screen,True)
             self.draw_text("TUTORIAL", 40, WHITE, WIDTH/3*2, HEIGHT/3 +100, screen,False)
             self.draw_text("RANKING", 40, WHITE, WIDTH/3*2, HEIGHT/3 +200, screen,False)
         elif self.option==2:

@@ -68,14 +68,19 @@ while play_mode:  # the main game loop
 
     displayObj.blit(background_image, [0, 0])
 
-    if random.randrange(0, 100) < 5:  #here, a probability of 5% is assigned to the appearance of a new zombie
+    if random.randrange(0, 100) < 3:  #here, a probability of 5% is assigned to the appearance of a new zombie
         #if a new zombie instance is created, it is added to the sprite group
         crewZombies.add(Zombie(random.randrange(0, WIDTH-img_width), random.randrange(0, HEIGHT-img_height)))
     #displayObj.fill(WHITE)  # set the background to white
     ourHero.display(displayObj)  # the hero is displayed
 
-    lives_counter = myfont.render('LIVES: '+str(ourHero.lives), False, (0,0,0))
-    displayObj.blit(lives_counter, (WIDTH - 180,0))
+    #we display lives
+    #lives_counter = myfont.render('LIVES: '+str(ourHero.lives), False, (0,0,0))
+    #displayObj.blit(lives_counter, (WIDTH - 180,0))
+
+    # we display score
+    score_counter = myfont.render('SCORE: ' + str(ourHero.score), False, (0, 0, 0))
+    displayObj.blit(score_counter, (WIDTH - 180, 0))
 
 
     crewZombies.draw(displayObj) # the zombies of the group are displayed
@@ -97,8 +102,8 @@ while play_mode:  # the main game loop
             ourHero.lives -= 1 #here our hero loses one life per zombie in the collisions list
             lasthit_time=0.0 #set the time from the last collision to hero
             if ourHero.lives == 0: # If Hero dies show Game Over screen
-                game.show_over_screen(displayObj)
-                ourHero.lives = 3 # hero's life back to 3
+                game.show_over_screen(displayObj,ourHero.score)
+                #ourHero.lives = 3 # hero's life back to 3
 
 
 
@@ -113,6 +118,8 @@ while play_mode:  # the main game loop
                 bul.kill()
             if len(bullet_zombies_collision) > 0:
                 bul.kill()
+                ourHero.score += 1
+
 
 
     hero_zombies_collision.clear()

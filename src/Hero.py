@@ -3,12 +3,17 @@ from pygame.locals import *
 from src.Wall import *
 import math
 
+WIDTH = 1024
+HEIGHT = 768
+img_width = 60
+img_height = 60
+
 class Hero(pygame.sprite.Sprite):
 
     # set the max and min position in each axis to prevent the hero from go outside the boundaries of the screen
     speed = 100  # set the module of velocity
-    pos_max_x=940
-    pos_max_y=540
+    pos_max_x=WIDTH-img_width
+    pos_max_y=HEIGHT-img_height
     pos_min_x=0
     pos_min_y=0
     lives = 3
@@ -28,6 +33,7 @@ class Hero(pygame.sprite.Sprite):
         self.angle = 0
         self.pos = self.rect
         self.orientation = pygame.math.Vector2(1.0, 0.0) #inicialize the orientation vector to 0,0
+        self.score=0
     def get_rot_mouse(self):
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
