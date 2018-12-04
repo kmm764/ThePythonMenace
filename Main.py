@@ -54,6 +54,8 @@ play_mode = game.menu(displayObj)
 
 #creates an object of the class Hero
 ourHero = Hero()
+# display the life bar on the screen
+displayObj.blit(ourHero.lives_img, (WIDTH - 200,0))
 
 #here we create a sprite group to make easier to manage our zombies instances
 crewZombies = pygame.sprite.Group()
