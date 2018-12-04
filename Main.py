@@ -15,10 +15,15 @@ pygame.init()
 pygame.font.init()
 myfont = pygame.font.SysFont('8-Bit Madness', 50)
 
-WIDTH = 1000
-HEIGHT = 600
+WIDTH = 1024
+HEIGHT = 768
 img_width = 60
 img_height = 60
+Tile_size = 32
+GridWidth = WIDTH/Tile_size
+GridHeight = HEIGHT/Tile_size
+
+
 FPS = 30  # frames per second setting
 vel_x, vel_y = 0., 0. #inicializes the x and y components of the velocity vector of the hero
 lasthit_time=2.0 #inicializes the time variable that we are going to use to limit the collisions between the hero and the zombies
@@ -143,6 +148,11 @@ while play_mode:  # the main game loop
     #so the zombies update method changes its position, based on the position of the hero the time passed
     crewZombies.update(ourHero.rect, time_passed_s)
     groupBullets.update(time_passed_s)
+
+    for x in range(0 , WIDTH, Tile_size):
+        pygame.draw.line(background_image, RED, (x,0),(x,HEIGHT))
+    for y in range(0, HEIGHT, Tile_size):
+        pygame.draw.line(background_image, RED, (0, y), (WIDTH, y))
 
     pygame.display.flip() #DO WE NEED BOTH OS THESE?!!!! update the screen with what we've drawn
     pygame.display.update() #updates the state of the game

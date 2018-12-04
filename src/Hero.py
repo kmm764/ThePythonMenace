@@ -12,7 +12,7 @@ class Hero(pygame.sprite.Sprite):
     pos_min_x=0
     pos_min_y=0
     lives = 3
-    hero_IMG = pygame.image.load("heroRight.png")
+    hero_IMG = pygame.image.load("Hero.png")
 
 
 
