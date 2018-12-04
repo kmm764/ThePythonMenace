@@ -48,6 +48,8 @@ class Zombie(pygame.sprite.Sprite):
         """
         self.setVel(positionHero)
 
+
+
         # calculates the new position vector, to do so, the attibute rect is turned into a 2d vector to make easier the operations
         newpos = pygame.math.Vector2(self.rect.x, self.rect.y)+self.vel*self.speed*t
         #once the new position is calculated,, we make sure that it is inside the boundaries of the screen

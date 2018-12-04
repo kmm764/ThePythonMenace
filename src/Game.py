@@ -28,9 +28,9 @@ class Game:
     def show_start_screen(self, screen):
         screen.fill(BLACK)
         #self.text_surface = myfont.render('Our Pygame', False, WHITE)
-        self.draw_text("Our Pygame", 48, WHITE, WIDTH/2, HEIGHT/4, screen, False)
-        self.draw_text("Shoot the zombies and escape", 22, WHITE, WIDTH/2, HEIGHT/2, screen, False)
-        self.draw_text("Press a key to play", 22, WHITE, WIDTH/2, HEIGHT/3*4, screen, False)
+        self.draw_text("Our Pygame", 48, WHITE, WIDTH/3, HEIGHT/5, screen, False)
+        self.draw_text("Shoot the zombies and escape", 22, WHITE, WIDTH/5, HEIGHT/5+100, screen, False)
+        self.draw_text("Press a key to play", 22, WHITE, WIDTH/3, HEIGHT/5 + 200, screen, False)
         pygame.display.flip()
         return self.wait_for_key_start()
     
@@ -52,24 +52,45 @@ class Game:
     
     def tutorial(self, screen):
         screen.fill(BLACK)
+        self.draw_text("TUTORIAL", 100, RED, WIDTH / 8, HEIGHT / 5, screen, True)
+        img1 = pygame.image.load("arrows2.png")
+        img2 = pygame.image.load("arrows.jpg")
+        screen.blit(img1, (60, HEIGHT/3))
+        screen.blit(img2, (60 + 70, HEIGHT / 3))
+        self.draw_text("Arrows - Move the hero", 40, WHITE, WIDTH / 4, HEIGHT / 3, screen, False)
+        self.draw_text("Mouse pointer - Rotate the hero", 40, WHITE, WIDTH / 4, HEIGHT / 3 + 100, screen, False)
+        self.draw_text("Right mouse click - Shoot", 40, WHITE, WIDTH / 4, HEIGHT / 3 + 200, screen, False)
+        self.draw_text("Press <- to go back to the menu", 40, YELLOW, WIDTH / 5, HEIGHT / 3 + 300, screen, False)
+        pygame.display.flip()
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit() # ends pygame
-                    os._exit(0)
+                    os.exit(0)
                     sys.exit()  # ends the program
                     return
                 if event.type == pygame.KEYDOWN:
                     if event.key == K_LEFT:
                         return
                         
-            
-        pass
+
     
     def ranking(self,screen):
         screen.fill(BLACK)
-        self.menu(screen)
-        pass
+        self.draw_text("Ranking", 100, RED, WIDTH / 8, HEIGHT / 5, screen, True)
+        self.draw_text("Press <- to go back to the menu", 40, YELLOW, WIDTH / 5, HEIGHT / 3 + 300, screen, False)
+        pygame.display.flip()
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()  # ends pygame
+                    os.exit(0)
+                    sys.exit()  # ends the program
+                    return
+                if event.type == pygame.KEYDOWN:
+                    if event.key == K_LEFT:
+                        return
+
             
     
     def options_draw(self, screen):
@@ -112,10 +133,12 @@ class Game:
                         else:
                             self.option-=1
                     if event.key == K_RETURN:
-                        if self.option == 2:
-                            self.tutorial(screen)
-                        elif self.option == 1:
+                        if self.option == 1:
                             return True
+                        elif self.option == 2:
+                            self.tutorial(screen)
+                        else:
+                            self.ranking(screen)
                     self.options_draw(screen)
                     
     
