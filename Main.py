@@ -100,10 +100,12 @@ while play_mode:  # the main game loop
         lasthit_time += time_passed_s
         if lasthit_time >= 2.0:
             ourHero.lives -= 1 #here our hero loses one life per zombie in the collisions list
+            ourHero.update_livebar(ourHero.lives)
             lasthit_time=0.0 #set the time from the last collision to hero
             if ourHero.lives == 0: # If Hero dies show Game Over screen
                 game.show_over_screen(displayObj,ourHero.score)
-                #ourHero.lives = 3 # hero's life back to 3
+                #ourHero.lives = 5 # hero's life back to 5
+                ourHero.lives = 5
 
 
 
