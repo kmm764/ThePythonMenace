@@ -16,9 +16,14 @@ class Hero(pygame.sprite.Sprite):
     pos_max_y=HEIGHT-img_height
     pos_min_x=0
     pos_min_y=0
-    lives = 3
+    lives_ini = 4
     hero_IMG = pygame.image.load("Hero.png")
-
+    hero_IMG = pygame.image.load("Hero.png")
+    life_bar_full = pygame.image.load("life_bar_full.png")
+    life_bar_3 = pygame.image.load("life_bar_3.png")
+    life_bar_half = pygame.image.load("life_bar_half.png")
+    life_bar_1 = pygame.image.load("life_bar_1.png")
+    life_bar_empty = pygame.image.load("life_bar_empty.png")
 
 
     def __init__(self):
@@ -33,7 +38,10 @@ class Hero(pygame.sprite.Sprite):
         self.angle = 0
         self.pos = self.rect
         self.orientation = pygame.math.Vector2(1.0, 0.0) #inicialize the orientation vector to 0,0
-        self.score=0
+        self.score = 0
+        self.lives = Hero.lives_ini
+        self.lives_img = Hero.life_bar_full
+        
     def get_rot_mouse(self):
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -92,7 +100,20 @@ class Hero(pygame.sprite.Sprite):
             self.vel=vec
     #def collide_with_walls(self,dir):
        # if dir = "x"
-
+    
+    def update_livebar(self, num_lives):
+        if num_lives == 4:
+            self.lives_img = Hero.life_bar_full
+        if num_lives == 3:
+            self.lives_img = Hero.life_bar_3
+        if num_lives == 2:
+            self.lives_img = Hero.life_bar_half
+        if num_lives == 1:
+            self.lives_img = Hero.life_bar_1
+        if num_lives == 0:
+            self.lives_img = Hero.life_bar_empty
+        else:
+            pass
 
     def update(self,t):
         self.get_rot_mouse()
