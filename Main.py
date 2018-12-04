@@ -16,11 +16,12 @@ pygame.init()
 pygame.font.init()
 myfont = pygame.font.SysFont('8-Bit Madness', 50)
 
+
 WIDTH = 1024
 HEIGHT = 768
 img_width = 60
 img_height = 60
-Tile_size = 64
+Tile_size = 32
 GridWidth = WIDTH/Tile_size
 GridHeight = HEIGHT/Tile_size
 
