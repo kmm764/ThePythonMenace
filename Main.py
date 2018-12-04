@@ -9,7 +9,7 @@ from src.Hero import Hero
 from src.Zombie import Zombie
 from src.Bullet import Bullet
 from src.Game import Game
-from Wall import Walls
+from src.Wall import Walls
 
 
 pygame.init()
@@ -25,7 +25,7 @@ GridWidth = WIDTH/Tile_size
 GridHeight = HEIGHT/Tile_size
 
 
-FPS = 30  # frames per second setting
+FPS = 60  # frames per second setting
 vel_x, vel_y = 0., 0. #inicializes the x and y components of the velocity vector of the hero
 lasthit_time=2.0 #inicializes the time variable that we are going to use to limit the collisions between the hero and the zombies
 fpsClock = pygame.time.Clock()  #this object will make sure our program runs at a certain maximum FPS
@@ -81,12 +81,13 @@ while play_mode:  # the main game loop
     groupBullets.draw(displayObj)
     ourWall.draw(displayObj)
 
-    for x in range(5,10):
-        ourWall.add(Walls(x,3,Tile_size))
+    for x in range(2,10):
+        ourWall.add(Walls(x,1,Tile_size))
 
 
     #here we check if it has been any collision between any sprite of the group crewZombies and the hero
     hero_zombies_collision = pygame.sprite.spritecollide(ourHero, crewZombies, False)
+    hero_wall_collision = pygame.sprite.spritecollide(ourHero, ourWall, False)
 
     for zombie in hero_zombies_collision:
         #for each zombie that has taken part in the collision, we check if it's been at least 2 seconds from the last collision that was counted
@@ -97,7 +98,9 @@ while play_mode:  # the main game loop
             if ourHero.lives == 0: # If Hero dies show Game Over screen
                 game.show_over_screen(displayObj)
                 ourHero.lives = 3 # hero's life back to 3
-                
+
+
+
                 
     # here we check the collision between the bullets and the zombies, if they collision, the zombies deleted from the groups
     if len(groupBullets.sprites())>0:
@@ -115,7 +118,7 @@ while play_mode:  # the main game loop
             pygame.quit() # ends pygame
             os._exit(0)
             sys.exit()  # ends the program
-            
+
         if event.type == KEYUP:
             # handles if a key is released
             if event.key in (K_LEFT, K_a):
@@ -136,11 +139,28 @@ while play_mode:  # the main game loop
                 vel_y = -1.
             if event.key in (K_DOWN, K_s):
                 vel_y = 1.
-        if event.type == K_j:
-            ourHero.rot_speed = -250 #??????????????????????????????????????????
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 groupBullets.add(Bullet(ourHero.rect))
+
+        if hero_wall_collision:  # right
+
+            if vel_x <0:
+                ourHero.rect.left= hero_wall_collision[0].rect.right + 10
+                #vel_x = 1
+            elif vel_x > 0:
+                ourHero.rect.right= hero_wall_collision[0].rect.left - 10
+                #vel_x = -1
+
+            if vel_y < 0:
+                ourHero.rect.top = hero_wall_collision[0].rect.bottom + 10
+
+                #vel_y = 1
+            elif vel_y >0:
+                ourHero.rect.bottom = hero_wall_collision[0].rect.top - 10
+                #vel_y = -1
+
 
 
 

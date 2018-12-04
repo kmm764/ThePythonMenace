@@ -20,3 +20,4 @@ class Walls(pygame.sprite.Sprite):
     def display(self, displayObj):
 
         displayObj.blit(self.image, (self.rect.x, self.rect.y))
+

@@ -1,6 +1,6 @@
 import pygame, sys
 from pygame.locals import *
-
+from src.Wall import *
 import math
 
 class Hero(pygame.sprite.Sprite):
@@ -84,6 +84,9 @@ class Hero(pygame.sprite.Sprite):
         else:
         #if the new velocity vector is (0,0)
             self.vel=vec
+    #def collide_with_walls(self,dir):
+       # if dir = "x"
+
 
     def update(self,t):
         self.get_rot_mouse()
