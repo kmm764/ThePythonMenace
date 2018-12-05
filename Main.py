@@ -85,7 +85,7 @@ while play_mode:  # the main game loop
 
     displayObj.blit(background_image, [0, 0])
 
-    if random.randrange(0, 100) < 3:  #here, a probability of 5% is assigned to the appearance of a new zombie
+    if random.randrange(0, 100) < 0:  #here, a probability of 5% is assigned to the appearance of a new zombie
         #if a new zombie instance is created, it is added to the sprite group
         crewZombies.add(Zombie(random.randrange(0, WIDTH-img_width), random.randrange(0, HEIGHT-img_height)))
     #displayObj.fill(WHITE)  # set the background to white
@@ -108,7 +108,7 @@ while play_mode:  # the main game loop
 
     #here we check if it has been any collision between any sprite of the group crewZombies and the hero
     hero_zombies_collision = pygame.sprite.spritecollide(ourHero, crewZombies, False)
-    hero_wall_collision = pygame.sprite.spritecollide(ourHero, ourWall, False)
+
 
     for zombie in hero_zombies_collision:
         #for each zombie that has taken part in the collision, we check if it's been at least 2 seconds from the last collision that was counted
@@ -147,6 +147,8 @@ while play_mode:  # the main game loop
     hero_zombies_collision.clear()
 
 
+
+
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit() # ends pygame
@@ -178,29 +180,54 @@ while play_mode:  # the main game loop
             if event.button == 1:
                 groupBullets.add(Bullet(ourHero.rect))
 
-        if hero_wall_collision:  # right
 
-            if vel_x <0:
-                ourHero.rect.left= hero_wall_collision[0].rect.right + 10
-                #vel_x = 1
-            elif vel_x > 0:
-                ourHero.rect.right= hero_wall_collision[0].rect.left - 10
-                #vel_x = -1
+    hero_wall_collision = pygame.sprite.spritecollide(ourHero, ourWall, False)
 
-            if vel_y < 0:
-                ourHero.rect.top = hero_wall_collision[0].rect.bottom + 10
+    for wall in ourWall:
 
-                #vel_y = 1
-            elif vel_y >0:
-                ourHero.rect.bottom = hero_wall_collision[0].rect.top - 10
-                #vel_y = -1
+        print("hero x:", end="")
+        print(ourHero.rect.x)
+        print("wall x - tilesize:", end="")
+        print(wall.rect.x + Tile_size)
+        print("wall x:", end="")
+        print(wall.rect.x)
+        if (ourHero.rect.x >= wall.rect.x-Tile_size) and (ourHero.rect.x <= wall.rect.x) and vel_y == 1. and (ourHero.rect.y + img_width) >= wall.rect.y and (ourHero.rect.y <= wall.rect.y+ Tile_size):
+
+            ourHero.rect.y = (wall.rect.y - img_width)
+            vel_y = 0.
+
+        if (ourHero.rect.x >= wall.rect.x - Tile_size) and (ourHero.rect.x <= wall.rect.x) and vel_y == -1. and (ourHero.rect.y <= wall.rect.y + Tile_size) and (ourHero.rect.y >= wall.rect.y):
+            ourHero.rect.y = (wall.rect.y + Tile_size)
+            vel_y = 0.
+        if (ourHero.rect.y+20 >= wall.rect.y - Tile_size) and (ourHero.rect.y <= wall.rect.y) and (ourHero.rect.x + img_width >= wall.rect.x) and (ourHero.rect.x <= wall.rect.x+Tile_size) and vel_x == 1. :
+            ourHero.rect.x = (wall.rect.x - img_width)
+            vel_x = 0.
+        if (ourHero.rect.y+20 >= wall.rect.y - Tile_size) and (ourHero.rect.y <= wall.rect.y) and (ourHero.rect.x >= wall.rect.x) and (ourHero.rect.x <= wall.rect.x+Tile_size) and vel_x == -1. :
+            print("2")
+            print("hero x:", end="")
+            print(ourHero.rect.x)
+            print("wall x - tilesize:", end="")
+            print(wall.rect.x + Tile_size)
+            print("wall x:", end="")
+            print(wall.rect.x)
+            ourHero.rect.x = (wall.rect.x + Tile_size)
+            vel_x = 0.
+        """
+      elif ourHero.rect.x == (wall.rect.x + Tile_size) and vel_x == -1.:
+          print("2")
+          vel_x = 0.
+      if ourHero.rect.y == wall.rect.y and vel_y == 1.:
+          print("3")
+          vel_y = 0.
+      elif ourHero.rect.y == (wall.rect.y + Tile_size) and vel_y == -1.:
+          print("4")
+          vel_y = 0.
+          """
 
 
 
-
-
-        # once the keys have been read, the method setVel is called to modify the velocity of the hero
-        ourHero.setVel(pygame.math.Vector2(vel_x, vel_y))
+    # once the keys have been read, the method setVel is called to modify the velocity of the hero
+    ourHero.setVel(pygame.math.Vector2(vel_x, vel_y))
 
     # sets the frames per second to our clock object and store the time passed from the last call in time_passed_ms
     time_passed_ms = fpsClock.tick(FPS)
