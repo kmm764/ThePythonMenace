@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="444c8b9c-40f1-43bf-a3a5-ee5a8ea0afcd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Bullet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bullet.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="215" lean-forward="true" selection-start-line="215" selection-end-line="215" />
+            <state relative-caret-position="277">
+              <caret line="194" column="44" lean-forward="true" selection-start-line="194" selection-start-column="44" selection-end-line="194" selection-end-column="44" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -60,8 +61,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Bullet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="67" column="37" lean-forward="true" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
+            <state relative-caret-position="-574">
+              <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -144,15 +145,15 @@
         <option value="$PROJECT_DIR$/src/items.py" />
         <option value="$PROJECT_DIR$/Map.txt" />
         <option value="$PROJECT_DIR$/src/Hero.py" />
-        <option value="$PROJECT_DIR$/Main.py" />
         <option value="$PROJECT_DIR$/src/Bullet.py" />
+        <option value="$PROJECT_DIR$/Main.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="642" />
-    <option name="width" value="638" />
-    <option name="height" value="800" />
+    <option name="y" value="23" />
+    <option name="width" value="636" />
+    <option name="height" value="777" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -465,8 +466,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Bullet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="67" column="37" lean-forward="true" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
+        <state relative-caret-position="-574">
+          <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -475,8 +476,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="215" lean-forward="true" selection-start-line="215" selection-end-line="215" />
+        <state relative-caret-position="277">
+          <caret line="194" column="44" lean-forward="true" selection-start-line="194" selection-start-column="44" selection-end-line="194" selection-end-column="44" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

@@ -1,7 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 import math
-
+from random import uniform
 
 
 class Bullet(pygame.sprite.Sprite):

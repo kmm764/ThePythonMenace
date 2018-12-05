@@ -191,7 +191,8 @@ while play_mode:  # the main game loop
                 if weaponType == "Pistol":
                     groupBullets.add(Pistol_bullet(ourHero.rect))
                 elif weaponType == "Shotgun":
-                    groupBullets.add(Shotgun_Bullet(ourHero.rect))
+                    for x in range(2):
+                        groupBullets.add(Shotgun_Bullet(ourHero.rect))
 
 
         if hero_wall_collision:  # right
