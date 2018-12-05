@@ -16,6 +16,8 @@ pygame.init()
 pygame.font.init()
 myfont = pygame.font.SysFont('8-Bit Madness', 50)
 
+Pistol_sound = pygame.mixer.Sound("pistol.wav")
+Shotgun_sound = pygame.mixer.Sound("shotgun.wav")
 
 WIDTH = 1024
 HEIGHT = 768
@@ -24,7 +26,7 @@ img_height = 60
 Tile_size = 32
 GridWidth = WIDTH/Tile_size
 GridHeight = HEIGHT/Tile_size
-
+last_shot = 0
 
 FPS = 60  # frames per second setting
 vel_x, vel_y = 0., 0. #inicializes the x and y components of the velocity vector of the hero
@@ -188,15 +190,21 @@ while play_mode:  # the main game loop
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                Pistol_sound = pygame.mixer.Sound("pistol.wav")
-                Shotgun_sound = pygame.mixer.Sound("shotgun.wav")
+                now=pygame.time.get_ticks()
+
                 if weaponType == "Pistol":
-                    groupBullets.add(Pistol_bullet(ourHero.rect))
-                    pygame.mixer.Sound.play(Pistol_sound)
+                    Bullet_Rate = 350
+                    if now - last_shot > Bullet_Rate:
+                            last_shot = now
+                            groupBullets.add(Pistol_bullet(ourHero.rect))
+                            pygame.mixer.Sound.play(Pistol_sound)
                 elif weaponType == "Shotgun":
-                    for x in range(5):
-                        groupBullets.add(Shotgun_Bullet(ourHero.rect))
-                        pygame.mixer.Sound.play(Shotgun_sound)
+                    Bullet_Rate = 1200
+                    if now - last_shot > Bullet_Rate:
+                        last_shot = now
+                        for x in range(5):
+                            groupBullets.add(Shotgun_Bullet(ourHero.rect))
+                            pygame.mixer.Sound.play(Shotgun_sound)
 
 
         if hero_wall_collision:  # right
