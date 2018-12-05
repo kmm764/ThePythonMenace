@@ -69,3 +69,5 @@ class Shotgun_Bullet(Bullet):
         Bullet.__init__(self, positionHero)
         self.speed = 600
         self.Bullet_lifetime = 300
+        self.size = self.image.get_size()
+        self.image = pygame.transform.scale(self.image, (int(self.size[0]/2), int(self.size[1]/2)))
