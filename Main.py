@@ -1,16 +1,20 @@
 import pygame, sys
 from pygame.locals import *
 import random
+
+
 import os
 from os import path
-import math
+
 from src.Game import Game
+
 from src.Hero import Hero
 from src.Zombie import Zombie
 from src.Bullet import *
 from src.Game import Game
 from src.Wall import Walls
 from src.items import Item
+
 vec = pygame.math.Vector2
 pygame.init()
 pygame.font.init()
@@ -77,17 +81,17 @@ with open(path.join(game_folder, 'map.txt'), 'rt') as f:  #rf is read
     for line in f:
         map_data.append(line)
 
-for row, tiles in enumerate(map_data):  # enumerate to get both index and value as row and column
-    for col, tile in enumerate(tiles):
-        if tile == "1":
-            ourWall.add(Walls(col, row, Tile_size))
-        if tile == "H":
-            ourItems.add(Item(col,row,"Hp"))
-        if tile == "S":
-            ourItems.add(Item(col,row,"Shotgun"))
+
 
 while play_mode:  # the main game loop
-
+    for row, tiles in enumerate(map_data):  # enumerate to get both index and value as row and column
+        for col, tile in enumerate(tiles):
+            if tile == "1":
+                ourWall.add(Walls(col, row, Tile_size))
+            if tile == "H":
+                ourItems.add(Item(col, row, "Hp"))
+            if tile == "S":
+                ourItems.add(Item(col, row, "Shotgun"))
 
 
     displayObj.blit(background_image, [0, 0])
@@ -213,22 +217,6 @@ while play_mode:  # the main game loop
                         else:
                             weaponType = "Pistol"
 
-        if hero_wall_collision:  # right
-
-            if vel_x <0:
-                ourHero.rect.left= hero_wall_collision[0].rect.right + 10
-                #vel_x = 1
-            elif vel_x > 0:
-                ourHero.rect.right= hero_wall_collision[0].rect.left - 10
-                #vel_x = -1
-
-            if vel_y < 0:
-                ourHero.rect.top = hero_wall_collision[0].rect.bottom + 10
-
-                #vel_y = 1
-            elif vel_y >0:
-                ourHero.rect.bottom = hero_wall_collision[0].rect.top - 10
-                #vel_y = -1
 
 
 
