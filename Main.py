@@ -4,7 +4,7 @@ import random
 import os
 from os import path
 import math
-# from src.Game import Game
+from src.Game import Game
 from src.Hero import Hero
 from src.Zombie import Zombie
 from src.Bullet import *
@@ -71,6 +71,7 @@ weaponType = "Pistol"
 pygame.display.flip()
 game_folder = path.dirname(__file__)
 map_data = []
+shotgun_ammo = 0
 
 with open(path.join(game_folder, 'map.txt'), 'rt') as f:  #rf is read
     for line in f:
@@ -98,8 +99,9 @@ while play_mode:  # the main game loop
     ourHero.display(displayObj)  # the hero is displayed
 
     #we display lives
-    #lives_counter = myfont.render('LIVES: '+str(ourHero.lives), False, (0,0,0))
+    Shotgun_ammo_count = myfont.render('Shotgun Ammo: '+str(shotgun_ammo), False, (0,0,0))
     displayObj.blit(ourHero.lives_img, (WIDTH - 200,0))
+    displayObj.blit(Shotgun_ammo_count, (WIDTH - 350, 30))
 
     # we display score
     score_counter = myfont.render('SCORE: ' + str(ourHero.score), False, (255, 255, 255))
@@ -140,6 +142,7 @@ while play_mode:  # the main game loop
         elif hit.type == "Shotgun":
             hit.kill()
             weaponType = "Shotgun"
+            shotgun_ammo = 6
 
 
 
@@ -202,10 +205,13 @@ while play_mode:  # the main game loop
                     Bullet_Rate = 1200
                     if now - last_shot > Bullet_Rate:
                         last_shot = now
-                        for x in range(5):
-                            groupBullets.add(Shotgun_Bullet(ourHero.rect))
-                            pygame.mixer.Sound.play(Shotgun_sound)
-
+                        if shotgun_ammo > 0:
+                            shotgun_ammo -= 1
+                            for x in range(5):
+                                groupBullets.add(Shotgun_Bullet(ourHero.rect))
+                                pygame.mixer.Sound.play(Shotgun_sound)
+                        else:
+                            weaponType = "Pistol"
 
         if hero_wall_collision:  # right
 
