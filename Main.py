@@ -188,11 +188,15 @@ while play_mode:  # the main game loop
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
+                Pistol_sound = pygame.mixer.Sound("pistol.wav")
+                Shotgun_sound = pygame.mixer.Sound("shotgun.wav")
                 if weaponType == "Pistol":
                     groupBullets.add(Pistol_bullet(ourHero.rect))
+                    pygame.mixer.Sound.play(Pistol_sound)
                 elif weaponType == "Shotgun":
-                    for x in range(2):
+                    for x in range(5):
                         groupBullets.add(Shotgun_Bullet(ourHero.rect))
+                        pygame.mixer.Sound.play(Shotgun_sound)
 
 
         if hero_wall_collision:  # right
@@ -232,10 +236,6 @@ while play_mode:  # the main game loop
     groupBullets.update(time_passed_s)
     ourHero.update(time_passed_s)
 
-    for x in range(0 , WIDTH, Tile_size):
-        pygame.draw.line(background_image, RED, (x,0),(x,HEIGHT))
-    for y in range(0, HEIGHT, Tile_size):
-        pygame.draw.line(background_image, RED, (0, y), (WIDTH, y))
 
     pygame.display.flip() #DO WE NEED BOTH OS THESE?!!!! update the screen with what we've drawn
     pygame.display.update() #updates the state of the game
