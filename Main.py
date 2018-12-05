@@ -102,6 +102,10 @@ while play_mode:  # the main game loop
     #displayObj.fill(WHITE)  # set the background to white
     ourHero.display(displayObj)  # the hero is displayed
 
+    if random.randrange(0, 100) < 3:
+        ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT), "Shotgun"))
+
+
     #we display lives
     Shotgun_ammo_count = myfont.render('Shotgun Ammo: '+str(shotgun_ammo), False, (0,0,0))
     displayObj.blit(ourHero.lives_img, (WIDTH - 200,0))
