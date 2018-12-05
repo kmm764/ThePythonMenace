@@ -3,15 +3,15 @@ from pygame.locals import *
 import random
 import os
 from os import path
-
+import math
 # from src.Game import Game
 from src.Hero import Hero
 from src.Zombie import Zombie
-from src.Bullet import Bullet
+from src.Bullet import *
 from src.Game import Game
 from src.Wall import Walls
 from src.items import Item
-
+vec = pygame.math.Vector2
 pygame.init()
 pygame.font.init()
 myfont = pygame.font.SysFont('8-Bit Madness', 50)
@@ -65,7 +65,7 @@ groupBullets = pygame.sprite.Group()
 ourWall = pygame.sprite.Group()
 ourItems = pygame.sprite.Group()
 #pygame.key.set_repeat(1, 10) #to handle the "holding key" event
-
+weaponType = "Pistol"
 pygame.display.flip()
 game_folder = path.dirname(__file__)
 map_data = []
@@ -135,6 +135,10 @@ while play_mode:  # the main game loop
             hit.kill()
             ourHero.lives += 1
             ourHero.update_livebar(ourHero.lives)
+        elif hit.type == "Shotgun":
+            hit.kill()
+            weaponType = "Shotgun"
+
 
 
                 
@@ -184,7 +188,11 @@ while play_mode:  # the main game loop
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                groupBullets.add(Bullet(ourHero.rect))
+                if weaponType == "Pistol":
+                    groupBullets.add(Pistol_bullet(ourHero.rect))
+                elif weaponType == "Shotgun":
+                    groupBullets.add(Shotgun_Bullet(ourHero.rect))
+
 
         if hero_wall_collision:  # right
 

@@ -1,11 +1,11 @@
 import pygame, sys
 from pygame.locals import *
-
+import math
 
 
 
 class Bullet(pygame.sprite.Sprite):
-    speed=200
+
     
 
     def __init__(self, positionHero): #x and y are the location of the hero
@@ -14,8 +14,14 @@ class Bullet(pygame.sprite.Sprite):
         #image and rect are the attributes used by the methods of the superclass sprite
         self.image = pygame.image.load('bullet.png')
         self.rect = self.image.get_rect()
-        self.rect.x = positionHero.x+60
-        self.rect.y = positionHero.y + 60
+        self.speed = 0
+        self.Bullet_lifetime = 0
+
+        self.rect.x = positionHero.x
+        self.rect.y = positionHero.y
+
+        self.last_shot = 0
+
         #here we set the velocity towards the position of the mouse
         mouse_x, mouse_y = pygame.mouse.get_pos()
         vel = pygame.math.Vector2(mouse_x - self.rect.x, mouse_y - self.rect.y)
@@ -24,7 +30,9 @@ class Bullet(pygame.sprite.Sprite):
             self.vel = vel.normalize()
 
 
-    
+        self.spawn_time = pygame.time.get_ticks()
+
+
     def display(self, displayObj):
 
         displayObj.blit(self.image, (self.rect.x, self.rect.y))
@@ -33,14 +41,31 @@ class Bullet(pygame.sprite.Sprite):
     def update(self, t):
 
 
-        newpos = pygame.math.Vector2(self.rect.x, self.rect.y)+self.vel*Bullet.speed*t
+        newpos = pygame.math.Vector2(self.rect.x, self.rect.y)+self.vel*self.speed*t
 
         self.rect.x = newpos.x
         self.rect.y = newpos.y
 
 
+
         #kill it if it leaves the screen
-        if self.rect.x > 1000 or self.rect.x < 0:
+        rate = pygame.time.get_ticks()
+        if rate - self.spawn_time > self.Bullet_lifetime:
             self.kill()
-        if self.rect.y > 600 or self.rect.y < 0:
-            self.kill()
+
+
+class Pistol_bullet(Bullet):
+
+    def __init__(self, positionHero):
+        Bullet.__init__(self, positionHero)
+        self.speed = 600
+        self.Bullet_lifetime = 600
+
+
+
+class Shotgun_Bullet(Bullet):
+
+    def __init__(self, positionHero):
+        Bullet.__init__(self, positionHero)
+        self.speed = 600
+        self.Bullet_lifetime = 300

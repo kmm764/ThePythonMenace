@@ -31,7 +31,7 @@ class Hero(pygame.sprite.Sprite):
         self.image = Hero.hero_IMG
         self.rect = self.image.get_rect()
         self.rect.x = 0
-        self. rect.y = 0
+        self.rect.y = 0
         self.vel = pygame.math.Vector2(0.0, 0.0) #inicialize the velocity vector to 0,0
         self.rot = 0
         self.rot_speed = 0
@@ -41,6 +41,9 @@ class Hero(pygame.sprite.Sprite):
         self.score = 0
         self.lives = Hero.lives_ini
         self.lives_img = Hero.life_bar_full
+
+
+
         
     def get_rot_mouse(self):
 
