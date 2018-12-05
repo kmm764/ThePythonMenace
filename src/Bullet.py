@@ -25,8 +25,8 @@ class Bullet(pygame.sprite.Sprite):
 
         #here we set the velocity towards the position of the mouse
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        mouse_x = random.randint(mouse_x-100, mouse_x+100)
-        mouse_y = random.randint(mouse_y - 100, mouse_y + 100)
+        mouse_x = random.randint(mouse_x-50, mouse_x+50)
+        mouse_y = random.randint(mouse_y - 50, mouse_y + 50)
         vel = pygame.math.Vector2(mouse_x - self.rect.x, mouse_y - self.rect.y)
         if vel != (0., 0.):
             #we turn it into a unit vector to get just the direction of the movement
