@@ -9,7 +9,7 @@ class Bullet(pygame.sprite.Sprite):
     
 
     def __init__(self, positionHero): #x and y are the location of the hero
-        
+
         super().__init__()
         #image and rect are the attributes used by the methods of the superclass sprite
         self.image = pygame.image.load('bullet.png')

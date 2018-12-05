@@ -10,7 +10,7 @@ from src.Zombie import Zombie
 from src.Bullet import Bullet
 from src.Game import Game
 from src.Wall import Walls
-
+from src.items import Item
 
 pygame.init()
 pygame.font.init()
@@ -63,12 +63,13 @@ displayObj.blit(ourHero.lives_img, (WIDTH - 200, 0))
 crewZombies = pygame.sprite.Group()
 groupBullets = pygame.sprite.Group()
 ourWall = pygame.sprite.Group()
-
+ourItems = pygame.sprite.Group()
 #pygame.key.set_repeat(1, 10) #to handle the "holding key" event
 
 pygame.display.flip()
 game_folder = path.dirname(__file__)
 map_data = []
+
 with open(path.join(game_folder, 'map.txt'), 'rt') as f:  #rf is read
     for line in f:
         map_data.append(line)
@@ -77,7 +78,10 @@ for row, tiles in enumerate(map_data):  # enumerate to get both index and value 
     for col, tile in enumerate(tiles):
         if tile == "1":
             ourWall.add(Walls(col, row, Tile_size))
-
+        if tile == "H":
+            ourItems.add(Item(col,row,"Hp"))
+        if tile == "S":
+            ourItems.add(Item(col,row,"Shotgun"))
 
 while play_mode:  # the main game loop
 
@@ -103,12 +107,12 @@ while play_mode:  # the main game loop
     crewZombies.draw(displayObj) # the zombies of the group are displayed
     groupBullets.draw(displayObj)
     ourWall.draw(displayObj)
-
-
+    ourItems.draw(displayObj)
 
     #here we check if it has been any collision between any sprite of the group crewZombies and the hero
     hero_zombies_collision = pygame.sprite.spritecollide(ourHero, crewZombies, False)
     hero_wall_collision = pygame.sprite.spritecollide(ourHero, ourWall, False)
+    hero_item_collision = pygame.sprite.spritecollide(ourHero, ourItems, False)
 
     for zombie in hero_zombies_collision:
         #for each zombie that has taken part in the collision, we check if it's been at least 2 seconds from the last collision that was counted
@@ -126,7 +130,11 @@ while play_mode:  # the main game loop
                     ourWall = pygame.sprite.Group()
                     pygame.display.flip()
 
-
+    for hit in hero_item_collision:
+        if hit.type == "Hp" and ourHero.lives < 4:
+            hit.kill()
+            ourHero.lives += 1
+            ourHero.update_livebar(ourHero.lives)
 
 
                 
