@@ -2,7 +2,7 @@ import pygame, sys
 from pygame.locals import *
 import random
 import os
-
+from os import path
 
 # from src.Game import Game
 from src.Hero import Hero
@@ -67,8 +67,21 @@ ourWall = pygame.sprite.Group()
 #pygame.key.set_repeat(1, 10) #to handle the "holding key" event
 
 pygame.display.flip()
+game_folder = path.dirname(__file__)
+map_data = []
+with open(path.join(game_folder, 'map.txt'), 'rt') as f:  #rf is read
+    for line in f:
+        map_data.append(line)
+
+
 
 while play_mode:  # the main game loop
+
+
+    for row, tiles in enumerate(map_data):  # enumerate to get both index and value as row and column
+        for col, tile in enumerate(tiles):
+            if tile == "1":
+                ourWall.add(Walls(col, row, Tile_size))
 
     displayObj.blit(background_image, [0, 0])
 
@@ -91,8 +104,6 @@ while play_mode:  # the main game loop
     groupBullets.draw(displayObj)
     ourWall.draw(displayObj)
 
-    for x in range(2,10):
-        ourWall.add(Walls(x,1,Tile_size))
 
 
     #here we check if it has been any collision between any sprite of the group crewZombies and the hero
