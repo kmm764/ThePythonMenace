@@ -52,6 +52,8 @@ menu_mode = game.show_start_screen(displayObj)
 # show the menu
 play_mode = game.menu(displayObj)
 
+
+
 #creates an object of the class Hero
 ourHero = Hero()
 # display the life bar on the screen
@@ -105,9 +107,14 @@ while play_mode:  # the main game loop
             ourHero.update_livebar(ourHero.lives)
             lasthit_time=0.0 #set the time from the last collision to hero
             if ourHero.lives == 0: # If Hero dies show Game Over screen
-                game.show_over_screen(displayObj,ourHero.score)
-                #ourHero.lives = 4 # hero's life back to 4
-                ourHero.lives = ourHero.lives_ini
+                if game.show_over_screen(displayObj,ourHero.score) == True:
+                    ourHero = Hero()
+                    displayObj.blit(ourHero.lives_img, (WIDTH - 200, 0))
+                    crewZombies = pygame.sprite.Group()
+                    groupBullets = pygame.sprite.Group()
+                    ourWall = pygame.sprite.Group()
+                    pygame.display.flip()
+
 
 
 

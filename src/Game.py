@@ -72,6 +72,8 @@ class Game:
                     if event.type == pygame.KEYUP:
                         if event.key == K_c:
                             return True
+        elif self.wait_for_key_over() == "continue":
+            return True
 
 
     def wait_for_key_over(self):
@@ -84,8 +86,9 @@ class Game:
                     return False
                 if event.type == pygame.KEYUP:
                     if event.key == K_s:
-                        print("s pressed")
                         return "save"
+                    if event.key == K_c:
+                        return "continue"
 
     def input_name_screen(self, screen):
         screen.fill(BLACK)
