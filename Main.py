@@ -73,15 +73,15 @@ with open(path.join(game_folder, 'map.txt'), 'rt') as f:  #rf is read
     for line in f:
         map_data.append(line)
 
+for row, tiles in enumerate(map_data):  # enumerate to get both index and value as row and column
+    for col, tile in enumerate(tiles):
+        if tile == "1":
+            ourWall.add(Walls(col, row, Tile_size))
 
 
 while play_mode:  # the main game loop
 
 
-    for row, tiles in enumerate(map_data):  # enumerate to get both index and value as row and column
-        for col, tile in enumerate(tiles):
-            if tile == "1":
-                ourWall.add(Walls(col, row, Tile_size))
 
     displayObj.blit(background_image, [0, 0])
 
@@ -134,7 +134,7 @@ while play_mode:  # the main game loop
     if len(groupBullets.sprites())>0:
         for bul in groupBullets:
             bullet_zombies_collision = pygame.sprite.spritecollide(bul, crewZombies, True)
-            bullet_wall_collision = pygame.sprite.spritecollide(bul, ourWall, True)
+            bullet_wall_collision = pygame.sprite.spritecollide(bul, ourWall, False)
             # if there is a collision the bullets is also deleted from the group
             if len(bullet_wall_collision) > 0:
                 bul.kill()
