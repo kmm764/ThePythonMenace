@@ -31,11 +31,12 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
-frecuency_Zombie = 4
-FRECUENCY_GUN = 4
-FRECUENCY_LIVES = 4
+frecuency_Zombie = 3
+FRECUENCY_GUN = 0
+FRECUENCY_LIVES = 0
 map_data = []
 shotgun_ammo = 0
+margin = 5 # we add a margin to make the movements more natural, as our hero image has transparents borders
 play_mode = False
 menu_mode = False
 game_folder = path.dirname(__file__)
@@ -103,7 +104,7 @@ while play_mode:  # the main game loop
 
     displayObj.blit(background_image, [0, 0])
 
-    if random.randrange(0, 100) < 3:  # here, a probability of 5% is assigned to the appearance of a new zombie
+    if random.randrange(0, 100) < frecuency_Zombie:  # here, a probability of 5% is assigned to the appearance of a new zombie
         # if a new zombie instance is created, it is added to the sprite group
         crewZombies.add(Zombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height)))
     # displayObj.fill(WHITE)  # set the background to white
@@ -247,26 +248,34 @@ while play_mode:  # the main game loop
 
         # once the keys have been read, the method setVel is called to modify the velocity of the hero
 
+    """
+        for wall in ourWall:
+            max_dist_x=img_width/2+Tile_size/2
+            max_dist_y = img_height/2+Tile_size/2
+            dist_x = wall.rect.centerx - ourHero.rect.centerx
+            dist_y = wall.rect.centery - ourHero.rect.centery
+            if dist_x > 0 and dist_x <= max_dist_x and dist_y<=max_dist_y and dist_y >= (max_dist_y*-1) and vel_x>0:
+                vel_x=0
+                """
+
     for wall in ourWall:
 
-        if (ourHero.rect.x >= wall.rect.x - Tile_size) and (ourHero.rect.x <= wall.rect.x) and vel_y == 1. and (
-                ourHero.rect.y + img_width) >= wall.rect.y and (ourHero.rect.y <= wall.rect.y + Tile_size):
-            ourHero.rect.y = (wall.rect.y - img_width)
-            vel_y = 0.
-
-        if (ourHero.rect.x >= wall.rect.x - Tile_size) and (ourHero.rect.x <= wall.rect.x) and vel_y == -1. and (
-                ourHero.rect.y <= wall.rect.y + Tile_size) and (ourHero.rect.y >= wall.rect.y):
-            ourHero.rect.y = (wall.rect.y + Tile_size)
-            vel_y = 0.
-        if (ourHero.rect.y + 20 >= wall.rect.y - Tile_size) and (ourHero.rect.y <= wall.rect.y) and (
-                ourHero.rect.x + img_width >= wall.rect.x) and (
-                ourHero.rect.x <= wall.rect.x + Tile_size) and vel_x == 1.:
-            ourHero.rect.x = (wall.rect.x - img_width)
+        if ourHero.rect.centerx > wall.rect.centerx - img_width / 2 - Tile_size / 2 and ourHero.rect.centerx < wall.rect.centerx and ourHero.rect.centery <= wall.rect.centery + img_height / 2 + Tile_size / 2 - margin and ourHero.rect.centery >= wall.rect.centery - img_height / 2 - Tile_size / 2 + margin and vel_x > 0:
+            print("1")
+            print(wall.rect.center)
             vel_x = 0.
-        if (ourHero.rect.y + 20 >= wall.rect.y - Tile_size) and (ourHero.rect.y <= wall.rect.y) and (
-                ourHero.rect.x >= wall.rect.x) and (ourHero.rect.x <= wall.rect.x + Tile_size) and vel_x == -1.:
-            ourHero.rect.x = (wall.rect.x + Tile_size)
+        if ourHero.rect.centerx < wall.rect.centerx + img_width / 2 + Tile_size / 2 and ourHero.rect.centerx > wall.rect.centerx and ourHero.rect.centery <= wall.rect.centery + img_height / 2 + Tile_size / 2 - margin and ourHero.rect.centery >= wall.rect.centery - img_height / 2 - Tile_size / 2 + margin and vel_x < 0:
             vel_x = 0.
+            print("2")
+            print(wall.rect.center)
+        if ourHero.rect.centery > wall.rect.centery - img_height / 2 - Tile_size / 2 and ourHero.rect.centery < wall.rect.centery and ourHero.rect.centerx > wall.rect.centerx - img_width / 2 - Tile_size / 2 + margin and ourHero.rect.centerx < wall.rect.centerx + img_width / 2 + Tile_size / 2 -margin and vel_y > 0:
+            vel_y = 0.
+            print("3")
+            print(wall.rect.center)
+        if ourHero.rect.centery < wall.rect.centery + img_height / 2 + Tile_size / 2 and ourHero.rect.centery > wall.rect.centery and ourHero.rect.centerx > wall.rect.centerx - img_width / 2 - Tile_size / 2 + margin and ourHero.rect.centerx < wall.rect.centerx + img_width / 2 + Tile_size / 2 - margin and vel_y < 0:
+            vel_y = 0.
+            print("4")
+            print(wall.rect.center)
 
     # sets the frames per second to our clock object and store the time passed from the last call in time_passed_ms
     ourHero.setVel(pygame.math.Vector2(vel_x, vel_y))
