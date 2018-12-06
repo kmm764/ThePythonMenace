@@ -18,8 +18,8 @@ class Bullet(pygame.sprite.Sprite):
         self.speed = 0
         self.Bullet_lifetime = 0
 
-        self.rect.x = positionHero.x
-        self.rect.y = positionHero.y
+        self.rect.x = positionHero.x +50
+        self.rect.y = positionHero.y +50
         self.last_shot = 0
 
 

@@ -50,6 +50,7 @@ pygame.font.init()
 myfont = pygame.font.SysFont('8-Bit Madness', 50)
 Pistol_sound = pygame.mixer.Sound("pistol.wav")
 Shotgun_sound = pygame.mixer.Sound("shotgun.wav")
+Gun_pickup = pygame.mixer.Sound("gun_pickup.wav")
 fpsClock = pygame.time.Clock()  #this object will make sure our program runs at a certain maximum FPS
 
 
@@ -124,7 +125,7 @@ while play_mode:  # the main game loop
     displayObj.blit(score_counter, (WIDTH - 180, HEIGHT-200))
     crewZombies.draw(displayObj) # the zombies of the group are displayed
     groupBullets.draw(displayObj)
-    ourWall.draw(displayObj)
+    #ourWall.draw(displayObj)
     ourItems.draw(displayObj)
 
     """----------------------COLLISIONS CHECKING----------------------------"""
@@ -155,6 +156,7 @@ while play_mode:  # the main game loop
             ourHero.update_livebar(ourHero.lives)
         elif hit.type == "Shotgun":
             hit.kill()
+            pygame.mixer.Sound.play(Gun_pickup)
             weaponType = "Shotgun"
             shotgun_ammo = 6
 

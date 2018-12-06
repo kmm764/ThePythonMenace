@@ -51,7 +51,7 @@ class Zombie(pygame.sprite.Sprite):
 
 
         # calculates the new position vector, to do so, the attibute rect is turned into a 2d vector to make easier the operations
-        newpos = pygame.math.Vector2(self.rect.x, self.rect.y)+self.vel*self.speed*t
+        newpos = pygame.math.Vector2(self.rect.x, self.rect.y)+self.vel*(random.randint(self.speed, self.speed +100))*t
         #once the new position is calculated,, we make sure that it is inside the boundaries of the screen
         newpos.x= clamp(newpos.x,Zombie.pos_min_x,Zombie.pos_max_x)
         newpos.y= clamp(newpos.y, Zombie.pos_min_y, Zombie.pos_max_y)
