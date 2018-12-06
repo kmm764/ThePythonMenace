@@ -34,7 +34,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
-frecuency_Zombie = 10
+frecuency_Zombie = 0
 FRECUENCY_GUN = 1
 FRECUENCY_LIVES = 1
 map_data = []
@@ -58,7 +58,7 @@ fpsClock = pygame.time.Clock()  #this object will make sure our program runs at 
 """----------------------SCREEN OBJECT----------------------------"""
 displayObj = pygame.display.set_mode((WIDTH, HEIGHT)) #creates the object that display the screen
 pygame.display.set_caption('Game')
-background_image = pygame.image.load("background.jpg").convert()
+background_image = pygame.image.load("level1_1024.jpg").convert()
 
 
 
@@ -88,7 +88,7 @@ pygame.display.flip()
 
 """----------------------MAP CREATION----------------------------"""
 
-with open(path.join(game_folder, 'map.txt'), 'rt') as f:  #rf is read
+with open(path.join(game_folder, 'FirstMap.txt'), 'rt') as f:  #rf is read
     for line in f:
         map_data.append(line)
 
