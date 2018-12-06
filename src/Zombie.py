@@ -7,8 +7,8 @@ class Zombie(pygame.sprite.Sprite):
     speed=50 #set the module of velocity
 
     # set the max and min position in each axis to prevent the hero from go outside the boundaries of the screen
-    pos_max_x=940
-    pos_max_y=540
+    pos_max_x=1024
+    pos_max_y=768
     pos_min_x=0
     pos_min_y=0
 
@@ -46,9 +46,8 @@ class Zombie(pygame.sprite.Sprite):
             Method that update the position of the Zombie. The method update of the super class does nothing, so here it is overwritten
             :param t --> time passed in seconds from the last call
         """
+
         self.setVel(positionHero)
-
-
 
         # calculates the new position vector, to do so, the attibute rect is turned into a 2d vector to make easier the operations
         newpos = pygame.math.Vector2(self.rect.x, self.rect.y)+self.vel*(random.randint(self.speed -20, self.speed +20))*t
