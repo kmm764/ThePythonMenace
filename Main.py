@@ -114,6 +114,7 @@ while play_mode:  # the main game loop
         ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT), "Shotgun"))
 
 
+
     """----------------------OBJECTS DISPLAY----------------------------"""
     ourHero.display(displayObj)
     Shotgun_ammo_count = myfont.render('Shotgun Ammo: '+str(shotgun_ammo), False, (0,0,0))
@@ -217,7 +218,7 @@ while play_mode:  # the main game loop
                         last_shot = now
                         if shotgun_ammo > 0:
                             shotgun_ammo -= 1
-                            for x in range(5):
+                            for x in range(10):
                                 groupBullets.add(Shotgun_Bullet(ourHero.rect))
                                 pygame.mixer.Sound.play(Shotgun_sound)
                         else:
