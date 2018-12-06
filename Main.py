@@ -50,8 +50,16 @@ pygame.init()
 pygame.font.init()
 myfont = pygame.font.SysFont('8-Bit Madness', 50)
 Pistol_sound = pygame.mixer.Sound("pistol.wav")
-Shotgun_sound = pygame.mixer.Sound("shotgun.wav")
+Shotgun_sound = ("shotgun.wav")
 Gun_pickup = pygame.mixer.Sound("gun_pickup.wav")
+Player_sound = ["p0.wav","p1.wav","p2.wav","p3.wav","p4.wav","p5.wav","p6.wav"]
+for sounds in range(len(Player_sound)):
+    Player_sound[sounds] = pygame.mixer.Sound(Player_sound[sounds])
+print(Player_sound)
+
+
+
+
 fpsClock = pygame.time.Clock()  #this object will make sure our program runs at a certain maximum FPS
 
 
@@ -162,17 +170,18 @@ while play_mode:  # the main game loop
             ourHero.lives += 1
             ourHero.update_livebar(ourHero.lives)
         elif hit.type == "Shotgun":
-            hit.kill()
-            pygame.mixer.Sound.play(Gun_pickup)
-            weaponType = "Shotgun"
-            shotgun_ammo += 6
+            if shotgun_ammo < 6:
+                hit.kill()
+                pygame.mixer.Sound.play(Gun_pickup)
+                weaponType = "Shotgun"
+                shotgun_ammo = 6
 
     if len(ourItems.sprites()) > 0:
         for items in ourItems:
             Item_wall_collision =  pygame.sprite.spritecollide(items, ourWall, False)
             if len(Item_wall_collision) >0:
                 items.kill()
-                
+
 
     # here we check the collision between the bullets and the zombies, if they collision, the zombies deleted from the groups
     if len(groupBullets.sprites())>0:
