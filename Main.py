@@ -14,6 +14,7 @@ from src.Bullet import *
 from src.Game import Game
 from src.Wall import Walls
 from src.items import Item
+from src.Effects import *
 
 
 
@@ -34,7 +35,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
-frecuency_Zombie = 0
+frecuency_Zombie = 10
 FRECUENCY_GUN = 1
 FRECUENCY_LIVES = 1
 map_data = []
@@ -81,6 +82,7 @@ crewZombies = pygame.sprite.Group()
 groupBullets = pygame.sprite.Group()
 ourWall = pygame.sprite.Group()
 ourItems = pygame.sprite.Group()
+ourEffect = pygame.sprite.Group()
 #pygame.key.set_repeat(1, 10) #to handle the "holding key" event
 weaponType = "Pistol"
 pygame.display.flip()
@@ -116,7 +118,7 @@ while play_mode:  # the main game loop
 
 
     """----------------------OBJECTS DISPLAY----------------------------"""
-    ourHero.display(displayObj)
+
     Shotgun_ammo_count = myfont.render('Shotgun Ammo: '+str(shotgun_ammo), False, (0,0,0))
     displayObj.blit(ourHero.lives_img, (WIDTH - 200,0))
     if shotgun_ammo >0:  # only display the text on screen when the player is using shotgun
@@ -124,10 +126,14 @@ while play_mode:  # the main game loop
     # we display score
     score_counter = myfont.render('SCORE: ' + str(ourHero.score), False, (255, 255, 255))
     displayObj.blit(score_counter, (WIDTH - 180, HEIGHT-200))
-    crewZombies.draw(displayObj) # the zombies of the group are displayed
-    groupBullets.draw(displayObj)
-    #ourWall.draw(displayObj)
+    ourEffect.draw(displayObj)
     ourItems.draw(displayObj)
+    groupBullets.draw(displayObj)
+    crewZombies.draw(displayObj) # the zombies of the group are displayed
+    ourHero.display(displayObj)
+
+    #ourWall.draw(displayObj)
+
 
     """----------------------COLLISIONS CHECKING----------------------------"""
     hero_zombies_collision = pygame.sprite.spritecollide(ourHero, crewZombies, False)
@@ -172,6 +178,7 @@ while play_mode:  # the main game loop
                 bul.kill()
             if len(bullet_zombies_collision) > 0:
                 bul.kill()
+                ourEffect.add(zombie_splat(bul.rect))
                 ourHero.score += 1
 
     hero_zombies_collision.clear()
@@ -263,6 +270,7 @@ while play_mode:  # the main game loop
     crewZombies.update(ourHero.rect, time_passed_s)
     groupBullets.update(time_passed_s)
     ourHero.update(time_passed_s)
+    ourEffect.update()
 
 
     pygame.display.flip() #DO WE NEED BOTH OS THESE?!!!! update the screen with what we've drawn
