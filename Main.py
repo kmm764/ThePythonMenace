@@ -53,11 +53,15 @@ Pistol_sound = pygame.mixer.Sound("pistol.wav")
 Shotgun_sound = pygame.mixer.Sound("shotgun.wav")
 Gun_pickup = pygame.mixer.Sound("gun_pickup.wav")
 Player_sound = ["p0.wav","p1.wav","p2.wav","p3.wav","p4.wav","p5.wav","p6.wav"]
-Zombie_sound = ["z0.wav","z1.wav","z2.wav","z3.wav","z4.wav","z5.wav","z6.wav"]
+Zombie_sound = ["z0.wav","z1.wav","z2.wav","z3.wav","z4.wav","z5.wav","z6.wav","z7.wav"]
 for sounds in range(len(Player_sound)):
     Player_sound[sounds] = pygame.mixer.Sound(Player_sound[sounds])
+    Player_sound[sounds].set_volume(2.0)
+
 for z in range(len(Zombie_sound)):
     Zombie_sound[z] = pygame.mixer.Sound(Zombie_sound[z])
+    Zombie_sound[z].set_volume(2.0)
+
 
 
 
@@ -129,6 +133,8 @@ while play_mode:  # the main game loop
 
 
 
+
+
     """----------------------OBJECTS DISPLAY----------------------------"""
 
     Shotgun_ammo_count = myfont.render('Shotgun Ammo: '+str(shotgun_ammo), False, (0,0,0))
@@ -187,6 +193,10 @@ while play_mode:  # the main game loop
             Item_wall_collision =  pygame.sprite.spritecollide(items, ourWall, False)
             if len(Item_wall_collision) >0:
                 items.kill()
+
+    if len(crewZombies.sprites())>0:
+        if random.randrange(0,100) < 8:
+            pygame.mixer.Sound.play(Zombie_sound[random.randint(0,len(Zombie_sound)-1)])
 
 
     # here we check the collision between the bullets and the zombies, if they collision, the zombies deleted from the groups
