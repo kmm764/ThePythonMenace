@@ -34,6 +34,9 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
+frecuency_Zombie = 3
+FRECUENCY_GUN = 1
+FRECUENCY_LIVES = 1
 map_data = []
 shotgun_ammo = 0
 play_mode = False
@@ -96,22 +99,18 @@ while play_mode:  # the main game loop
             for col, tile in enumerate(tiles):
                 if tile == "1":
                     ourWall.add(Walls(col, row, Tile_size))
-                #if tile == "H":
-                 #   ourItems.add(Item(col, row, "Hp"))
-                #if tile == "S":
-                #    ourItems.add(Item(col, row, "Shotgun"))
 
 
     displayObj.blit(background_image, [0, 0])
 
-    if random.randrange(0, 100) < 3:  #here, a probability of 5% is assigned to the appearance of a new zombie
+    if random.randrange(0, 100) < frecuency_Zombie :  #here, a probability of 5% is assigned to the appearance of a new zombie
         #if a new zombie instance is created, it is added to the sprite group
         crewZombies.add(Zombie(random.randrange(0, WIDTH-img_width), random.randrange(0, HEIGHT-img_height)))
-    #displayObj.fill(WHITE)  # set the background to white
 
-
-    if random.randrange(0, 1000) < 3:
+    if random.randrange(0, 1000) < FRECUENCY_GUN:
         ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT), "Shotgun"))
+    if random.randrange(0, 1000) < FRECUENCY_LIVES:
+        ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT), "Hp"))
 
 
 
@@ -227,12 +226,6 @@ while play_mode:  # the main game loop
     #colision of the hero with the wall, and change in the velocity
     for wall in ourWall:
 
-        print("hero x:", end="")
-        print(ourHero.rect.x)
-        print("wall x - tilesize:", end="")
-        print(wall.rect.x + Tile_size)
-        print("wall x:", end="")
-        print(wall.rect.x)
         if (ourHero.rect.x >= wall.rect.x-Tile_size) and (ourHero.rect.x <= wall.rect.x) and vel_y == 1. and (ourHero.rect.y + img_width) >= wall.rect.y and (ourHero.rect.y <= wall.rect.y+ Tile_size):
 
             ourHero.rect.y = (wall.rect.y - img_width)
@@ -245,13 +238,7 @@ while play_mode:  # the main game loop
             ourHero.rect.x = (wall.rect.x - img_width)
             vel_x = 0.
         if (ourHero.rect.y+20 >= wall.rect.y - Tile_size) and (ourHero.rect.y <= wall.rect.y) and (ourHero.rect.x >= wall.rect.x) and (ourHero.rect.x <= wall.rect.x+Tile_size) and vel_x == -1. :
-            print("2")
-            print("hero x:", end="")
-            print(ourHero.rect.x)
-            print("wall x - tilesize:", end="")
-            print(wall.rect.x + Tile_size)
-            print("wall x:", end="")
-            print(wall.rect.x)
+
             ourHero.rect.x = (wall.rect.x + Tile_size)
             vel_x = 0.
 
