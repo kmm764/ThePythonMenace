@@ -34,7 +34,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
-frecuency_Zombie = 3
+frecuency_Zombie = 10
 FRECUENCY_GUN = 1
 FRECUENCY_LIVES = 1
 map_data = []
@@ -119,7 +119,8 @@ while play_mode:  # the main game loop
     ourHero.display(displayObj)
     Shotgun_ammo_count = myfont.render('Shotgun Ammo: '+str(shotgun_ammo), False, (0,0,0))
     displayObj.blit(ourHero.lives_img, (WIDTH - 200,0))
-    displayObj.blit(Shotgun_ammo_count, (WIDTH - 350, 30))
+    if shotgun_ammo >0:  # only display the text on screen when the player is using shotgun
+        displayObj.blit(Shotgun_ammo_count, (WIDTH - 350, 30))
     # we display score
     score_counter = myfont.render('SCORE: ' + str(ourHero.score), False, (255, 255, 255))
     displayObj.blit(score_counter, (WIDTH - 180, HEIGHT-200))
