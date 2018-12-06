@@ -172,7 +172,7 @@ while play_mode:  # the main game loop
             Item_wall_collision =  pygame.sprite.spritecollide(items, ourWall, False)
             if len(Item_wall_collision) >0:
                 items.kill()
-                print("killed item")
+                
 
     # here we check the collision between the bullets and the zombies, if they collision, the zombies deleted from the groups
     if len(groupBullets.sprites())>0:
