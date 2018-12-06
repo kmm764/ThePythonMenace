@@ -91,14 +91,15 @@ with open(path.join(game_folder, 'map.txt'), 'rt') as f:  #rf is read
 
 
 while play_mode:  # the main game loop
-    for row, tiles in enumerate(map_data):  # enumerate to get both index and value as row and column
-        for col, tile in enumerate(tiles):
-            if tile == "1":
-                ourWall.add(Walls(col, row, Tile_size))
-            #if tile == "H":
-             #   ourItems.add(Item(col, row, "Hp"))
-            #if tile == "S":
-            #    ourItems.add(Item(col, row, "Shotgun"))
+    if len(ourWall) == 0:
+        for row, tiles in enumerate(map_data):  # enumerate to get both index and value as row and column
+            for col, tile in enumerate(tiles):
+                if tile == "1":
+                    ourWall.add(Walls(col, row, Tile_size))
+                #if tile == "H":
+                 #   ourItems.add(Item(col, row, "Hp"))
+                #if tile == "S":
+                #    ourItems.add(Item(col, row, "Shotgun"))
 
 
     displayObj.blit(background_image, [0, 0])
