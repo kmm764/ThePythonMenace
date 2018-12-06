@@ -7,6 +7,8 @@ WIDTH = 1024
 HEIGHT = 768
 img_width = 60
 img_height = 60
+INI_HERO_X = 416
+INI_HERO_Y = 224
 
 class Hero(pygame.sprite.Sprite):
 
@@ -30,8 +32,8 @@ class Hero(pygame.sprite.Sprite):
         super().__init__()
         self.image = Hero.hero_IMG
         self.rect = self.image.get_rect()
-        self.rect.x = 0
-        self.rect.y = 0
+        self.rect.x = INI_HERO_X
+        self.rect.y = INI_HERO_Y
         self.vel = pygame.math.Vector2(0.0, 0.0) #inicialize the velocity vector to 0,0
         self.rot = 0
         self.rot_speed = 0
