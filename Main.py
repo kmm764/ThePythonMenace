@@ -36,8 +36,8 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 frecuency_Zombie = 10
-FRECUENCY_GUN = 1
-FRECUENCY_LIVES = 1
+FRECUENCY_GUN = 20
+FRECUENCY_LIVES = 20
 map_data = []
 shotgun_ammo = 0
 play_mode = False
@@ -165,8 +165,14 @@ while play_mode:  # the main game loop
             hit.kill()
             pygame.mixer.Sound.play(Gun_pickup)
             weaponType = "Shotgun"
-            shotgun_ammo = 6
+            shotgun_ammo += 6
 
+    if len(ourItems.sprites()) > 0:
+        for items in ourItems:
+            Item_wall_collision =  pygame.sprite.spritecollide(items, ourWall, False)
+            if len(Item_wall_collision) >0:
+                items.kill()
+                print("killed item")
 
     # here we check the collision between the bullets and the zombies, if they collision, the zombies deleted from the groups
     if len(groupBullets.sprites())>0:
