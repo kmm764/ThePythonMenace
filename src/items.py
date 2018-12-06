@@ -9,12 +9,9 @@ Shotgun_img = pygame.image.load("shotgun.png")
 class Item(pygame.sprite.Sprite):
 
 
-
-    def __init__(self, x,y, type): #x and y are the location of the hero
-
+    def __init__(self, x,y, type):
 
         super().__init__()
-        #image and rect are the attributes used by the methods of the superclass sprite
         self.health_image = pygame.transform.scale(Health_img, (Tile_size, Tile_size))
         self.shotgun_image = pygame.transform.scale(Shotgun_img, (Tile_size, Tile_size))
         self.type = type

@@ -15,14 +15,10 @@ from src.Game import Game
 from src.Wall import Walls
 from src.items import Item
 
-vec = pygame.math.Vector2
-pygame.init()
-pygame.font.init()
-myfont = pygame.font.SysFont('8-Bit Madness', 50)
 
-Pistol_sound = pygame.mixer.Sound("pistol.wav")
-Shotgun_sound = pygame.mixer.Sound("shotgun.wav")
 
+
+"""----------------------PARAMETERS----------------------------"""
 WIDTH = 1024
 HEIGHT = 768
 img_width = 60
@@ -31,40 +27,51 @@ Tile_size = 32
 GridWidth = WIDTH/Tile_size
 GridHeight = HEIGHT/Tile_size
 last_shot = 0
-
 FPS = 60  # frames per second setting
 vel_x, vel_y = 0., 0. #inicializes the x and y components of the velocity vector of the hero
 lasthit_time=2.0 #inicializes the time variable that we are going to use to limit the collisions between the hero and the zombies
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+YELLOW = (255, 255, 0)
+map_data = []
+shotgun_ammo = 0
+play_mode = False
+menu_mode = False
+game_folder = path.dirname(__file__)
+
+
+"""----------------------PYGAME INITIALIZING---------------------------"""
+pygame.init()
+pygame.font.init()
+myfont = pygame.font.SysFont('8-Bit Madness', 50)
+Pistol_sound = pygame.mixer.Sound("pistol.wav")
+Shotgun_sound = pygame.mixer.Sound("shotgun.wav")
 fpsClock = pygame.time.Clock()  #this object will make sure our program runs at a certain maximum FPS
 
+
+
+"""----------------------SCREEN OBJECT----------------------------"""
 displayObj = pygame.display.set_mode((WIDTH, HEIGHT)) #creates the object that display the screen
 pygame.display.set_caption('Game')
 background_image = pygame.image.load("background.jpg").convert()
 
 
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-YELLOW = (255, 255, 0)
 
-play_mode = False
-menu_mode = False
 
-# create an object of the class Game
+"""----------------------GAME OBJECT: display start screen ans menu----------------------------"""
 game = Game()
 # show start screen
 menu_mode = game.show_start_screen(displayObj)
-
 # show the menu
 play_mode = game.menu(displayObj)
 
 
 
-#creates an object of the class Hero
+"""----------------------INITIAL INSTANCES AND GROUPS CREATION----------------------------"""
 ourHero = Hero()
 # display the life bar on the screen
 displayObj.blit(ourHero.lives_img, (WIDTH - 200, 0))
-
 #here we create a sprite group to make easier to manage our zombies instances
 crewZombies = pygame.sprite.Group()
 groupBullets = pygame.sprite.Group()
@@ -73,9 +80,9 @@ ourItems = pygame.sprite.Group()
 #pygame.key.set_repeat(1, 10) #to handle the "holding key" event
 weaponType = "Pistol"
 pygame.display.flip()
-game_folder = path.dirname(__file__)
-map_data = []
-shotgun_ammo = 0
+
+
+"""----------------------MAP CREATION----------------------------"""
 
 with open(path.join(game_folder, 'map.txt'), 'rt') as f:  #rf is read
     for line in f:
@@ -88,10 +95,10 @@ while play_mode:  # the main game loop
         for col, tile in enumerate(tiles):
             if tile == "1":
                 ourWall.add(Walls(col, row, Tile_size))
-            if tile == "H":
-                ourItems.add(Item(col, row, "Hp"))
-            if tile == "S":
-                ourItems.add(Item(col, row, "Shotgun"))
+            #if tile == "H":
+             #   ourItems.add(Item(col, row, "Hp"))
+            #if tile == "S":
+            #    ourItems.add(Item(col, row, "Shotgun"))
 
 
     displayObj.blit(background_image, [0, 0])
@@ -100,28 +107,26 @@ while play_mode:  # the main game loop
         #if a new zombie instance is created, it is added to the sprite group
         crewZombies.add(Zombie(random.randrange(0, WIDTH-img_width), random.randrange(0, HEIGHT-img_height)))
     #displayObj.fill(WHITE)  # set the background to white
-    ourHero.display(displayObj)  # the hero is displayed
+
 
     if random.randrange(0, 100) < 3:
         ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT), "Shotgun"))
 
 
-    #we display lives
+    """----------------------OBJECTS DISPLAY----------------------------"""
+    ourHero.display(displayObj)
     Shotgun_ammo_count = myfont.render('Shotgun Ammo: '+str(shotgun_ammo), False, (0,0,0))
     displayObj.blit(ourHero.lives_img, (WIDTH - 200,0))
     displayObj.blit(Shotgun_ammo_count, (WIDTH - 350, 30))
-
     # we display score
     score_counter = myfont.render('SCORE: ' + str(ourHero.score), False, (255, 255, 255))
     displayObj.blit(score_counter, (WIDTH - 180, HEIGHT-200))
-
-
     crewZombies.draw(displayObj) # the zombies of the group are displayed
     groupBullets.draw(displayObj)
     ourWall.draw(displayObj)
     ourItems.draw(displayObj)
 
-    #here we check if it has been any collision between any sprite of the group crewZombies and the hero
+    """----------------------COLLISIONS CHECKING----------------------------"""
     hero_zombies_collision = pygame.sprite.spritecollide(ourHero, crewZombies, False)
     hero_wall_collision = pygame.sprite.spritecollide(ourHero, ourWall, False)
     hero_item_collision = pygame.sprite.spritecollide(ourHero, ourItems, False)
@@ -153,8 +158,6 @@ while play_mode:  # the main game loop
             shotgun_ammo = 6
 
 
-
-                
     # here we check the collision between the bullets and the zombies, if they collision, the zombies deleted from the groups
     if len(groupBullets.sprites())>0:
         for bul in groupBullets:
@@ -167,11 +170,9 @@ while play_mode:  # the main game loop
                 bul.kill()
                 ourHero.score += 1
 
-
-
     hero_zombies_collision.clear()
 
-
+    """----------------------EVENTS HANDLING----------------------------"""
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit() # ends pygame
@@ -254,7 +255,7 @@ while play_mode:  # the main game loop
 
 
 
-
+    """----------------------OBJECTS UPDATE----------------------------"""
     # once the keys have been read, the method setVel is called to modify the velocity of the hero
     ourHero.setVel(pygame.math.Vector2(vel_x, vel_y))
 
