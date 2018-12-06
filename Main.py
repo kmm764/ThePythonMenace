@@ -35,9 +35,9 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
-frecuency_Zombie = 10
-FRECUENCY_GUN = 20
-FRECUENCY_LIVES = 20
+frecuency_Zombie = 4
+FRECUENCY_GUN = 4
+FRECUENCY_LIVES = 4
 map_data = []
 shotgun_ammo = 0
 play_mode = False
@@ -190,12 +190,12 @@ while play_mode:  # the main game loop
 
     if len(ourItems.sprites()) > 0:
         for items in ourItems:
-            Item_wall_collision =  pygame.sprite.spritecollide(items, ourWall, False)
+            Item_wall_collision = pygame.sprite.spritecollide(items, ourWall, False)
             if len(Item_wall_collision) >0:
                 items.kill()
 
     if len(crewZombies.sprites())>0:
-        if random.randrange(0,100) < 8:
+        if random.randrange(0,1000) < 3:
             pygame.mixer.Sound.play(Zombie_sound[random.randint(0,len(Zombie_sound)-1)])
 
 
