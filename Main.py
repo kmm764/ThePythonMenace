@@ -50,12 +50,16 @@ pygame.init()
 pygame.font.init()
 myfont = pygame.font.SysFont('8-Bit Madness', 50)
 Pistol_sound = pygame.mixer.Sound("pistol.wav")
-Shotgun_sound = ("shotgun.wav")
+Shotgun_sound = pygame.mixer.Sound("shotgun.wav")
 Gun_pickup = pygame.mixer.Sound("gun_pickup.wav")
 Player_sound = ["p0.wav","p1.wav","p2.wav","p3.wav","p4.wav","p5.wav","p6.wav"]
+Zombie_sound = ["z0.wav","z1.wav","z2.wav","z3.wav","z4.wav","z5.wav","z6.wav"]
 for sounds in range(len(Player_sound)):
     Player_sound[sounds] = pygame.mixer.Sound(Player_sound[sounds])
-print(Player_sound)
+for z in range(len(Zombie_sound)):
+    Zombie_sound[z] = pygame.mixer.Sound(Zombie_sound[z])
+
+
 
 
 
@@ -152,6 +156,8 @@ while play_mode:  # the main game loop
         #for each zombie that has taken part in the collision, we check if it's been at least 2 seconds from the last collision that was counted
         lasthit_time += time_passed_s
         if lasthit_time >= 2.0:
+            rand_sound = random.randint(0,len(Player_sound)-1)
+            pygame.mixer.Sound.play(Player_sound[rand_sound])
             ourHero.lives -= 1 #here our hero loses one life per zombie in the collisions list
             ourHero.update_livebar(ourHero.lives)
             lasthit_time=0.0 #set the time from the last collision to hero
