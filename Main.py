@@ -221,13 +221,42 @@ while play_mode:  # the main game loop
                         else:
                             weaponType = "Pistol"
 
+    #colision of the hero with the wall, and change in the velocity
+    for wall in ourWall:
+
+        print("hero x:", end="")
+        print(ourHero.rect.x)
+        print("wall x - tilesize:", end="")
+        print(wall.rect.x + Tile_size)
+        print("wall x:", end="")
+        print(wall.rect.x)
+        if (ourHero.rect.x >= wall.rect.x-Tile_size) and (ourHero.rect.x <= wall.rect.x) and vel_y == 1. and (ourHero.rect.y + img_width) >= wall.rect.y and (ourHero.rect.y <= wall.rect.y+ Tile_size):
+
+            ourHero.rect.y = (wall.rect.y - img_width)
+            vel_y = 0.
+
+        if (ourHero.rect.x >= wall.rect.x - Tile_size) and (ourHero.rect.x <= wall.rect.x) and vel_y == -1. and (ourHero.rect.y <= wall.rect.y + Tile_size) and (ourHero.rect.y >= wall.rect.y):
+            ourHero.rect.y = (wall.rect.y + Tile_size)
+            vel_y = 0.
+        if (ourHero.rect.y+20 >= wall.rect.y - Tile_size) and (ourHero.rect.y <= wall.rect.y) and (ourHero.rect.x + img_width >= wall.rect.x) and (ourHero.rect.x <= wall.rect.x+Tile_size) and vel_x == 1. :
+            ourHero.rect.x = (wall.rect.x - img_width)
+            vel_x = 0.
+        if (ourHero.rect.y+20 >= wall.rect.y - Tile_size) and (ourHero.rect.y <= wall.rect.y) and (ourHero.rect.x >= wall.rect.x) and (ourHero.rect.x <= wall.rect.x+Tile_size) and vel_x == -1. :
+            print("2")
+            print("hero x:", end="")
+            print(ourHero.rect.x)
+            print("wall x - tilesize:", end="")
+            print(wall.rect.x + Tile_size)
+            print("wall x:", end="")
+            print(wall.rect.x)
+            ourHero.rect.x = (wall.rect.x + Tile_size)
+            vel_x = 0.
 
 
 
 
-
-        # once the keys have been read, the method setVel is called to modify the velocity of the hero
-        ourHero.setVel(pygame.math.Vector2(vel_x, vel_y))
+    # once the keys have been read, the method setVel is called to modify the velocity of the hero
+    ourHero.setVel(pygame.math.Vector2(vel_x, vel_y))
 
     # sets the frames per second to our clock object and store the time passed from the last call in time_passed_ms
     time_passed_ms = fpsClock.tick(FPS)
