@@ -69,6 +69,8 @@ class Shotgun_Bullet(Bullet):
     def __init__(self, positionHero):
         Bullet.__init__(self, positionHero)
         self.speed = 600
-        self.Bullet_lifetime = 200
+        self.Bullet_lifetime = 350
         self.size = self.image.get_size()
         self.image = pygame.transform.scale(self.image, (int(self.size[0]/2), int(self.size[1]/2)))
+        self.mouse_x = random.randint(self.mouse_x - 100, self.mouse_x + 100)
+        self.mouse_y = random.randint(self.mouse_y - 100, self.mouse_y + 100)
