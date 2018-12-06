@@ -24,8 +24,8 @@ class Item(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.rect = self.image.get_rect()
-        self.rect.x = x * Tile_size
-        self.rect.y = y * Tile_size
+        self.rect.x = x
+        self.rect.y = y
 
     def display(self, displayObj):
 

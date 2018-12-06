@@ -110,7 +110,7 @@ while play_mode:  # the main game loop
     #displayObj.fill(WHITE)  # set the background to white
 
 
-    if random.randrange(0, 100) < 3:
+    if random.randrange(0, 1000) < 3:
         ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT), "Shotgun"))
 
 
