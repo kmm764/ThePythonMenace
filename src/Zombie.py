@@ -29,25 +29,34 @@ class Zombie(pygame.sprite.Sprite):
             :param displayObj --> Object display where the hero will be display on
         """
         displayObj.blit(self.image, (self.rect.x, self.rect.y))
-    def setVel(self, positionHero):
+    def setVel(self, positionHero, vx):
         """
             Method that update the direction of the velocity vector of the zombie towards the hero
             :param vec: new vector velocity
         """
-        vel = pygame.math.Vector2(positionHero.x - self.rect.x, positionHero.y - self.rect.y)
+        vx_tohero = positionHero.x - self.rect.x
+        vy_tohero = positionHero.y - self.rect.y
+        if vx == 0:
+            vel_x = 0
+            vel_y = vy_tohero
+            print(vy_tohero)
+            if vy_tohero < 30 or vy_tohero > 30:
+                vel_y = -1
+        else:
+            vel_x = vx_tohero
+            vel_y = vy_tohero
+        vel = pygame.math.Vector2(vel_x, vel_y)
         if vel != (0.,0.):
         #if the new velocity vector is different from (0,0) we need to turn it into a unit vector to get only the direction of the movement
             self.vel = vel.normalize()
         else:
             pass
 
-    def update(self, positionHero, t):
+    def update(self, t):
         """
             Method that update the position of the Zombie. The method update of the super class does nothing, so here it is overwritten
             :param t --> time passed in seconds from the last call
         """
-
-        self.setVel(positionHero)
 
         # calculates the new position vector, to do so, the attibute rect is turned into a 2d vector to make easier the operations
         newpos = pygame.math.Vector2(self.rect.x, self.rect.y)+self.vel*(random.randint(self.speed -20, self.speed +20))*t

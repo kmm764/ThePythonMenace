@@ -28,6 +28,7 @@ GridHeight = HEIGHT / Tile_size
 last_shot = 0
 FPS = 60  # frames per second setting
 vel_x, vel_y = 0., 0.  # inicializes the x and y components of the velocity vector of the hero
+zvel_x, zvel_y = -1., -1.
 lasthit_time = 2.0  # inicializes the time variable that we are going to use to limit the collisions between the hero and the zombies
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -148,15 +149,16 @@ while play_mode:  # the main game loop
         for i in range(MAX_HORROCRUX):
             ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT/4 * 3), "Horrocrux"))
         first_time = False
+        crewZombies.add(Zombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height)))
     else:
         for i in range(horrocrux_killed):
             ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT / 4 * 3), "Horrocrux"))
         horrocrux_killed=0
 
     # ·····························ZOMBIES································
-    if random.randrange(0, 100) < frecuency_Zombie:  # here, a probability of "frecuency zombie" is assigned to the appearance of a new zombie
+    #if random.randrange(0, 100) < frecuency_Zombie:  # here, a probability of "frecuency zombie" is assigned to the appearance of a new zombie
         # if a new zombie instance is created, it is added to the sprite group
-        crewZombies.add(Zombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height)))
+        #crewZombies.add(Zombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height)))
 
     # ·····························GUNS································
     if random.randrange(0, 1000) < FRECUENCY_GUN:
@@ -314,6 +316,7 @@ while play_mode:  # the main game loop
 
     """---------------------------------COLLISIONS : PART 2---------------------------------"""
     # ···································HERO - WALLS································
+    """
     for wall in ourWall:
         if ourHero.rect.centerx > wall.rect.centerx - dist_center_xmin and ourHero.rect.centerx < wall.rect.centerx and ourHero.rect.centery <= wall.rect.centery + dist_center_ymin - margin and ourHero.rect.centery >= wall.rect.centery - dist_center_ymin + margin and vel_x > 0:
             vel_x = 0.
@@ -327,6 +330,24 @@ while play_mode:  # the main game loop
         elif ourHero.rect.centery < wall.rect.centery + dist_center_ymin and ourHero.rect.centery > wall.rect.centery and ourHero.rect.centerx > wall.rect.centerx - dist_center_xmin + margin and ourHero.rect.centerx < wall.rect.centerx + dist_center_xmin - margin and vel_y < 0:
             vel_y = 0.
             break
+    """
+
+    for zombie in crewZombies:
+
+
+
+
+        for wall in ourWall:
+            if zombie.rect.centerx > wall.rect.centerx - dist_center_xmin and zombie.rect.centerx < wall.rect.centerx and zombie.rect.centery <= wall.rect.centery + dist_center_ymin - margin and zombie.rect.centery >= wall.rect.centery - dist_center_ymin + margin:
+                zvel_x=0
+            elif zombie.rect.centerx < wall.rect.centerx + dist_center_xmin and zombie.rect.centerx > wall.rect.centerx and zombie.rect.centery <= wall.rect.centery + dist_center_ymin - margin and zombie.rect.centery >= wall.rect.centery - dist_center_ymin + margin:
+                xvel_x = 0
+            elif zombie.rect.centery > wall.rect.centery - dist_center_ymin and zombie.rect.centery < wall.rect.centery and zombie.rect.centerx > wall.rect.centerx - dist_center_xmin + margin and zombie.rect.centerx < wall.rect.centerx + dist_center_xmin - margin:
+                vel_y = 0
+            elif zombie.rect.centery < wall.rect.centery + dist_center_ymin and zombie.rect.centery > wall.rect.centery and zombie.rect.centerx > wall.rect.centerx - dist_center_xmin + margin and zombie.rect.centerx < wall.rect.centerx + dist_center_xmin - margin:
+                vel_y = 0
+        zombie.setVel(ourHero.rect, zvel_x, zvel_y)
+        zvel_x = -1
 
     """---------------------------------UPDATES---------------------------------"""
 
@@ -340,7 +361,7 @@ while play_mode:  # the main game loop
 
     # the function update of the sprite group basically calls the update function of each sprite of the group
     # so the zombies update method changes its position, based on the position of the hero the time passed
-    crewZombies.update(ourHero.rect, time_passed_s)
+    crewZombies.update(time_passed_s)
     groupBullets.update(time_passed_s)
     ourHero.update(time_passed_s)
 
