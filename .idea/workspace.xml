@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="444c8b9c-40f1-43bf-a3a5-ee5a8ea0afcd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SecondMap.txt" beforeDir="false" afterPath="$PROJECT_DIR$/SecondMap.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdMap.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ThirdMap.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,12 +33,12 @@
     <session id="-1386345417">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="2886" />
+          <entry key="py" value="2893" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="2886" />
+          <entry key="Python" value="2893" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -57,8 +58,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="324" column="14" lean-forward="true" selection-start-line="324" selection-start-column="14" selection-end-line="324" selection-end-column="14" />
+            <state relative-caret-position="-289">
+              <caret line="328" column="17" lean-forward="true" selection-start-line="328" selection-start-column="17" selection-end-line="328" selection-end-column="17" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -126,7 +127,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Zombie.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
+            <state relative-caret-position="-33">
               <caret line="18" column="43" lean-forward="true" selection-start-line="18" selection-start-column="43" selection-end-line="18" selection-end-column="43" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -185,8 +186,8 @@
         <option value="$USER_HOME$/Desktop/ThePythonMenace-Collision-zombies-wall/ThePythonMenace-Collision-zombies-wall/Main.py" />
         <option value="$USER_HOME$/Desktop/ThePythonMenace-Collision-zombies-wall/ThePythonMenace-Collision-zombies-wall/src/Zombie.py" />
         <option value="$PROJECT_DIR$/src/Hero.py" />
-        <option value="$PROJECT_DIR$/Main.py" />
         <option value="$PROJECT_DIR$/src/Zombie.py" />
+        <option value="$PROJECT_DIR$/Main.py" />
       </list>
     </option>
   </component>
@@ -380,12 +381,12 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49622166" visible="true" weight="0.33147854" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49622166" visible="true" weight="0.17567568" />
       <window_info id="Structure" order="1" sideWeight="0.50377834" side_tool="true" weight="0.33508956" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3291815" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.37900355" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.09252669" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39679715" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -552,7 +553,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Zombie.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
+        <state relative-caret-position="-33">
           <caret line="18" column="43" lean-forward="true" selection-start-line="18" selection-start-column="43" selection-end-line="18" selection-end-column="43" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
@@ -562,8 +563,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="324" column="14" lean-forward="true" selection-start-line="324" selection-start-column="14" selection-end-line="324" selection-end-column="14" />
+        <state relative-caret-position="-289">
+          <caret line="328" column="17" lean-forward="true" selection-start-line="328" selection-start-column="17" selection-end-line="328" selection-end-column="17" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
