@@ -21,6 +21,8 @@ HEIGHT = 768
 img_width = 60
 img_height = 60
 Tile_size = 32
+dist_center_xmin = img_width / 2 + Tile_size / 2
+dist_center_ymin = img_height / 2 + Tile_size / 2
 GridWidth = WIDTH / Tile_size
 GridHeight = HEIGHT / Tile_size
 last_shot = 0
@@ -32,7 +34,7 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 frecuency_Zombie = 3
-FRECUENCY_GUN = 1
+FRECUENCY_GUN = 3
 FRECUENCY_LIVES = 0
 MAX_HORROCRUX = 5
 CHECKPOINT_X = 960
@@ -313,14 +315,18 @@ while play_mode:  # the main game loop
     """---------------------------------COLLISIONS : PART 2---------------------------------"""
     # ···································HERO - WALLS································
     for wall in ourWall:
-        if ourHero.rect.centerx > wall.rect.centerx - img_width / 2 - Tile_size / 2 and ourHero.rect.centerx < wall.rect.centerx and ourHero.rect.centery <= wall.rect.centery + img_height / 2 + Tile_size / 2 - margin and ourHero.rect.centery >= wall.rect.centery - img_height / 2 - Tile_size / 2 + margin and vel_x > 0:
+        if ourHero.rect.centerx > wall.rect.centerx - dist_center_xmin and ourHero.rect.centerx < wall.rect.centerx and ourHero.rect.centery <= wall.rect.centery + dist_center_ymin - margin and ourHero.rect.centery >= wall.rect.centery - dist_center_ymin + margin and vel_x > 0:
             vel_x = 0.
-        elif ourHero.rect.centerx < wall.rect.centerx + img_width / 2 + Tile_size / 2 and ourHero.rect.centerx > wall.rect.centerx and ourHero.rect.centery <= wall.rect.centery + img_height / 2 + Tile_size / 2 - margin and ourHero.rect.centery >= wall.rect.centery - img_height / 2 - Tile_size / 2 + margin and vel_x < 0:
+            break
+        elif ourHero.rect.centerx < wall.rect.centerx + dist_center_xmin and ourHero.rect.centerx > wall.rect.centerx and ourHero.rect.centery <= wall.rect.centery + dist_center_ymin - margin and ourHero.rect.centery >= wall.rect.centery - dist_center_ymin + margin and vel_x < 0:
             vel_x = 0.
-        elif ourHero.rect.centery > wall.rect.centery - img_height / 2 - Tile_size / 2 and ourHero.rect.centery < wall.rect.centery and ourHero.rect.centerx > wall.rect.centerx - img_width / 2 - Tile_size / 2 + margin and ourHero.rect.centerx < wall.rect.centerx + img_width / 2 + Tile_size / 2 -margin and vel_y > 0:
+            break
+        elif ourHero.rect.centery > wall.rect.centery - dist_center_ymin and ourHero.rect.centery < wall.rect.centery and ourHero.rect.centerx > wall.rect.centerx - dist_center_xmin + margin and ourHero.rect.centerx < wall.rect.centerx + dist_center_xmin -margin and vel_y > 0:
             vel_y = 0.
-        elif ourHero.rect.centery < wall.rect.centery + img_height / 2 + Tile_size / 2 and ourHero.rect.centery > wall.rect.centery and ourHero.rect.centerx > wall.rect.centerx - img_width / 2 - Tile_size / 2 + margin and ourHero.rect.centerx < wall.rect.centerx + img_width / 2 + Tile_size / 2 - margin and vel_y < 0:
+            break
+        elif ourHero.rect.centery < wall.rect.centery + dist_center_ymin and ourHero.rect.centery > wall.rect.centery and ourHero.rect.centerx > wall.rect.centerx - dist_center_xmin + margin and ourHero.rect.centerx < wall.rect.centerx + dist_center_xmin - margin and vel_y < 0:
             vel_y = 0.
+            break
 
     """---------------------------------UPDATES---------------------------------"""
 
