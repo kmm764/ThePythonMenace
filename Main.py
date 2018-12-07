@@ -11,7 +11,7 @@ from src.Hero import Hero
 from src.Zombie import Zombie
 from src.Bullet import *
 from src.Game import Game
-from src.Wall import Walls
+from src.Walls import Walls
 from src.items import Item
 from src.Effects import *
 
@@ -25,13 +25,14 @@ GridWidth = WIDTH / Tile_size
 GridHeight = HEIGHT / Tile_size
 last_shot = 0
 FPS = 60  # frames per second setting
-vel_x, vel_y = 0., 0.  # inicializes the x and y components of the velocity vector of the hero
-lasthit_time = 2.0  # inicializes the time variable that we are going to use to limit the collisions between the hero and the zombies
+vel_x, vel_y = 0., 0.  # initializes the x and y components of the velocity vector of the hero
+lasthit_time = 2.0  # initializes the time variable that we are going to use to limit the collisions between the hero and the zombies
 WHITE = (255, 255, 255)
+zombie_vx, zombie_vy = -1, -1
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
-frecuency_Zombie = 3
+frecuency_Zombie = 5
 FRECUENCY_GUN = 0
 FRECUENCY_LIVES = 0
 map_data = []
@@ -248,16 +249,8 @@ while play_mode:  # the main game loop
 
         # once the keys have been read, the method setVel is called to modify the velocity of the hero
 
-    """
-        for wall in ourWall:
-            max_dist_x=img_width/2+Tile_size/2
-            max_dist_y = img_height/2+Tile_size/2
-            dist_x = wall.rect.centerx - ourHero.rect.centerx
-            dist_y = wall.rect.centery - ourHero.rect.centery
-            if dist_x > 0 and dist_x <= max_dist_x and dist_y<=max_dist_y and dist_y >= (max_dist_y*-1) and vel_x>0:
-                vel_x=0
-                """
 
+    """----------------------COLLISION HERO WALLS----------------------------"""
     for wall in ourWall:
 
         if ourHero.rect.centerx > wall.rect.centerx - img_width / 2 - Tile_size / 2 and ourHero.rect.centerx < wall.rect.centerx and ourHero.rect.centery <= wall.rect.centery + img_height / 2 + Tile_size / 2 - margin and ourHero.rect.centery >= wall.rect.centery - img_height / 2 - Tile_size / 2 + margin and vel_x > 0:
@@ -284,12 +277,34 @@ while play_mode:  # the main game loop
     # converts the time to seconds
     time_passed_s = time_passed_ms / 1000.0
     # call the hero method to update its position, based on the time passed and its velocity
-
+    ourHero.update(time_passed_s)
+    groupBullets.update(time_passed_s)
     # the function update of the sprite group basically calls the update function of each sprite of the group
     # so the zombies update method changes its position, based on the position of the hero the time passed
-    crewZombies.update(ourHero.rect, time_passed_s)
-    groupBullets.update(time_passed_s)
-    ourHero.update(time_passed_s)
+
+    for zombie in crewZombies:
+
+        zombie_wall_collision = pygame.sprite.spritecollide(zombie, ourWall, False)
+        for wall in ourWall:
+
+            if zombie.rect.centerx > wall.rect.centerx - img_width / 2 - Tile_size / 2 and zombie.rect.centerx < wall.rect.centerx and zombie.rect.centery <= wall.rect.centery + img_height / 2 + Tile_size / 2 - margin and zombie.rect.centery >= wall.rect.centery - img_height / 2 - Tile_size / 2 + margin and zombie.vel.x > 0:
+                zombie_vx = 0
+            if zombie.rect.centerx < wall.rect.centerx + img_width / 2 + Tile_size / 2 and zombie.rect.centerx > wall.rect.centerx and zombie.rect.centery <= wall.rect.centery + img_height / 2 + Tile_size / 2 - margin and zombie.rect.centery >= wall.rect.centery - img_height / 2 - Tile_size / 2 + margin and zombie.vel.x < 0:
+                zombie_vx = 0
+
+            if zombie.rect.centery > wall.rect.centery - img_height / 2 - Tile_size / 2 and zombie.rect.centery < wall.rect.centery and zombie.rect.centerx > wall.rect.centerx - img_width / 2 - Tile_size / 2 + margin and zombie.rect.centerx < wall.rect.centerx + img_width / 2 + Tile_size / 2 -margin and zombie.vel.y > 0:
+                zombie_vy = 0
+
+            if zombie.rect.centery < wall.rect.centery + img_height / 2 + Tile_size / 2 and zombie.rect.centery > wall.rect.centery and zombie.rect.centerx > wall.rect.centerx - img_width / 2 - Tile_size / 2 + margin and zombie.rect.centerx < wall.rect.centerx + img_width / 2 + Tile_size / 2 - margin and zombie.vel.y < 0:
+                zombie_vy = 0
+
+        zombie.update(ourHero.rect, time_passed_s, zombie_vx,zombie_vy)
+        print(time_passed_s)
+        zombie_vy = -1
+        zombie_vx = -1
+
+    #crewZombies.update(ourHero.rect, time_passed_s, zombie_vx, zombie_vy)
+
 
     pygame.display.flip()  # DO WE NEED BOTH OS THESE?!!!! update the screen with what we've drawn
     pygame.display.update()  # updates the state of the game

@@ -1,6 +1,5 @@
 import pygame, sys
 from pygame.locals import *
-from src.Wall import *
 import math
 
 WIDTH = 1024
@@ -18,7 +17,7 @@ class Hero(pygame.sprite.Sprite):
     pos_max_y=HEIGHT-img_height
     pos_min_x=0
     pos_min_y=0
-    lives_ini = 4
+    lives_ini = 100
     hero_IMG = pygame.image.load("Hero.png")
     hero_IMG = pygame.image.load("Hero.png")
     life_bar_full = pygame.image.load("life_bar_full.png")
