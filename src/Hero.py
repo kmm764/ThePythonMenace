@@ -1,6 +1,6 @@
 import pygame, sys
 from pygame.locals import *
-from src.Wall import *
+from src.Walls import *
 import math
 
 WIDTH = 1024
@@ -19,6 +19,7 @@ class Hero(pygame.sprite.Sprite):
     pos_min_x=0
     pos_min_y=0
     lives_ini = 4
+    horrocrux_collected = 0
     hero_IMG = pygame.image.load("Hero.png")
     hero_IMG = pygame.image.load("Hero.png")
     life_bar_full = pygame.image.load("life_bar_full.png")
@@ -91,6 +92,9 @@ class Hero(pygame.sprite.Sprite):
         self.rect.x = newpos.x
         self.rect.y = newpos.y
 
+    def setPos2(self, x, y):
+        self.rect.centerx = x
+        self.rect.centery = y
 
     def setVel(self, vec):
         """
@@ -125,8 +129,11 @@ class Hero(pygame.sprite.Sprite):
         self.rot = (self.rot + self.rot_speed * t) % 360
         self.image = pygame.transform.rotate(Hero.hero_IMG, self.angle)
         self.rect = self.image.get_rect(center=self.rect.center)
-
         self.setPos(t)
+
+    def ifCheckpoint(self,cp_x,cp_ymin, cp_ymax):
+        if self.rect.centerx > cp_x and self.rect.centery > cp_ymin and self.rect.centery < cp_ymax:
+            return True
 
 
 def clamp(n, minn, maxn):

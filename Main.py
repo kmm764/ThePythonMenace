@@ -11,7 +11,7 @@ from src.Hero import Hero
 from src.Zombie import Zombie
 from src.Bullet import *
 from src.Game import Game
-from src.Wall import Walls
+from src.Walls import Walls
 from src.items import Item
 from src.Effects import *
 
@@ -32,9 +32,20 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 frecuency_Zombie = 3
-FRECUENCY_GUN = 0
+FRECUENCY_GUN = 1
 FRECUENCY_LIVES = 0
+MAX_HORROCRUX = 5
+CHECKPOINT_X = 960
+CHECKPOINT_Y_MAX = 256
+CHECKPOINT_Y_MIN = 224
+horrocrux_killed = 0
+first_time = True
+second_time = False
+game_complete = False
+maps = []
 map_data = []
+map2_data = []
+map3_data = []
 shotgun_ammo = 0
 margin = 5 # we add a margin to make the movements more natural, as our hero image has transparents borders
 play_mode = False
@@ -63,7 +74,7 @@ fpsClock = pygame.time.Clock()  # this object will make sure our program runs at
 """----------------------SCREEN OBJECT----------------------------"""
 displayObj = pygame.display.set_mode((WIDTH, HEIGHT))  # creates the object that display the screen
 pygame.display.set_caption('Game')
-background_image = pygame.image.load("level1_1024.jpg").convert()
+
 
 """----------------------GAME OBJECT: display start screen ans menu----------------------------"""
 game = Game()
@@ -84,33 +95,72 @@ ourItems = pygame.sprite.Group()
 ourEffect = pygame.sprite.Group()
 # pygame.key.set_repeat(1, 10) #to handle the "holding key" event
 weaponType = "Pistol"
+level = 1
 pygame.display.flip()
 
-"""----------------------MAP CREATION----------------------------"""
+"""-----------------------------MAP CREATION----------------------------"""
 
 with open(path.join(game_folder, 'FirstMap.txt'), 'rt') as f:  # rf is read
     for line in f:
         map_data.append(line)
 
+with open(path.join(game_folder, 'SecondMap.txt'), 'rt') as f:  # rf is read
+    for line in f:
+        map2_data.append(line)
+
+with open(path.join(game_folder, 'ThirdMap.txt'), 'rt') as f:  # rf is read
+    for line in f:
+        map3_data.append(line)
+
+"""----------------------------------------------------------------------------"""
+"""--------------------------------GAME LOOP-----------------------------------"""
+"""----------------------------------------------------------------------------"""
+
 while play_mode:  # the main game loop
-    for row, tiles in enumerate(map_data):  # enumerate to get both index and value as row and column
+
+    """------------------------MAP CREATION IN FUNCTION OF THE LEVEL---------------------------"""
+
+    if level == 1:
+        maps = map_data
+    elif level == 2:
+        maps = map2_data
+    else:
+        maps = map3_data
+
+    for row, tiles in enumerate(maps):  # enumerate to get both index and value as row and column
         for col, tile in enumerate(tiles):
             if tile == "1":
                 ourWall.add(Walls(col, row, Tile_size))
-            if tile == "H":
-                ourItems.add(Item(col, row, "Hp"))
-            if tile == "S":
-                ourItems.add(Item(col, row, "Shotgun"))
 
+    if level == 1:
+        background_image = pygame.image.load("level1_1024.jpg").convert()
+    elif level == 2:
+        background_image = pygame.image.load("level2.jpg").convert()
+    else:
+        background_image = pygame.image.load("level3_begin.jpg").convert()
     displayObj.blit(background_image, [0, 0])
 
-    if random.randrange(0, 100) < frecuency_Zombie:  # here, a probability of 5% is assigned to the appearance of a new zombie
+    """------------------------INSTANCES CREATION---------------------------"""
+    #·····························HORROCRUXES································
+    if first_time == True:
+        for i in range(MAX_HORROCRUX):
+            ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT/4 * 3), "Horrocrux"))
+        first_time = False
+    else:
+        for i in range(horrocrux_killed):
+            ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT / 4 * 3), "Horrocrux"))
+        horrocrux_killed=0
+
+    # ·····························ZOMBIES································
+    if random.randrange(0, 100) < frecuency_Zombie:  # here, a probability of "frecuency zombie" is assigned to the appearance of a new zombie
         # if a new zombie instance is created, it is added to the sprite group
         crewZombies.add(Zombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height)))
-    # displayObj.fill(WHITE)  # set the background to white
-    # the hero is displayed
+
+    # ·····························GUNS································
     if random.randrange(0, 1000) < FRECUENCY_GUN:
         ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT), "Shotgun"))
+
+    # ·····························LIVES································
     if random.randrange(0, 1000) < FRECUENCY_LIVES:
         ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT), "Hp"))
 
@@ -119,29 +169,32 @@ while play_mode:  # the main game loop
 
 
 
-
     """----------------------OBJECTS DISPLAY----------------------------"""
 
+    # ·····························AMMU································
     Shotgun_ammo_count = myfont.render('Shotgun Ammo: ' + str(shotgun_ammo), False, (0, 0, 0))
     displayObj.blit(ourHero.lives_img, (WIDTH - 200, 0))
     if shotgun_ammo > 0:  # only display the text on screen when the player is using shotgun
         displayObj.blit(Shotgun_ammo_count, (WIDTH - 350, 30))
-    # we display score
+
+    # ·····························SCORE································
     score_counter = myfont.render('SCORE: ' + str(ourHero.score), False, (255, 255, 255))
     displayObj.blit(score_counter, (WIDTH - 180, HEIGHT - 200))
 
+    # ·····························SPRITE GROUPS································
     ourEffect.draw(displayObj)
     ourItems.draw(displayObj)
     groupBullets.draw(displayObj)
     crewZombies.draw(displayObj)
-    # the zombies of the group are displayed
     ourHero.display(displayObj)
 
-    # here we check if it has been any collision between any sprite of the group crewZombies and the hero
+    """---------------------------------COLLISIONS : PART 1---------------------------------"""
+
     hero_zombies_collision = pygame.sprite.spritecollide(ourHero, crewZombies, False)
     hero_wall_collision = pygame.sprite.spritecollide(ourHero, ourWall, False)
     hero_item_collision = pygame.sprite.spritecollide(ourHero, ourItems, False)
 
+    # ·····························ZOMBIE - HERO································
     for zombie in hero_zombies_collision:
         # for each zombie that has taken part in the collision, we check if it's been at least 2 seconds from the last collision that was counted
         lasthit_time += time_passed_s
@@ -160,6 +213,7 @@ while play_mode:  # the main game loop
                     ourWall = pygame.sprite.Group()
                     pygame.display.flip()
 
+    # ·····························ITEMS - HERO································
     for hit in hero_item_collision:
         if hit.type == "Hp" and ourHero.lives < 4:
             hit.kill()
@@ -171,18 +225,19 @@ while play_mode:  # the main game loop
                 pygame.mixer.Sound.play(Gun_pickup)
                 weaponType = "Shotgun"
                 shotgun_ammo = 6
+        elif hit.type == "Horrocrux":
+            ourHero.horrocrux_collected+=1
+            hit.kill()
 
-    if len(ourItems.sprites()) > 0:
-        for items in ourItems:
-            Item_wall_collision = pygame.sprite.spritecollide(items, ourWall, False)
-            if len(Item_wall_collision) > 0:
-                items.kill()
+    # ·····························ITEMS - WALL································
+    for wall in ourWall:
+        item_wall_collision = pygame.sprite.spritecollide(wall,ourItems,False)
+        for item in item_wall_collision:
+            if item.type == "Horrocrux":
+                horrocrux_killed+=1
+            item.kill()
 
-    if len(crewZombies.sprites()) > 0:
-        if random.randrange(0, 1000) < 3:
-            pygame.mixer.Sound.play(Zombie_sound[random.randint(0, len(Zombie_sound) - 1)])
-
-    # here we check the collision between the bullets and the zombies, if they collision, the zombies deleted from the groups
+    # ·····························ZOMBIE - BULLETS································
     if len(groupBullets.sprites()) > 0:
         for bul in groupBullets:
             bullet_zombies_collision = pygame.sprite.spritecollide(bul, crewZombies, True)
@@ -197,6 +252,12 @@ while play_mode:  # the main game loop
 
     hero_zombies_collision.clear()
 
+    #sound of the roar of zombies randomize
+    if len(crewZombies.sprites()) > 0:
+        if random.randrange(0, 1000) < 3:
+            pygame.mixer.Sound.play(Zombie_sound[random.randint(0, len(Zombie_sound) - 1)])
+
+    """----------------------EVENTS HANDLING----------------------------"""
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()  # ends pygame
@@ -224,6 +285,7 @@ while play_mode:  # the main game loop
             if event.key in (K_DOWN, K_s):
                 vel_y = 1.
 
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 now = pygame.time.get_ticks()
@@ -248,34 +310,19 @@ while play_mode:  # the main game loop
 
         # once the keys have been read, the method setVel is called to modify the velocity of the hero
 
-    """
-        for wall in ourWall:
-            max_dist_x=img_width/2+Tile_size/2
-            max_dist_y = img_height/2+Tile_size/2
-            dist_x = wall.rect.centerx - ourHero.rect.centerx
-            dist_y = wall.rect.centery - ourHero.rect.centery
-            if dist_x > 0 and dist_x <= max_dist_x and dist_y<=max_dist_y and dist_y >= (max_dist_y*-1) and vel_x>0:
-                vel_x=0
-                """
-
+    """---------------------------------COLLISIONS : PART 2---------------------------------"""
+    # ···································HERO - WALLS································
     for wall in ourWall:
-
         if ourHero.rect.centerx > wall.rect.centerx - img_width / 2 - Tile_size / 2 and ourHero.rect.centerx < wall.rect.centerx and ourHero.rect.centery <= wall.rect.centery + img_height / 2 + Tile_size / 2 - margin and ourHero.rect.centery >= wall.rect.centery - img_height / 2 - Tile_size / 2 + margin and vel_x > 0:
-            print("1")
-            print(wall.rect.center)
             vel_x = 0.
-        if ourHero.rect.centerx < wall.rect.centerx + img_width / 2 + Tile_size / 2 and ourHero.rect.centerx > wall.rect.centerx and ourHero.rect.centery <= wall.rect.centery + img_height / 2 + Tile_size / 2 - margin and ourHero.rect.centery >= wall.rect.centery - img_height / 2 - Tile_size / 2 + margin and vel_x < 0:
+        elif ourHero.rect.centerx < wall.rect.centerx + img_width / 2 + Tile_size / 2 and ourHero.rect.centerx > wall.rect.centerx and ourHero.rect.centery <= wall.rect.centery + img_height / 2 + Tile_size / 2 - margin and ourHero.rect.centery >= wall.rect.centery - img_height / 2 - Tile_size / 2 + margin and vel_x < 0:
             vel_x = 0.
-            print("2")
-            print(wall.rect.center)
-        if ourHero.rect.centery > wall.rect.centery - img_height / 2 - Tile_size / 2 and ourHero.rect.centery < wall.rect.centery and ourHero.rect.centerx > wall.rect.centerx - img_width / 2 - Tile_size / 2 + margin and ourHero.rect.centerx < wall.rect.centerx + img_width / 2 + Tile_size / 2 -margin and vel_y > 0:
+        elif ourHero.rect.centery > wall.rect.centery - img_height / 2 - Tile_size / 2 and ourHero.rect.centery < wall.rect.centery and ourHero.rect.centerx > wall.rect.centerx - img_width / 2 - Tile_size / 2 + margin and ourHero.rect.centerx < wall.rect.centerx + img_width / 2 + Tile_size / 2 -margin and vel_y > 0:
             vel_y = 0.
-            print("3")
-            print(wall.rect.center)
-        if ourHero.rect.centery < wall.rect.centery + img_height / 2 + Tile_size / 2 and ourHero.rect.centery > wall.rect.centery and ourHero.rect.centerx > wall.rect.centerx - img_width / 2 - Tile_size / 2 + margin and ourHero.rect.centerx < wall.rect.centerx + img_width / 2 + Tile_size / 2 - margin and vel_y < 0:
+        elif ourHero.rect.centery < wall.rect.centery + img_height / 2 + Tile_size / 2 and ourHero.rect.centery > wall.rect.centery and ourHero.rect.centerx > wall.rect.centerx - img_width / 2 - Tile_size / 2 + margin and ourHero.rect.centerx < wall.rect.centerx + img_width / 2 + Tile_size / 2 - margin and vel_y < 0:
             vel_y = 0.
-            print("4")
-            print(wall.rect.center)
+
+    """---------------------------------UPDATES---------------------------------"""
 
     # sets the frames per second to our clock object and store the time passed from the last call in time_passed_ms
     ourHero.setVel(pygame.math.Vector2(vel_x, vel_y))
@@ -290,6 +337,25 @@ while play_mode:  # the main game loop
     crewZombies.update(ourHero.rect, time_passed_s)
     groupBullets.update(time_passed_s)
     ourHero.update(time_passed_s)
+
+
+
+    if ourHero.ifCheckpoint(CHECKPOINT_X,CHECKPOINT_Y_MIN,CHECKPOINT_Y_MAX) and ourHero.horrocrux_collected == MAX_HORROCRUX:
+        if level == 1:
+            level = 2
+            first_time = True
+            #reinitializes the position of the hero and delete the zombies
+            ourHero.horrocrux_collected=0
+            ourHero.setPos2(48,48)
+            crewZombies.empty()
+
+        elif level == 2:
+            level = 3
+            ourHero.setPos2(48, 48)
+            crewZombies.empty()
+            first_time = True
+        else:
+            game_complete = True
 
     pygame.display.flip()  # DO WE NEED BOTH OS THESE?!!!! update the screen with what we've drawn
     pygame.display.update()  # updates the state of the game
