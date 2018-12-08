@@ -5,7 +5,7 @@ from pygame.locals import *
 Tile_size = 32
 health_img = pygame.image.load("hp.png")
 shotgun_img = pygame.image.load("shotgun.png")
-horrocrux_img = pygame.image.load("hp.png")
+horrocrux_img = pygame.image.load("backpack.png")
 
 
 class Item(pygame.sprite.Sprite):
