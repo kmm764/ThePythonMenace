@@ -33,13 +33,17 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
-frecuency_Zombie = 3
+frecuency_Zombie = 0
 FRECUENCY_GUN = 3
 FRECUENCY_LIVES = 0
 MAX_HORROCRUX = 5
-CHECKPOINT_X = 960
+CHECKPOINT_X_MIN = 960
 CHECKPOINT_Y_MAX = 256
 CHECKPOINT_Y_MIN = 224
+FINAL_XMAX = 480
+FINAL_XMIN = 416
+FINAL_YMAX = 352
+FINAL_YMIN = 288
 horrocrux_killed = 0
 first_time = True
 second_time = False
@@ -63,6 +67,8 @@ Shotgun_sound = pygame.mixer.Sound("shotgun.wav")
 Gun_pickup = pygame.mixer.Sound("gun_pickup.wav")
 Player_sound = ["p0.wav", "p1.wav", "p2.wav", "p3.wav", "p4.wav", "p5.wav", "p6.wav"]
 Zombie_sound = ["z0.wav", "z1.wav", "z2.wav", "z3.wav", "z4.wav", "z5.wav", "z6.wav", "z7.wav"]
+
+
 for sounds in range(len(Player_sound)):
     Player_sound[sounds] = pygame.mixer.Sound(Player_sound[sounds])
     Player_sound[sounds].set_volume(2.0)
@@ -74,16 +80,30 @@ for z in range(len(Zombie_sound)):
 fpsClock = pygame.time.Clock()  # this object will make sure our program runs at a certain maximum FPS
 
 """----------------------SCREEN OBJECT----------------------------"""
+
 displayObj = pygame.display.set_mode((WIDTH, HEIGHT))  # creates the object that display the screen
 pygame.display.set_caption('Game')
 
 
 """----------------------GAME OBJECT: display start screen ans menu----------------------------"""
+
 game = Game()
 # show start screen
 menu_mode = game.show_start_screen(displayObj)
 # show the menu
 play_mode = game.menu(displayObj)
+
+#initial music
+level_1_sound= pygame.mixer.music.load("Level1.mp3")
+pygame.mixer.music.play(2)
+
+""" to display the instruccions
+if play_mode == True:
+    img_instructions = pygame.image.load("instructions_screen.png")
+    displayObj.blit(img_instructions, (0, 0))
+    pygame.display.flip()
+    pygame.time.delay(10000)
+"""
 
 """----------------------INITIAL INSTANCES AND GROUPS CREATION----------------------------"""
 ourHero = Hero()
@@ -129,10 +149,12 @@ while play_mode:  # the main game loop
     else:
         maps = map3_data
 
+    ourWall.empty()
     for row, tiles in enumerate(maps):  # enumerate to get both index and value as row and column
         for col, tile in enumerate(tiles):
             if tile == "1":
                 ourWall.add(Walls(col, row, Tile_size))
+
 
     if level == 1:
         background_image = pygame.image.load("level1_1024.jpg").convert()
@@ -146,11 +168,11 @@ while play_mode:  # the main game loop
     #·····························HORROCRUXES································
     if first_time == True:
         for i in range(MAX_HORROCRUX):
-            ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT/4 * 3), "Horrocrux"))
+            ourItems.add(Item(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT/4 * 3), "Horrocrux"))
         first_time = False
     else:
         for i in range(horrocrux_killed):
-            ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT / 4 * 3), "Horrocrux"))
+            ourItems.add(Item(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT / 4 * 3), "Horrocrux"))
         horrocrux_killed=0
 
     # ·····························ZOMBIES································
@@ -160,11 +182,11 @@ while play_mode:  # the main game loop
 
     # ·····························GUNS································
     if random.randrange(0, 1000) < FRECUENCY_GUN:
-        ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT), "Shotgun"))
+        ourItems.add(Item(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT-Tile_size), "Shotgun"))
 
     # ·····························LIVES································
     if random.randrange(0, 1000) < FRECUENCY_LIVES:
-        ourItems.add(Item(random.randrange(0, WIDTH), random.randrange(0, HEIGHT), "Hp"))
+        ourItems.add(Item(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT - Tile_size), "Hp"))
 
 
 
@@ -184,9 +206,10 @@ while play_mode:  # the main game loop
     displayObj.blit(score_counter, (WIDTH - 180, HEIGHT - 200))
 
     # ·····························SPRITE GROUPS································
+    groupBullets.draw(displayObj)
     ourEffect.draw(displayObj)
     ourItems.draw(displayObj)
-    groupBullets.draw(displayObj)
+
     crewZombies.draw(displayObj)
     ourHero.display(displayObj)
 
@@ -209,11 +232,12 @@ while play_mode:  # the main game loop
             if ourHero.lives == 0:  # If Hero dies show Game Over screen
                 if game.show_over_screen(displayObj, ourHero.score) == True:
                     ourHero = Hero()
-                    displayObj.blit(ourHero.lives_img, (WIDTH - 200, 0))
-                    crewZombies = pygame.sprite.Group()
-                    groupBullets = pygame.sprite.Group()
-                    ourWall = pygame.sprite.Group()
-                    pygame.display.flip()
+                    crewZombies.empty()
+                    groupBullets.empty()
+                    ourItems.empty()
+                    ourWall.empty()
+                    level=1
+                    first_time=True
 
     # ·····························ITEMS - HERO································
     for hit in hero_item_collision:
@@ -286,6 +310,12 @@ while play_mode:  # the main game loop
                 vel_y = -1.
             if event.key in (K_DOWN, K_s):
                 vel_y = 1.
+            if event.key == K_n:
+                level = 2
+            if event.key == K_l:
+                level = 3
+            if event.key == K_o:
+                game_complete = True
 
 
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -306,6 +336,8 @@ while play_mode:  # the main game loop
                             shotgun_ammo -= 1
                             for x in range(10):
                                 groupBullets.add(Shotgun_Bullet(ourHero.rect))
+                                print("shotgun")
+                                print(x)
                                 pygame.mixer.Sound.play(Shotgun_sound)
                         else:
                             weaponType = "Pistol"
@@ -346,22 +378,49 @@ while play_mode:  # the main game loop
 
 
 
-    if ourHero.ifCheckpoint(CHECKPOINT_X,CHECKPOINT_Y_MIN,CHECKPOINT_Y_MAX) and ourHero.horrocrux_collected == MAX_HORROCRUX:
-        if level == 1:
-            level = 2
-            first_time = True
-            #reinitializes the position of the hero and delete the zombies
-            ourHero.horrocrux_collected=0
-            ourHero.setPos2(48,48)
-            crewZombies.empty()
 
-        elif level == 2:
-            level = 3
-            ourHero.setPos2(48, 48)
-            crewZombies.empty()
-            first_time = True
-        else:
+    if ourHero.horrocrux_collected == MAX_HORROCRUX:
+        if ourHero.ifCheckpoint(CHECKPOINT_X_MIN,WIDTH,CHECKPOINT_Y_MIN,CHECKPOINT_Y_MAX):
+            if level == 1:
+                level = 2
+                first_time = True
+                #reinitializes the position of the hero and delete the zombies
+                ourHero.horrocrux_collected=0
+                ourHero.setPos2(48,48)
+                crewZombies.empty()
+                ourItems.empty()
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load("Level2.mp3")
+                pygame.mixer.music.play(0)
+
+            elif level == 2:
+                level = 3
+                ourHero.setPos2(48, 48)
+                crewZombies.empty()
+                ourItems.empty()
+                ourHero.horrocrux_collected = 0
+                first_time = True
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load("Level3.mp3")
+                pygame.mixer.music.play(0)
+        elif level == 3 and ourHero.ifCheckpoint(FINAL_XMIN,FINAL_XMAX,FINAL_YMIN,FINAL_YMAX):
             game_complete = True
+            pygame.mixer.music.stop()
+            pygame.mixer.music.load("GameComplete.mp3")
+            pygame.mixer.music.play(0)
+
+    if game_complete == True:
+        if game.game_complete_screen(displayObj, ourHero.score) == True:
+            ourHero = Hero()
+            crewZombies.empty()
+            groupBullets.empty()
+            ourItems.empty()
+            ourWall.empty()
+            level = 1
+            first_time = True
+            game_complete=False
+
+
 
     pygame.display.flip()  # DO WE NEED BOTH OS THESE?!!!! update the screen with what we've drawn
     pygame.display.update()  # updates the state of the game

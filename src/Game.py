@@ -41,6 +41,36 @@ class Game:
         #self.draw_text("Press a key to play", 22, WHITE, WIDTH/3, HEIGHT/5 + 200, screen, False)
         pygame.display.flip()
         return self.wait_for_key_start()
+
+    def game_complete_screen(self, screen, score):
+        """
+            Method that displays the start screen of the game
+                :param screen --> Object display where the start screen will be display on
+        """
+        screen.fill(BLACK)
+        img_ini = pygame.image.load("game_complete_screen.png")
+        screen.blit(img_ini, (0, 0))
+        pygame.display.flip()
+        if self.wait_for_key_over()== "save":
+            name = self.input_name_screen(screen)
+            ranking_update(score,name)
+            screen.fill(BLACK)
+            self.draw_text("Ranking", RED, WIDTH / 8, HEIGHT / 5, screen, True)
+            self.ranking_draw(screen)
+            self.draw_text("Press C to play again", YELLOW, WIDTH / 5, HEIGHT / 3 + 300, screen, False)
+            pygame.display.flip()
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()  # ends pygame
+                        os._exit(0)
+                        sys.exit()  # ends the program
+                        return False
+                    if event.type == pygame.KEYUP:
+                        if event.key == K_c:
+                            return True
+        elif self.wait_for_key_over() == "continue":
+            return True
     
     def show_over_screen(self, screen, score):
         """
@@ -53,9 +83,7 @@ class Game:
         self.draw_text("press S to save your score", RED, 40, HEIGHT / 2 + 100, screen, True)
         pygame.display.flip()
         if self.wait_for_key_over()== "save":
-            print("here")
             name = self.input_name_screen(screen)
-            print(name)
             ranking_update(score,name)
             screen.fill(BLACK)
             self.draw_text("Ranking", RED, WIDTH / 8, HEIGHT / 5, screen, True)

@@ -13,7 +13,7 @@ INI_HERO_Y = 224
 class Hero(pygame.sprite.Sprite):
 
     # set the max and min position in each axis to prevent the hero from go outside the boundaries of the screen
-    speed = 100  # set the module of velocity
+    speed = 150  # set the module of velocity
     pos_max_x=WIDTH-img_width
     pos_max_y=HEIGHT-img_height
     pos_min_x=0
@@ -131,8 +131,8 @@ class Hero(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=self.rect.center)
         self.setPos(t)
 
-    def ifCheckpoint(self,cp_x,cp_ymin, cp_ymax):
-        if self.rect.centerx > cp_x and self.rect.centery > cp_ymin and self.rect.centery < cp_ymax:
+    def ifCheckpoint(self,cp_xmin, cp_xmax,cp_ymin, cp_ymax):
+        if self.rect.centerx > cp_xmin and self.rect.centerx < cp_xmax  and self.rect.centery > cp_ymin and self.rect.centery < cp_ymax:
             return True
 
 
