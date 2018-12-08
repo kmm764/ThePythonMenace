@@ -29,22 +29,24 @@ class Zombie(pygame.sprite.Sprite):
             :param displayObj --> Object display where the hero will be display on
         """
         displayObj.blit(self.image, (self.rect.x, self.rect.y))
-    def setVel(self, positionHero, vx):
+    def setVel(self, positionHero, vx, vy):
         """
             Method that update the direction of the velocity vector of the zombie towards the hero
             :param vec: new vector velocity
         """
         vx_tohero = positionHero.x - self.rect.x
         vy_tohero = positionHero.y - self.rect.y
+        print("una vuelta")
         if vx == 0:
-            vel_x = 0
-            vel_y = vy_tohero
-            print(vy_tohero)
-            if vy_tohero < 30 or vy_tohero > 30:
-                vel_y = -1
+            vel_x = 0.
         else:
             vel_x = vx_tohero
+        if vy == 0:
+            vel_y = 0.
+        else:
             vel_y = vy_tohero
+        print("set vx:")
+        print(vel_x)
         vel = pygame.math.Vector2(vel_x, vel_y)
         if vel != (0.,0.):
         #if the new velocity vector is different from (0,0) we need to turn it into a unit vector to get only the direction of the movement

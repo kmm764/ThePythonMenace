@@ -20,9 +20,13 @@ WIDTH = 1024
 HEIGHT = 768
 img_width = 60
 img_height = 60
+img_width_zombie = 34
+img_height_zombie = 43
 Tile_size = 32
 dist_center_xmin = img_width / 2 + Tile_size / 2
 dist_center_ymin = img_height / 2 + Tile_size / 2
+dist_xmin_zombie = img_width_zombie / 2 + Tile_size / 2
+dist_ymin_zombie = img_height_zombie / 2 + Tile_size / 2
 GridWidth = WIDTH / Tile_size
 GridHeight = HEIGHT / Tile_size
 last_shot = 0
@@ -102,6 +106,11 @@ level = 1
 pygame.display.flip()
 
 """-----------------------------MAP CREATION----------------------------"""
+map_prueba = []
+with open(path.join(game_folder, 'Map.txt'), 'rt') as f:  # rf is read
+    for line in f:
+        map_prueba.append(line)
+
 
 with open(path.join(game_folder, 'FirstMap.txt'), 'rt') as f:  # rf is read
     for line in f:
@@ -130,10 +139,18 @@ while play_mode:  # the main game loop
     else:
         maps = map3_data
 
-    for row, tiles in enumerate(maps):  # enumerate to get both index and value as row and column
+    ourWall.empty()
+    for row, tiles in enumerate(map_prueba):  # enumerate to get both index and value as row and column
         for col, tile in enumerate(tiles):
             if tile == "1":
                 ourWall.add(Walls(col, row, Tile_size))
+    """
+    for row, tiles in enumerate(maps):  # enumerate to get both index and value as row and column
+        for col, tile in enumerate(tiles):
+            if tile == "1":
+                #ourWall.add(Walls(col, row, Tile_size))
+                
+    """
 
     if level == 1:
         background_image = pygame.image.load("level1_1024.jpg").convert()
@@ -187,6 +204,7 @@ while play_mode:  # the main game loop
 
     # ·····························SPRITE GROUPS································
     ourEffect.draw(displayObj)
+    ourWall.draw(displayObj)
     ourItems.draw(displayObj)
     groupBullets.draw(displayObj)
     crewZombies.draw(displayObj)
@@ -333,21 +351,38 @@ while play_mode:  # the main game loop
     """
 
     for zombie in crewZombies:
-
-
+        """
+        print("primera")
+        print(zombie.rect.centery < wall.rect.centery + dist_ymin_zombie)
+        print("segunda")
+        print(zombie.rect.centery > wall.rect.centery)
+        print("tercera")
+        print(zombie.rect.centerx > wall.rect.centerx - dist_xmin_zombie)
+        print("cuarta")
+        print(zombie.rect.centerx < wall.rect.centerx + dist_xmin_zombie)
+        print(zombie.rect.centery < wall.rect.centery + dist_ymin_zombie, end="")
+        print(zombie.rect.centery > wall.rect.centery - Tile_size / 2, end="")
+        print(zombie.rect.centerx > wall.rect.centerx - dist_xmin_zombie, end="")
+        print(zombie.rect.centerx < wall.rect.centerx + dist_xmin_zombie)
+        """
 
 
         for wall in ourWall:
-            if zombie.rect.centerx > wall.rect.centerx - dist_center_xmin and zombie.rect.centerx < wall.rect.centerx and zombie.rect.centery <= wall.rect.centery + dist_center_ymin - margin and zombie.rect.centery >= wall.rect.centery - dist_center_ymin + margin:
+            if zombie.rect.centerx > wall.rect.centerx - dist_xmin_zombie and zombie.rect.centerx < wall.rect.centerx and zombie.rect.centery <= wall.rect.centery + dist_ymin_zombie and zombie.rect.centery >= wall.rect.centery - dist_ymin_zombie and ourHero.rect.x - zombie.rect.x>0:
                 zvel_x=0
-            elif zombie.rect.centerx < wall.rect.centerx + dist_center_xmin and zombie.rect.centerx > wall.rect.centerx and zombie.rect.centery <= wall.rect.centery + dist_center_ymin - margin and zombie.rect.centery >= wall.rect.centery - dist_center_ymin + margin:
-                xvel_x = 0
-            elif zombie.rect.centery > wall.rect.centery - dist_center_ymin and zombie.rect.centery < wall.rect.centery and zombie.rect.centerx > wall.rect.centerx - dist_center_xmin + margin and zombie.rect.centerx < wall.rect.centerx + dist_center_xmin - margin:
-                vel_y = 0
-            elif zombie.rect.centery < wall.rect.centery + dist_center_ymin and zombie.rect.centery > wall.rect.centery and zombie.rect.centerx > wall.rect.centerx - dist_center_xmin + margin and zombie.rect.centerx < wall.rect.centerx + dist_center_xmin - margin:
-                vel_y = 0
+                print("Pasa")
+            if zombie.rect.centerx < wall.rect.centerx + dist_xmin_zombie and zombie.rect.centerx > wall.rect.centerx and zombie.rect.centery <= wall.rect.centery + dist_ymin_zombie and zombie.rect.centery >= wall.rect.centery - dist_ymin_zombie and ourHero.rect.x - zombie.rect.x<0:
+                zvel_x =0
+                print("Pasa")
+            if zombie.rect.centery > wall.rect.centery - dist_ymin_zombie and zombie.rect.centery < wall.rect.centery + Tile_size/2 and zombie.rect.centerx > wall.rect.centerx - dist_xmin_zombie and zombie.rect.centerx < wall.rect.centerx + dist_xmin_zombie and ourHero.rect.y - zombie.rect.y>0:
+                zvel_y = 0
+
+            if zombie.rect.centery < wall.rect.centery + dist_ymin_zombie and zombie.rect.centery > wall.rect.centery - Tile_size/2 and zombie.rect.centerx > wall.rect.centerx - dist_xmin_zombie and zombie.rect.centerx < wall.rect.centerx + dist_xmin_zombie and ourHero.rect.y - zombie.rect.y<0:
+                zvel_y = 0
+
         zombie.setVel(ourHero.rect, zvel_x, zvel_y)
         zvel_x = -1
+        zvel_y=-1
 
     """---------------------------------UPDATES---------------------------------"""
 
