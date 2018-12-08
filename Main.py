@@ -196,10 +196,9 @@ while play_mode:  # the main game loop
     """----------------------OBJECTS DISPLAY----------------------------"""
 
     # ·····························AMMU································
-    Shotgun_ammo_count = myfont.render('Shotgun Ammo: ' + str(shotgun_ammo), False, (0, 0, 0))
-    displayObj.blit(ourHero.lives_img, (WIDTH - 200, 0))
     if shotgun_ammo > 0:  # only display the text on screen when the player is using shotgun
-        displayObj.blit(Shotgun_ammo_count, (WIDTH - 350, 30))
+        displayObj.blit(ourHero.ammo_img, (WIDTH - 200, 30))
+    displayObj.blit(ourHero.lives_img, (WIDTH - 200, 0))
 
     # ·····························SCORE································
     score_counter = myfont.render('SCORE: ' + str(ourHero.score), False, (255, 255, 255))
@@ -251,6 +250,8 @@ while play_mode:  # the main game loop
                 pygame.mixer.Sound.play(Gun_pickup)
                 weaponType = "Shotgun"
                 shotgun_ammo = 6
+            ourHero.update_ammo(shotgun_ammo)
+            displayObj.blit(ourHero.ammo_img, (WIDTH - 200, 30))
         elif hit.type == "Horrocrux":
             ourHero.horrocrux_collected+=1
             hit.kill()
@@ -334,10 +335,11 @@ while play_mode:  # the main game loop
                         last_shot = now
                         if shotgun_ammo > 0:
                             shotgun_ammo -= 1
+                            ourHero.update_ammo(shotgun_ammo)
                             for x in range(10):
                                 groupBullets.add(Shotgun_Bullet(ourHero.rect))
                                 print("shotgun")
-                                print(x)
+                                print(shotgun_ammo)
                                 pygame.mixer.Sound.play(Shotgun_sound)
                         else:
                             weaponType = "Pistol"

@@ -27,6 +27,14 @@ class Hero(pygame.sprite.Sprite):
     life_bar_half = pygame.image.load("life_bar_half.png")
     life_bar_1 = pygame.image.load("life_bar_1.png")
     life_bar_empty = pygame.image.load("life_bar_empty.png")
+    bullets_6 = pygame.image.load("bullets_6.png")
+    bullets_5 = pygame.image.load("bullets_5.png")
+    bullets_4 = pygame.image.load("bullets_4.png")
+    bullets_3 = pygame.image.load("bullets_3.png")
+    bullets_2 = pygame.image.load("bullets_2.png")
+    bullets_1 = pygame.image.load("bullets_1.png")
+
+
 
 
     def __init__(self):
@@ -44,6 +52,7 @@ class Hero(pygame.sprite.Sprite):
         self.score = 0
         self.lives = Hero.lives_ini
         self.lives_img = Hero.life_bar_full
+        self.ammo_img = Hero.bullets_6
 
 
 
@@ -123,6 +132,23 @@ class Hero(pygame.sprite.Sprite):
             self.lives_img = Hero.life_bar_empty
         else:
             pass
+    
+    def update_ammo(self, num_bullets):
+        if num_bullets == 6:
+            self.ammo_img = Hero.bullets_6
+        if num_bullets == 5:
+            self.ammo_img = Hero.bullets_5
+        if num_bullets == 4:
+            self.ammo_img = Hero.bullets_4
+        if num_bullets == 3:
+            self.ammo_img = Hero.bullets_3
+        if num_bullets == 2:
+            self.ammo_img = Hero.bullets_2
+        if num_bullets == 1:
+            self.ammo_img = Hero.bullets_1
+        else:
+            pass
+        
 
     def update(self,t):
         self.get_rot_mouse()
