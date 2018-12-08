@@ -50,6 +50,7 @@ last_shot = 0
 shotgun_ammo = 0
 first_time = True
 second_time = False
+final_screen = False
 game_complete = False
 maps = []
 map_data = []
@@ -162,8 +163,11 @@ while play_mode:  # the main game loop
         background_image = pygame.image.load("level1_1024.jpg").convert()
     elif level == 2:
         background_image = pygame.image.load("level2.jpg").convert()
-    else:
+    elif final_screen==False:
         background_image = pygame.image.load("level3_begin.jpg").convert()
+    else:
+        background_image = pygame.image.load("level3_final.jpg").convert()
+
     displayObj.blit(background_image, [0, 0])
 
     """------------------------INSTANCES CREATION---------------------------"""
@@ -420,11 +424,14 @@ while play_mode:  # the main game loop
                 pygame.mixer.music.stop()
                 pygame.mixer.music.load("Level3.mp3")
                 pygame.mixer.music.play(0)
+            elif final_screen == True:
+                game_complete = True
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load("GameComplete.mp3")
+                pygame.mixer.music.play(0)
+
         elif level == 3 and ourHero.ifCheckpoint(FINAL_XMIN,FINAL_XMAX,FINAL_YMIN,FINAL_YMAX):
-            game_complete = True
-            pygame.mixer.music.stop()
-            pygame.mixer.music.load("GameComplete.mp3")
-            pygame.mixer.music.play(0)
+            final_screen = True
 
     if game_complete == True:
         if game.game_complete_screen(displayObj, ourHero.score) == True:
@@ -440,6 +447,7 @@ while play_mode:  # the main game loop
             shotgun_ammo = 0
             first_time = True
             second_time = False
+            final_screen = False
             game_complete = False
 
 

@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="444c8b9c-40f1-43bf-a3a5-ee5a8ea0afcd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ranking/names.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Ranking/names.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ranking/scores.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Ranking/scores.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Hero.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hero.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/items.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,12 +32,12 @@
     <session id="-1386345417">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="3660" />
+          <entry key="py" value="3786" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="3660" />
+          <entry key="Python" value="3786" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -68,8 +64,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="254" lean-forward="true" selection-start-line="254" selection-end-line="254" />
+            <state relative-caret-position="255">
+              <caret line="438" column="31" lean-forward="true" selection-start-line="438" selection-start-column="31" selection-end-line="438" selection-end-column="31" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -389,6 +385,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49622166" visible="true" weight="0.17567568" />
       <window_info id="Structure" order="1" sideWeight="0.50377834" side_tool="true" weight="0.33508956" />
@@ -486,8 +483,8 @@
     <entry file="file://$PROJECT_DIR$/src/Wall.py" />
     <entry file="file://$PROJECT_DIR$/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="254" lean-forward="true" selection-start-line="254" selection-end-line="254" />
+        <state relative-caret-position="255">
+          <caret line="438" column="31" lean-forward="true" selection-start-line="438" selection-start-column="31" selection-end-line="438" selection-end-column="31" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
