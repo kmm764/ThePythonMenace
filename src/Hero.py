@@ -18,7 +18,7 @@ class Hero(pygame.sprite.Sprite):
     pos_max_y=HEIGHT-img_height
     pos_min_x=0
     pos_min_y=0
-    lives_ini = 4
+    lives_ini = 5
     horrocrux_collected = 0
     hero_IMG = pygame.image.load("Hero.png")
     hero_IMG = pygame.image.load("Hero.png")
@@ -33,6 +33,10 @@ class Hero(pygame.sprite.Sprite):
     bullets_3 = pygame.image.load("bullets_3.png")
     bullets_2 = pygame.image.load("bullets_2.png")
     bullets_1 = pygame.image.load("bullets_1.png")
+    backpack_icon = pygame.image.load("backpack_icon.png")
+    score_icon = pygame.image.load("score_icon.png")
+
+    
 
 
 
@@ -53,6 +57,10 @@ class Hero(pygame.sprite.Sprite):
         self.lives = Hero.lives_ini
         self.lives_img = Hero.life_bar_full
         self.ammo_img = Hero.bullets_6
+        self.backpack_icon = Hero.backpack_icon
+        self.score_icon = Hero.score_icon
+
+        
 
 
 
@@ -120,15 +128,15 @@ class Hero(pygame.sprite.Sprite):
        # if dir = "x"
     
     def update_livebar(self, num_lives):
-        if num_lives == 4:
+        if num_lives == 5:
             self.lives_img = Hero.life_bar_full
-        if num_lives == 3:
+        if num_lives == 4:
             self.lives_img = Hero.life_bar_3
-        if num_lives == 2:
+        if num_lives == 3:
             self.lives_img = Hero.life_bar_half
-        if num_lives == 1:
+        if num_lives == 2:
             self.lives_img = Hero.life_bar_1
-        if num_lives == 0:
+        if num_lives == 1:
             self.lives_img = Hero.life_bar_empty
         else:
             pass

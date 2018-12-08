@@ -34,8 +34,8 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 frecuency_Zombie = 2
-FRECUENCY_GUN = 3
-FRECUENCY_LIVES = 0
+FRECUENCY_GUN = 100
+FRECUENCY_LIVES = 5
 MAX_HORROCRUX = 5
 CHECKPOINT_X_MIN = 960
 CHECKPOINT_Y_MAX = 256
@@ -61,7 +61,7 @@ game_folder = path.dirname(__file__)
 """----------------------PYGAME INITIALIZING---------------------------"""
 pygame.init()
 pygame.font.init()
-myfont = pygame.font.SysFont('8-Bit Madness', 50)
+myfont = pygame.font.SysFont('8-Bit Madness', 35)
 Pistol_sound = pygame.mixer.Sound("pistol.wav")
 Shotgun_sound = pygame.mixer.Sound("shotgun.wav")
 Gun_pickup = pygame.mixer.Sound("gun_pickup.wav")
@@ -197,12 +197,20 @@ while play_mode:  # the main game loop
 
     # ·····························AMMU································
     if shotgun_ammo > 0:  # only display the text on screen when the player is using shotgun
-        displayObj.blit(ourHero.ammo_img, (WIDTH - 200, 30))
+        displayObj.blit(ourHero.ammo_img, (WIDTH - 110, 30))
+        
+    # ............................LIFEBAR...............................
     displayObj.blit(ourHero.lives_img, (WIDTH - 200, 0))
 
     # ·····························SCORE································
-    score_counter = myfont.render('SCORE: ' + str(ourHero.score), False, (255, 255, 255))
-    displayObj.blit(score_counter, (WIDTH - 180, HEIGHT - 200))
+    score_counter = myfont.render(str(ourHero.score), False, (255, 255, 255))
+    displayObj.blit(score_counter, (WIDTH - 170, 30))
+    displayObj.blit(ourHero.score_icon, (WIDTH - 200, 30))
+    
+    # ..........................HORROCRUX......................................
+    horrocrux_collected = myfont.render(str(ourHero.horrocrux_collected), False, (255, 255, 255))
+    displayObj.blit(horrocrux_collected, (WIDTH - 170, 60))
+    displayObj.blit(ourHero.backpack_icon, (WIDTH - 200, 60))
 
     # ·····························SPRITE GROUPS································
     groupBullets.draw(displayObj)
@@ -240,7 +248,7 @@ while play_mode:  # the main game loop
 
     # ·····························ITEMS - HERO································
     for hit in hero_item_collision:
-        if hit.type == "Hp" and ourHero.lives < 4:
+        if hit.type == "Hp" and ourHero.lives < 5:
             hit.kill()
             ourHero.lives += 1
             ourHero.update_livebar(ourHero.lives)
@@ -251,7 +259,7 @@ while play_mode:  # the main game loop
                 weaponType = "Shotgun"
                 shotgun_ammo = 6
             ourHero.update_ammo(shotgun_ammo)
-            displayObj.blit(ourHero.ammo_img, (WIDTH - 200, 30))
+            displayObj.blit(ourHero.ammo_img, (WIDTH - 110, 30))
         elif hit.type == "Horrocrux":
             ourHero.horrocrux_collected+=1
             hit.kill()

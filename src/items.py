@@ -13,6 +13,7 @@ class Item(pygame.sprite.Sprite):
     health_image = pygame.transform.scale(health_img, (Tile_size, Tile_size))
     shotgun_image = pygame.transform.scale(shotgun_img, (Tile_size, Tile_size))
     horrocrux_image = pygame.transform.scale(horrocrux_img, (Tile_size, Tile_size))
+    
 
     def __init__(self, x,y, type):
 
