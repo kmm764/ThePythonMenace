@@ -25,9 +25,9 @@ dist_center_xmin = img_width / 2 + Tile_size / 2
 dist_center_ymin = img_height / 2 + Tile_size / 2
 GridWidth = WIDTH / Tile_size
 GridHeight = HEIGHT / Tile_size
-last_shot = 0
+
 FPS = 60  # frames per second setting
-vel_x, vel_y = 0., 0.  # inicializes the x and y components of the velocity vector of the hero
+
 lasthit_time = 2.0  # inicializes the time variable that we are going to use to limit the collisions between the hero and the zombies
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -44,7 +44,10 @@ FINAL_XMAX = 480
 FINAL_XMIN = 416
 FINAL_YMAX = 352
 FINAL_YMIN = 288
+vel_x, vel_y = 0., 0.  # inicializes the x and y components of the velocity vector of the hero
 horrocrux_killed = 0
+last_shot = 0
+shotgun_ammo = 0
 first_time = True
 second_time = False
 game_complete = False
@@ -52,7 +55,6 @@ maps = []
 map_data = []
 map2_data = []
 map3_data = []
-shotgun_ammo = 0
 margin = 5 # we add a margin to make the movements more natural, as our hero image has transparents borders
 play_mode = False
 menu_mode = False
@@ -243,8 +245,13 @@ while play_mode:  # the main game loop
                     groupBullets.empty()
                     ourItems.empty()
                     ourWall.empty()
-                    level=1
-                    first_time=True
+                    level = 1
+                    vel_x, vel_y = 0., 0.  # inicializes the x and y components of the velocity vector of the hero
+                    horrocrux_killed = 0
+                    last_shot = 0
+                    shotgun_ammo = 0
+                    first_time = True
+                    second_time = False
 
     # ·····························ITEMS - HERO································
     for hit in hero_item_collision:
@@ -427,8 +434,13 @@ while play_mode:  # the main game loop
             ourItems.empty()
             ourWall.empty()
             level = 1
+            vel_x, vel_y = 0., 0.  # inicializes the x and y components of the velocity vector of the hero
+            horrocrux_killed = 0
+            last_shot = 0
+            shotgun_ammo = 0
             first_time = True
-            game_complete=False
+            second_time = False
+            game_complete = False
 
 
 
