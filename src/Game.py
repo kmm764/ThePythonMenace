@@ -16,6 +16,7 @@ YELLOW = (255, 255, 0)
 menu_left_margin = 180
 INTRO_X_INI=50
 INTRO_Y_INI=50
+TIME_TYPING = 100
 
 #pygame.font.init()
 #myfont = pygame.font.SysFont('8-Bit Madness', 50)
@@ -35,14 +36,13 @@ class Game:
                 :param screen --> Object display where the start screen will be display on
         """
         screen.fill(BLACK)
-        #self.text_surface = myfont.render('Our Pygame', False, WHITE)
         img_ini = pygame.image.load("start_screen_game.jpg")
         screen.blit(img_ini, (0, 0))
-        #self.draw_text("Our Pygame", 48, WHITE, WIDTH/3, HEIGHT/5, screen, False)
-        #self.draw_text("Shoot the zombies and escape", 22, WHITE, WIDTH/5, HEIGHT/5+100, screen, False)
-        #self.draw_text("Press a key to play", 22, WHITE, WIDTH/3, HEIGHT/5 + 200, screen, False)
         pygame.display.flip()
-        return self.wait_for_key_start()
+        while True:
+            if self.wait_for_anykey():
+                return
+
 
     def show_intro(self, screen):
         """
@@ -57,6 +57,7 @@ class Game:
         pygame.mixer.music.play(4)
         lines=0
         currentline = INTRO_Y_INI
+        pygame.event.clear()
         for line in intro:
             for letter in line:
                 if letter == ".":
@@ -66,7 +67,7 @@ class Game:
                         self.draw_text(txt, WHITE, INTRO_X_INI, currentline, screen, False)
                         pygame.display.flip()
                         print(txt)
-                        pygame.time.delay(100)
+                        pygame.time.delay(TIME_TYPING)
                         txt = txt[:-1]
                         screen.fill(BLACK)
                         for j in range(0, lines):
@@ -74,11 +75,11 @@ class Game:
                         self.draw_text(txt, WHITE, INTRO_X_INI, currentline, screen, False)
                         pygame.display.flip()
                         print(txt)
-                        pygame.time.delay(100)
+                        pygame.time.delay(TIME_TYPING)
                     txt += "."
                     self.draw_text(txt, WHITE, INTRO_X_INI, currentline, screen, False)
                     pygame.display.flip()
-                    pygame.time.delay(100)
+                    pygame.time.delay(TIME_TYPING)
                     pygame.mixer.music.play(4)
                 else:
                     txt += letter
@@ -86,12 +87,116 @@ class Game:
                         self.draw_text(intro[j], WHITE, INTRO_X_INI, INTRO_Y_INI+nextline*j, screen, False)
                     self.draw_text(txt, WHITE, INTRO_X_INI,currentline, screen, False)
                     pygame.display.flip()
-                    pygame.time.delay(100)
+                    pygame.time.delay(TIME_TYPING)
+                if self.wait_for_anykey()==True:
+                    pygame.mixer.music.stop()
+                    return
             lines+=1
             currentline=INTRO_Y_INI+nextline*lines
             txt=""
         pygame.mixer.music.stop()
         return
+
+    def wait_for_anykey(self):
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit() # ends pygame
+                    os._exit(0)
+                    sys.exit()  # ends the program
+                    return False
+                if event.type == pygame.KEYUP:
+                    pygame.event.clear()
+                    return True
+
+
+    def menu(self, screen):
+        self.options_draw(screen)
+        self.wait_for_key_menu(screen)
+        if self.option == 1:
+            return True
+        elif self.option == 2:
+            return self.tutorial(screen)
+        else:
+            return self.ranking(screen)
+
+    def wait_for_key_menu(self, screen):
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+
+                    pygame.quit() # ends pygame
+                    os._exit(0)
+                    sys.exit()  # ends the program
+                    return False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == K_DOWN:
+                        if self.option==3:
+                            self.option=1
+                        else:
+                            self.option += 1
+                    if event.key == K_UP:
+                        if self.option ==1:
+                            self.option=Game.max_options
+                        else:
+                            self.option-=1
+                    if event.key == K_RETURN:
+                        if self.option == 1:
+                            return True
+                        elif self.option == 2:
+                            self.tutorial(screen)
+                        else:
+                            self.ranking(screen)
+                    self.options_draw(screen)
+    def options_draw(self, screen):
+        img_menu = pygame.image.load("menu_screen_game.jpg")
+        screen.blit(img_menu, (0, 0))
+        if self.option==1:
+            self.draw_text("PLAY", YELLOW, menu_left_margin, HEIGHT/5*2, screen,True)
+            self.draw_text("TUTORIAL", WHITE, menu_left_margin, HEIGHT/5*2 +100, screen,False)
+            self.draw_text("RANKING", WHITE, menu_left_margin, HEIGHT/5*2 +200, screen,False)
+        elif self.option==2:
+            self.draw_text("PLAY", WHITE, menu_left_margin, HEIGHT/5*2, screen,False)
+            self.draw_text("TUTORIAL", YELLOW, menu_left_margin, HEIGHT/5*2 +100, screen,True)
+            self.draw_text("RANKING", WHITE, menu_left_margin, HEIGHT/5*2 +200, screen,False)
+        else:
+            self.draw_text("PLAY", WHITE, menu_left_margin, HEIGHT/5*2, screen,False)
+            self.draw_text("TUTORIAL", WHITE, menu_left_margin, HEIGHT/5*2 +100, screen,False)
+            self.draw_text("RANKING", YELLOW, menu_left_margin, HEIGHT/5*2 +200, screen,True)
+        pygame.display.flip()
+
+    def instructions(self, screen):
+        img_instructions = pygame.image.load("lifebar_score.jpg")
+        screen.blit(img_instructions, (0, 0))
+        pygame.display.flip()
+        pygame.event.clear()
+        #the total time we show the screen is 10s, but every second we check if the user wants to skip it
+        self.watchdog()
+        img_instructions = pygame.image.load("hero_platform.jpg")
+        screen.blit(img_instructions, (0, 0))
+        pygame.display.flip()
+        self.watchdog()
+        img_instructions = pygame.image.load("shotgun.jpg")
+        screen.blit(img_instructions, (0, 0))
+        pygame.display.flip()
+        self.watchdog()
+
+    def watchdog(self):
+        now = pygame.time.get_ticks()
+        pygame.event.clear()
+        while True:
+            # if it detect any key or the time run 10 seconds it returns
+            if self.wait_for_anykey()==True:
+                print("pasa")
+                return
+            elif (pygame.time.get_ticks() - now > 10000):
+                print(pygame.time.get_ticks() - now)
+                return
+
+
+
+
 
     def game_complete_screen(self, screen, score):
         """
@@ -130,8 +235,10 @@ class Game:
                         score --> score of the current game to be store
         """
         screen.fill(BLACK)
-        self.draw_text("GAME OVER", RED, 40, HEIGHT/2, screen, True)
-        self.draw_text("press S to save your score", RED, 40, HEIGHT / 2 + 100, screen, True)
+        img_ini = pygame.image.load("game_over_screen.jpg")
+        screen.blit(img_ini, (0, 0))
+        #self.draw_text("GAME OVER", RED, 40, HEIGHT/2, screen, True)
+        #self.draw_text("press S to save your score", RED, 40, HEIGHT / 2 + 100, screen, True)
         pygame.display.flip()
         if self.wait_for_key_over()== "save":
             name = self.input_name_screen(screen)
@@ -193,16 +300,7 @@ class Game:
             self.draw_text(name_input, WHITE, WIDTH / 5 * 2, HEIGHT / 3, screen, False)
             pygame.display.flip()
     
-    def menu(self, screen):
 
-        self.wait_for_key_menu(screen)
-        if self.option == 1:
-            return True
-        elif self.option == 2:
-            return self.tutorial(screen)
-        else:
-            return self.ranking(screen)
-    
     def tutorial(self, screen):
         screen.fill(BLACK)
         self.draw_text("TUTORIAL", RED, WIDTH / 8, HEIGHT / 5, screen, True)
@@ -286,71 +384,8 @@ class Game:
             print(k)
             self.draw_text(txt, WHITE, WIDTH / 4, HEIGHT / 3 + 100*i, screen, True)
         pygame.display.flip()
-        #self.draw_text("Mouse pointer - Rotate the hero", 40, WHITE, WIDTH / 4, HEIGHT / 3 + 100, screen, False)
-        #self.draw_text("Right mouse click - Shoot", 40, WHITE, WIDTH / 4, HEIGHT / 3 + 200, screen, False)
-    
-    def options_draw(self, screen):
-        img_menu = pygame.image.load("menu_screen_game.jpg")
-        screen.blit(img_menu, (0, 0))
-        #self.draw_text("MENU", 100, RED, WIDTH/8, HEIGHT/5, screen,True)
-        if self.option==1:
-            self.draw_text("PLAY", YELLOW, menu_left_margin, HEIGHT/5*2, screen,True)
-            self.draw_text("TUTORIAL", WHITE, menu_left_margin, HEIGHT/5*2 +100, screen,False)
-            self.draw_text("RANKING", WHITE, menu_left_margin, HEIGHT/5*2 +200, screen,False)
-        elif self.option==2:
-            self.draw_text("PLAY", WHITE, menu_left_margin, HEIGHT/5*2, screen,False)
-            self.draw_text("TUTORIAL", YELLOW, menu_left_margin, HEIGHT/5*2 +100, screen,True)
-            self.draw_text("RANKING", WHITE, menu_left_margin, HEIGHT/5*2 +200, screen,False)
-        else:
-            self.draw_text("PLAY", WHITE, menu_left_margin, HEIGHT/5*2, screen,False)
-            self.draw_text("TUTORIAL", WHITE, menu_left_margin, HEIGHT/5*2 +100, screen,False)
-            self.draw_text("RANKING", YELLOW, menu_left_margin, HEIGHT/5*2 +200, screen,True)
-        pygame.display.flip()
 
 
-    def wait_for_key_menu(self, screen):
-
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-
-                    pygame.quit() # ends pygame
-                    os._exit(0)
-                    sys.exit()  # ends the program
-                    return False
-                if event.type == pygame.KEYDOWN:
-                    if event.key == K_DOWN:
-                        if self.option==3:
-                            self.option=1
-                        else:
-                            self.option += 1
-                    if event.key == K_UP:
-                        if self.option ==1:
-                            self.option=Game.max_options
-                        else:
-                            self.option-=1
-                    if event.key == K_RETURN:
-                        if self.option == 1:
-                            return True
-                        elif self.option == 2:
-                            self.tutorial(screen)
-                        else:
-                            self.ranking(screen)
-                    self.options_draw(screen)
-
-
-    def wait_for_key_start(self):
-
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit() # ends pygame
-                    os._exit(0)
-                    sys.exit()  # ends the program
-                    return False
-                if event.type == pygame.KEYUP:
-                    #pygame.event.clear()
-                    return True
     
     def draw_text(self, text, color, x, y, screen, selected):
         if selected == True:

@@ -80,7 +80,7 @@ for z in range(len(Zombie_sound)):
     Zombie_sound[z] = pygame.mixer.Sound(Zombie_sound[z])
     Zombie_sound[z].set_volume(2.0)
 
-fpsClock = pygame.time.Clock()  # this object will make sure our program runs at a certain maximum FPS
+fpsClock = pygame.time.Clock()
 
 """----------------------SCREEN OBJECT----------------------------"""
 
@@ -91,11 +91,9 @@ pygame.display.set_caption('Game')
 """----------------------GAME OBJECT: display start screen and menu----------------------------"""
 
 game = Game()
-# show start screen
-menu_mode = game.show_start_screen(displayObj)
 
-#game.show_intro(displayObj)
-# show the menu
+game.show_start_screen(displayObj)
+game.show_intro(displayObj)
 play_mode = game.menu(displayObj)
 
 #initial music
@@ -103,21 +101,10 @@ level_1_sound= pygame.mixer.music.load("Level1.mp3")
 pygame.mixer.music.play(2)
 
 #to display the instruccions
-if play_mode == True:
-    """
-    img_instructions = pygame.image.load("lifebar_score.jpg")
-    displayObj.blit(img_instructions, (0, 0))
-    pygame.display.flip()
-    pygame.time.delay(10000)
-    img_instructions = pygame.image.load("hero_platform.jpg")
-    displayObj.blit(img_instructions, (0, 0))
-    pygame.display.flip()
-    pygame.time.delay(10000)
-    img_instructions = pygame.image.load("shotgun.jpg")
-    displayObj.blit(img_instructions, (0, 0))
-    pygame.display.flip()
-    pygame.time.delay(10000)
-    """
+
+game.instructions(displayObj)
+
+
 
 """----------------------INITIAL INSTANCES AND GROUPS CREATION----------------------------"""
 ourHero = Hero()
@@ -419,6 +406,7 @@ while play_mode:  # the main game loop
                 #reinitializes the position of the hero and delete the zombies
                 ourHero.horrocrux_collected=0
                 ourHero.setPos2(48,48)
+                frecuency_Zombie = 4
                 crewZombies.empty()
                 ourItems.empty()
                 pygame.mixer.music.stop()
@@ -427,6 +415,7 @@ while play_mode:  # the main game loop
 
             elif level == 2:
                 level = 3
+                frecuency_Zombie = 2
                 ourHero.setPos2(48, 48)
                 crewZombies.empty()
                 ourItems.empty()
