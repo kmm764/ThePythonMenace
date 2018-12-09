@@ -104,7 +104,15 @@ pygame.mixer.music.play(2)
 
 #to display the instruccions
 if play_mode == True:
-    img_instructions = pygame.image.load("instructions_screen.png")
+    img_instructions = pygame.image.load("lifebar_score.jpg")
+    displayObj.blit(img_instructions, (0, 0))
+    pygame.display.flip()
+    pygame.time.delay(10000)
+    img_instructions = pygame.image.load("hero_platform.jpg")
+    displayObj.blit(img_instructions, (0, 0))
+    pygame.display.flip()
+    pygame.time.delay(10000)
+    img_instructions = pygame.image.load("shotgun.jpg")
     displayObj.blit(img_instructions, (0, 0))
     pygame.display.flip()
     pygame.time.delay(10000)
