@@ -34,7 +34,7 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 frecuency_Zombie = 2
-FRECUENCY_GUN = 100
+FRECUENCY_GUN = 5
 FRECUENCY_LIVES = 5
 MAX_HORROCRUX = 5
 CHECKPOINT_X_MIN = 960
@@ -94,7 +94,7 @@ game = Game()
 # show start screen
 menu_mode = game.show_start_screen(displayObj)
 
-game.show_intro(displayObj)
+#game.show_intro(displayObj)
 # show the menu
 play_mode = game.menu(displayObj)
 
@@ -104,6 +104,7 @@ pygame.mixer.music.play(2)
 
 #to display the instruccions
 if play_mode == True:
+    """
     img_instructions = pygame.image.load("lifebar_score.jpg")
     displayObj.blit(img_instructions, (0, 0))
     pygame.display.flip()
@@ -116,6 +117,7 @@ if play_mode == True:
     displayObj.blit(img_instructions, (0, 0))
     pygame.display.flip()
     pygame.time.delay(10000)
+    """
 
 """----------------------INITIAL INSTANCES AND GROUPS CREATION----------------------------"""
 ourHero = Hero()

@@ -52,7 +52,7 @@ class Game:
         nextline=50
         screen.fill(BLACK)
         txt=""
-        intro = ["Moodle Programming announcements:"," Thursday, 20 December 2018, 13:59PM:","","Alert to all the students. Demonstration","cancelled. Waves of zombies are invading"," the Earth. If somebody is reading this, please","save us all.","Letting us die would be even worse than","repeating code.","Best regards.","Isaac and Thorsten"]
+        intro = ["Moodle Programming announcements:"," Thursday, 20 December 2018, 13:59PM:","","Alert to all the students. Demonstration","cancelled. Waves of zombies are invading"," the Earth. If somebody is reading this,","please, save us all.","Letting us die would be even worse than","repeating code.","Best regards.","Isaac and Thorsten"]
         pygame.mixer.music.load("keyboard.wav")
         pygame.mixer.music.play(4)
         lines=0
