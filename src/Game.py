@@ -14,6 +14,8 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 menu_left_margin = 180
+INTRO_X_INI=50
+INTRO_Y_INI=50
 
 #pygame.font.init()
 #myfont = pygame.font.SysFont('8-Bit Madness', 50)
@@ -41,6 +43,55 @@ class Game:
         #self.draw_text("Press a key to play", 22, WHITE, WIDTH/3, HEIGHT/5 + 200, screen, False)
         pygame.display.flip()
         return self.wait_for_key_start()
+
+    def show_intro(self, screen):
+        """
+            Method that displays the intro of the game
+                :param screen --> Object display where the start screen will be display on
+        """
+        nextline=50
+        screen.fill(BLACK)
+        txt=""
+        intro = ["Moodle Programming announcements:"," Thursday, 20 December 2018, 13:59PM:","","Alert to all the students. Demonstration","cancelled. Waves of zombies are invading"," the Earth. If somebody is reading this, please","save us all.","Letting us die would be even worse than","repeating code.","Best regards.","Isaac and Thorsten"]
+        pygame.mixer.music.load("keyboard.wav")
+        pygame.mixer.music.play(4)
+        lines=0
+        currentline = INTRO_Y_INI
+        for line in intro:
+            for letter in line:
+                if letter == ".":
+                    pygame.mixer.music.stop()
+                    for k in range(3):
+                        txt += "_"
+                        self.draw_text(txt, WHITE, INTRO_X_INI, currentline, screen, False)
+                        pygame.display.flip()
+                        print(txt)
+                        pygame.time.delay(100)
+                        txt = txt[:-1]
+                        screen.fill(BLACK)
+                        for j in range(0, lines):
+                            self.draw_text(intro[j], WHITE, INTRO_X_INI, INTRO_Y_INI + nextline * j, screen, False)
+                        self.draw_text(txt, WHITE, INTRO_X_INI, currentline, screen, False)
+                        pygame.display.flip()
+                        print(txt)
+                        pygame.time.delay(100)
+                    txt += "."
+                    self.draw_text(txt, WHITE, INTRO_X_INI, currentline, screen, False)
+                    pygame.display.flip()
+                    pygame.time.delay(100)
+                    pygame.mixer.music.play(4)
+                else:
+                    txt += letter
+                    for j in range(0,lines):
+                        self.draw_text(intro[j], WHITE, INTRO_X_INI, INTRO_Y_INI+nextline*j, screen, False)
+                    self.draw_text(txt, WHITE, INTRO_X_INI,currentline, screen, False)
+                    pygame.display.flip()
+                    pygame.time.delay(100)
+            lines+=1
+            currentline=INTRO_Y_INI+nextline*lines
+            txt=""
+        pygame.mixer.music.stop()
+        return
 
     def game_complete_screen(self, screen, score):
         """
@@ -161,7 +212,7 @@ class Game:
         screen.blit(img2, (60 + 70, HEIGHT / 3))
         self.draw_text("Arrows - Move the hero", WHITE, WIDTH / 4, HEIGHT / 3, screen, False)
         self.draw_text("Mouse pointer - Rotate the hero", WHITE, WIDTH / 4, HEIGHT / 3 + 100, screen, False)
-        self.draw_text("Right mouse click - Shoot", WHITE, WIDTH / 4, HEIGHT / 3 + 200, screen, False)
+        self.draw_text("Left mouse click - Shoot", WHITE, WIDTH / 4, HEIGHT / 3 + 200, screen, False)
         self.draw_text("Press <- to go back to the menu", YELLOW, WIDTH / 5, HEIGHT / 3 + 300, screen, False)
         pygame.display.flip()
         while True:

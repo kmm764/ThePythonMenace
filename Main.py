@@ -88,11 +88,13 @@ displayObj = pygame.display.set_mode((WIDTH, HEIGHT))  # creates the object that
 pygame.display.set_caption('Game')
 
 
-"""----------------------GAME OBJECT: display start screen ans menu----------------------------"""
+"""----------------------GAME OBJECT: display start screen and menu----------------------------"""
 
 game = Game()
 # show start screen
 menu_mode = game.show_start_screen(displayObj)
+
+game.show_intro(displayObj)
 # show the menu
 play_mode = game.menu(displayObj)
 
@@ -100,13 +102,12 @@ play_mode = game.menu(displayObj)
 level_1_sound= pygame.mixer.music.load("Level1.mp3")
 pygame.mixer.music.play(2)
 
-""" to display the instruccions
+#to display the instruccions
 if play_mode == True:
     img_instructions = pygame.image.load("instructions_screen.png")
     displayObj.blit(img_instructions, (0, 0))
     pygame.display.flip()
     pygame.time.delay(10000)
-"""
 
 """----------------------INITIAL INSTANCES AND GROUPS CREATION----------------------------"""
 ourHero = Hero()
