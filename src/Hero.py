@@ -1,14 +1,15 @@
 import pygame, sys
 from pygame.locals import *
-from src.Walls import *
+
 import math
 
 WIDTH = 1024
 HEIGHT = 768
-img_width = 60
-img_height = 60
 INI_HERO_X = 416
 INI_HERO_Y = 224
+tile_size = 32
+img_width = 49 
+img_height = 43
 
 class Hero(pygame.sprite.Sprite):
 
@@ -35,6 +36,8 @@ class Hero(pygame.sprite.Sprite):
     bullets_1 = pygame.image.load("bullets_1.png")
     backpack_icon = pygame.image.load("backpack_icon.png")
     score_icon = pygame.image.load("score_icon.png")
+    img_width = 49
+    img_height = 43
 
     
 
@@ -109,9 +112,6 @@ class Hero(pygame.sprite.Sprite):
         self.rect.x = newpos.x
         self.rect.y = newpos.y
 
-    def setPos2(self, x, y):
-        self.rect.centerx = x
-        self.rect.centery = y
 
     def setVel(self, vec):
         """
@@ -124,10 +124,34 @@ class Hero(pygame.sprite.Sprite):
         else:
         #if the new velocity vector is (0,0)
             self.vel=vec
-    #def collide_with_walls(self,dir):
-       # if dir = "x"
+
+    def collision_wall(self,wallx, wally):
+        """
+
+        :param wallx: rect.centerx of the wall object
+        :param wally: rect.centery of the wall object
+        :return:
+        """
+        dist_center_xmin = self.img_width / 2 + tile_size / 2
+        dist_center_ymin = self.img_height / 2 + tile_size / 2
+        margin = 5
+        if self.rect.centerx > wallx - dist_center_xmin and self.rect.centerx < wallx and self.rect.centery <= wally + dist_center_ymin - margin and self.rect.centery >= wally - dist_center_ymin + margin: # and vel_x > 0:
+            return "left"
+        elif self.rect.centerx < wallx + dist_center_xmin and self.rect.centerx > wallx and self.rect.centery <= wally + dist_center_ymin - margin and self.rect.centery >= wally - dist_center_ymin + margin:# and vel_x < 0:
+            return "right"
+        elif self.rect.centery > wally - dist_center_ymin and self.rect.centery < wally and self.rect.centerx > wallx - dist_center_xmin + margin and self.rect.centerx < wallx + dist_center_xmin -margin: # and vel_y > 0:
+            return "top"
+        elif self.rect.centery < wally + dist_center_ymin and self.rect.centery > wally and self.rect.centerx > wallx - dist_center_xmin + margin and self.rect.centerx < wallx + dist_center_xmin - margin: # and vel_y < 0:
+            return "bottom"
+        else:
+            return "none"
+
     
     def update_livebar(self, num_lives):
+        """
+            Method that update the life bar image when the hero gain or lose lives
+            :param num_lives : number of lifes left
+        """
         if num_lives == 5:
             self.lives_img = Hero.life_bar_full
         if num_lives == 4:
@@ -140,7 +164,8 @@ class Hero(pygame.sprite.Sprite):
             self.lives_img = Hero.life_bar_empty
         else:
             pass
-    
+
+
     def update_ammo(self, num_bullets):
         if num_bullets == 6:
             self.ammo_img = Hero.bullets_6

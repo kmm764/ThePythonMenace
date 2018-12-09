@@ -33,7 +33,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
-frecuency_Zombie = 2
+frecuency_Zombie = 0
 FRECUENCY_GUN = 5
 FRECUENCY_LIVES = 5
 MAX_HORROCRUX = 5
@@ -365,6 +365,8 @@ while play_mode:  # the main game loop
 
     """---------------------------------COLLISIONS : PART 2---------------------------------"""
     # ···································HERO - WALLS································
+
+    """
     for wall in ourWall:
         if ourHero.rect.centerx > wall.rect.centerx - dist_center_xmin and ourHero.rect.centerx < wall.rect.centerx and ourHero.rect.centery <= wall.rect.centery + dist_center_ymin - margin and ourHero.rect.centery >= wall.rect.centery - dist_center_ymin + margin and vel_x > 0:
             vel_x = 0.
@@ -376,6 +378,22 @@ while play_mode:  # the main game loop
             vel_y = 0.
             break
         elif ourHero.rect.centery < wall.rect.centery + dist_center_ymin and ourHero.rect.centery > wall.rect.centery and ourHero.rect.centerx > wall.rect.centerx - dist_center_xmin + margin and ourHero.rect.centerx < wall.rect.centerx + dist_center_xmin - margin and vel_y < 0:
+            vel_y = 0.
+            break
+    """
+
+    for wall in ourWall:
+        col = ourHero.collision_wall(wall.rect.centerx,wall.rect.centery)
+        if col == "left" and vel_x > 0:
+            vel_x = 0.
+            break
+        elif col == "right" and vel_x < 0:
+            vel_x = 0.
+            break
+        elif col == "top" and vel_y > 0:
+            vel_y = 0.
+            break
+        elif col == "bottom" and vel_y < 0:
             vel_y = 0.
             break
 
