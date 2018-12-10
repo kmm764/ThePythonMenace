@@ -27,16 +27,18 @@ GridWidth = WIDTH / Tile_size
 GridHeight = HEIGHT / Tile_size
 
 FPS = 60  # frames per second setting
-
-lasthit_time = 2.0  # inicializes the time variable that we are going to use to limit the collisions between the hero and the zombies
+LAST_HIT_TIME = 0.5
+lasthit_time = LAST_HIT_TIME  # inicializes the time variable that we are going to use to limit the collisions between the hero and the zombies
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+last_attack_time = 0.
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
-frecuency_Zombie = 1
+frecuency_Zombie = 10
 FRECUENCY_GUN = 2
 FRECUENCY_LIVES = 5
 MAX_HORROCRUX = 5
+MAX_TIME_DISPLAY = 1000
 CHECKPOINT_X_MIN = 960
 CHECKPOINT_Y_MAX = 256
 CHECKPOINT_Y_MIN = 224
@@ -60,6 +62,7 @@ map3_data = []
 margin = 5 # we add a margin to make the movements more natural, as our hero image has transparents borders
 play_mode = False
 menu_mode = False
+new_zombie_delete = False
 game_folder = path.dirname(__file__)
 
 """----------------------PYGAME INITIALIZING---------------------------"""
@@ -183,7 +186,16 @@ while play_mode:  # the main game loop
     # ·····························ZOMBIES································
     if random.randrange(0, 100) < frecuency_Zombie:  # here, a probability of "frecuency zombie" is assigned to the appearance of a new zombie
         # if a new zombie instance is created, it is added to the sprite group
-        crewZombies.add(Zombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height)))
+        zombie_new = Zombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height))
+        newzombie_walls_collision = pygame.sprite.spritecollide(zombie_new,ourWall,False)
+        for wall in ourWall:
+            if(zombie_new.collision_wall_x(wall.rect.centerx, wall.rect.centery) != "none" or zombie_new.collision_wall_y(wall.rect.centery, wall.rect.centery) != "none"):
+                new_zombie_delete = True
+        if len(newzombie_walls_collision)==0 or new_zombie_delete == False:
+            crewZombies.add(Zombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height)))
+        else:
+            new_zombie_delete = False
+
 
     # ·····························GUNS································
     if random.randrange(0, 1000) < FRECUENCY_GUN:
@@ -225,6 +237,12 @@ while play_mode:  # the main game loop
     crewZombies.draw(displayObj)
     ourHero.display(displayObj)
 
+    if (pygame.time.get_ticks() - last_attack_time) < MAX_TIME_DISPLAY:
+        ourHero.under_attack_display(displayObj)
+
+    if (pygame.time.get_ticks() - last_attack_time) < MAX_TIME_DISPLAY/2:
+        ourHero.red_screen_display(displayObj)
+
     """---------------------------------COLLISIONS : PART 1---------------------------------"""
 
     hero_zombies_collision = pygame.sprite.spritecollide(ourHero, crewZombies, False)
@@ -235,10 +253,11 @@ while play_mode:  # the main game loop
     for zombie in hero_zombies_collision:
         # for each zombie that has taken part in the collision, we check if it's been at least 2 seconds from the last collision that was counted
         lasthit_time += time_passed_s
-        if lasthit_time >= 2.0:
+        if lasthit_time >= LAST_HIT_TIME:
             rand_sound = random.randint(0, len(Player_sound) - 1)
             pygame.mixer.Sound.play(Player_sound[rand_sound])
             ourHero.lives -= 1  # here our hero loses one life per zombie in the collisions list
+            last_attack_time = ourHero.under_attack()
             ourHero.update_livebar(ourHero.lives)
             lasthit_time = 0.0  # set the time from the last collision to hero
             if ourHero.lives == 0:  # If Hero dies show Game Over screen
@@ -387,16 +406,12 @@ while play_mode:  # the main game loop
         colx = ourHero.collision_wall_x(wall.rect.centerx,wall.rect.centery)
         coly = ourHero.collision_wall_y(wall.rect.centerx, wall.rect.centery)
         if colx == "left" and vel_x > 0:
-            print("vx a cero - left collision detected")
             vel_x = 0.
         elif colx == "right" and vel_x < 0:
-            print("vx a cero - right collision detected")
             vel_x = 0.
         if coly == "top" and vel_y > 0:
-            print("vy a cero - top collision detected")
             vel_y = 0.
         elif coly == "bottom" and vel_y < 0:
-            print("vy a cero - bottom collision detected")
             vel_y = 0.
 
     for zombie in crewZombies:
@@ -404,18 +419,14 @@ while play_mode:  # the main game loop
         for wall in ourWall:
             colx_zombie = zombie.collision_wall_x(wall.rect.centerx, wall.rect.centery)
             if colx_zombie == "left" and zombie_vel.x > 0:
-                print("vx a cero - left collision detected")
                 zombie_vel.x = 0.
             elif colx_zombie == "right" and zombie_vel.x < 0:
-                print("vx a cero - right collision detected")
                 zombie_vel.x = 0.
         for wall in ourWall:
             coly_zombie = zombie.collision_wall_y(wall.rect.centerx, wall.rect.centery)
             if coly_zombie == "top" and zombie_vel.y > 0:
-                print("vy a cero - top collision detected")
                 zombie_vel.y = 0.
             elif coly_zombie == "bottom" and zombie_vel.y < 0:
-                print("vy a cero - bottom collision detected")
                 zombie_vel.y = 0.
         zombie.setVel(zombie_vel)
 
