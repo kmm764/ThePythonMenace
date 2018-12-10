@@ -380,22 +380,23 @@ while play_mode:  # the main game loop
         elif ourHero.rect.centery < wall.rect.centery + dist_center_ymin and ourHero.rect.centery > wall.rect.centery and ourHero.rect.centerx > wall.rect.centerx - dist_center_xmin + margin and ourHero.rect.centerx < wall.rect.centerx + dist_center_xmin - margin and vel_y < 0:
             vel_y = 0.
             break
-    """
 
+    """
     for wall in ourWall:
-        col = ourHero.collision_wall(wall.rect.centerx,wall.rect.centery)
-        if col == "left" and vel_x > 0:
+        colx = ourHero.collision_wall_x(wall.rect.centerx,wall.rect.centery)
+        coly = ourHero.collision_wall_y(wall.rect.centerx, wall.rect.centery)
+        if colx == "left" and vel_x > 0:
+            print("vx a cero - left collision detected")
             vel_x = 0.
-            break
-        elif col == "right" and vel_x < 0:
+        elif colx == "right" and vel_x < 0:
+            print("vx a cero - right collision detected")
             vel_x = 0.
-            break
-        elif col == "top" and vel_y > 0:
+        if coly == "top" and vel_y > 0:
+            print("vy a cero - top collision detected")
             vel_y = 0.
-            break
-        elif col == "bottom" and vel_y < 0:
+        elif coly == "bottom" and vel_y < 0:
+            print("vy a cero - bottom collision detected")
             vel_y = 0.
-            break
 
     """---------------------------------UPDATES---------------------------------"""
 

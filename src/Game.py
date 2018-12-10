@@ -188,10 +188,8 @@ class Game:
         while True:
             # if it detect any key or the time run 10 seconds it returns
             if self.wait_for_anykey()==True:
-                print("pasa")
                 return
             elif (pygame.time.get_ticks() - now > 10000):
-                print(pygame.time.get_ticks() - now)
                 return
 
 

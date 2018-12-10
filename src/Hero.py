@@ -8,7 +8,7 @@ HEIGHT = 768
 INI_HERO_X = 416
 INI_HERO_Y = 224
 tile_size = 32
-img_width = 49 
+img_width = 49
 img_height = 43
 
 class Hero(pygame.sprite.Sprite):
@@ -124,8 +124,34 @@ class Hero(pygame.sprite.Sprite):
         else:
         #if the new velocity vector is (0,0)
             self.vel=vec
-
+    """
     def collision_wall(self,wallx, wally):
+
+        dist_center_xmin = self.img_width / 2 + tile_size / 2
+        dist_center_ymin = self.img_height / 2 + tile_size / 2
+        margin = 5
+        if self.rect.centerx > wallx - dist_center_xmin and self.rect.centerx < wallx and self.rect.centery <= wally + dist_center_ymin - margin and self.rect.centery >= wally - dist_center_ymin + margin: # and vel_x > 0:
+            print("left", end="")
+            print(self.vel.x)
+            return "left"
+        elif self.rect.centerx < wallx + dist_center_xmin and self.rect.centerx > wallx and self.rect.centery <= wally + dist_center_ymin - margin and self.rect.centery >= wally - dist_center_ymin + margin:# and vel_x < 0:
+            print("right", end="")
+            print(self.vel.x)
+            return "right"
+        elif self.rect.centery > wally - dist_center_ymin and self.rect.centery < wally and self.rect.centerx > wallx - dist_center_xmin + margin and self.rect.centerx < wallx + dist_center_xmin -margin: # and vel_y > 0:
+            print("top", end="")
+            print(self.vel.y)
+            return "top"
+        elif self.rect.centery < wally + dist_center_ymin and self.rect.centery > wally and self.rect.centerx > wallx - dist_center_xmin + margin and self.rect.centerx < wallx + dist_center_xmin - margin: # and vel_y < 0:
+            print("bottom",end="")
+            print(self.vel.y)
+            return "bottom"
+        else:
+            return "none"
+    """
+
+
+    def collision_wall_y(self, wallx, wally):
         """
 
         :param wallx: rect.centerx of the wall object
@@ -135,18 +161,31 @@ class Hero(pygame.sprite.Sprite):
         dist_center_xmin = self.img_width / 2 + tile_size / 2
         dist_center_ymin = self.img_height / 2 + tile_size / 2
         margin = 5
-        if self.rect.centerx > wallx - dist_center_xmin and self.rect.centerx < wallx and self.rect.centery <= wally + dist_center_ymin - margin and self.rect.centery >= wally - dist_center_ymin + margin: # and vel_x > 0:
-            return "left"
-        elif self.rect.centerx < wallx + dist_center_xmin and self.rect.centerx > wallx and self.rect.centery <= wally + dist_center_ymin - margin and self.rect.centery >= wally - dist_center_ymin + margin:# and vel_x < 0:
-            return "right"
-        elif self.rect.centery > wally - dist_center_ymin and self.rect.centery < wally and self.rect.centerx > wallx - dist_center_xmin + margin and self.rect.centerx < wallx + dist_center_xmin -margin: # and vel_y > 0:
+
+        if self.rect.centery > wally - dist_center_ymin and self.rect.centery < wally and self.rect.centerx > wallx - dist_center_xmin + margin and self.rect.centerx < wallx + dist_center_xmin - margin:
             return "top"
-        elif self.rect.centery < wally + dist_center_ymin and self.rect.centery > wally and self.rect.centerx > wallx - dist_center_xmin + margin and self.rect.centerx < wallx + dist_center_xmin - margin: # and vel_y < 0:
+        elif self.rect.centery < wally + dist_center_ymin and self.rect.centery > wally and self.rect.centerx > wallx - dist_center_xmin + margin and self.rect.centerx < wallx + dist_center_xmin - margin:
             return "bottom"
         else:
             return "none"
 
-    
+    def collision_wall_x(self, wallx, wally):
+        """
+
+        :param wallx: rect.centerx of the wall object
+        :param wally: rect.centery of the wall object
+        :return:
+        """
+        dist_center_xmin = self.img_width / 2 + tile_size / 2
+        dist_center_ymin = self.img_height / 2 + tile_size / 2
+        margin = 5
+        if self.rect.centerx > wallx - dist_center_xmin and self.rect.centerx < wallx and self.rect.centery <= wally + dist_center_ymin - margin and self.rect.centery >= wally - dist_center_ymin + margin:
+            return "left"
+        elif self.rect.centerx < wallx + dist_center_xmin and self.rect.centerx > wallx and self.rect.centery <= wally + dist_center_ymin - margin and self.rect.centery >= wally - dist_center_ymin + margin:
+            return "right"
+        else:
+            return "none"
+
     def update_livebar(self, num_lives):
         """
             Method that update the life bar image when the hero gain or lose lives
