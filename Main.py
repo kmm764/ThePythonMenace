@@ -33,8 +33,8 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
-frecuency_Zombie = 0
-FRECUENCY_GUN = 5
+frecuency_Zombie = 1
+FRECUENCY_GUN = 2
 FRECUENCY_LIVES = 5
 MAX_HORROCRUX = 5
 CHECKPOINT_X_MIN = 960
@@ -45,6 +45,7 @@ FINAL_XMIN = 416
 FINAL_YMAX = 352
 FINAL_YMIN = 288
 vel_x, vel_y = 0., 0.  # inicializes the x and y components of the velocity vector of the hero
+zombie_vel = pygame.math.Vector2(0.,0.)
 horrocrux_killed = 0
 last_shot = 0
 shotgun_ammo = 0
@@ -398,6 +399,27 @@ while play_mode:  # the main game loop
             print("vy a cero - bottom collision detected")
             vel_y = 0.
 
+    for zombie in crewZombies:
+        zombie_vel = zombie.trajectory_intention(ourHero.rect)
+        for wall in ourWall:
+            colx_zombie = zombie.collision_wall_x(wall.rect.centerx, wall.rect.centery)
+            if colx_zombie == "left" and zombie_vel.x > 0:
+                print("vx a cero - left collision detected")
+                zombie_vel.x = 0.
+            elif colx_zombie == "right" and zombie_vel.x < 0:
+                print("vx a cero - right collision detected")
+                zombie_vel.x = 0.
+        for wall in ourWall:
+            coly_zombie = zombie.collision_wall_y(wall.rect.centerx, wall.rect.centery)
+            if coly_zombie == "top" and zombie_vel.y > 0:
+                print("vy a cero - top collision detected")
+                zombie_vel.y = 0.
+            elif coly_zombie == "bottom" and zombie_vel.y < 0:
+                print("vy a cero - bottom collision detected")
+                zombie_vel.y = 0.
+        zombie.setVel(zombie_vel)
+
+
     """---------------------------------UPDATES---------------------------------"""
 
     # sets the frames per second to our clock object and store the time passed from the last call in time_passed_ms
@@ -410,7 +432,7 @@ while play_mode:  # the main game loop
 
     # the function update of the sprite group basically calls the update function of each sprite of the group
     # so the zombies update method changes its position, based on the position of the hero the time passed
-    crewZombies.update(ourHero.rect, time_passed_s)
+    crewZombies.update(time_passed_s)
     groupBullets.update(time_passed_s)
     ourHero.update(time_passed_s)
 
