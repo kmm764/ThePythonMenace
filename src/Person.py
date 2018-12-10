@@ -1,44 +1,47 @@
+import pygame, sys
+from pygame.locals import *
 
+import math
 
+WIDTH = 1024
+HEIGHT = 768
+tile_size = 32
+RED = (255, 0, 0)
 
 
 class Person(pygame.sprite.Sprite):
-
-    pos_max_x=WIDTH-img_width
-    pos_max_y=HEIGHT-img_height
     pos_min_x=0
     pos_min_y=0
 
     def __init__(self):
-        super().__init__()
+        super().__init__() #calls the constructor of the superclass sprite
 
     def display(self, displayObj):
         """
-            Method that displays the hero
+            Method that displays the person
             :param displayObj --> Object display where the person will be display on
         """
         displayObj.blit(self.image, (self.rect.x, self.rect.y))
 
     def setPos(self, t):
         """
-            Method that updates the position of the hero, based on the time passed and the velocity of the hero
+            Method that updates the position of the person, based on the time passed and the velocity of the person
             :param t --> time passed in seconds from the last call
         """
-        #Here, the new position vector is calculated. The attibute rect is turned into a 2d vector class to make easier the operations
+        # Here, the new position vector is calculated. The attibute rect is turned into a 2d vector class to make easier the operations
 
+        newpos = pygame.math.Vector2(self.rect.x, self.rect.y) + self.vel * self.speed * t
 
-        newpos =  pygame.math.Vector2(self.rect.x, self.rect.y)+self.vel*self.speed*t
-
-        #once the new position is calculated,, we make sure that it is inside the boundaries of the screen
-        newpos.x=clamp(newpos.x,Person.pos_min_x,Person.pos_max_x)
-        newpos.y=clamp(newpos.y, Person.pos_min_y, Person.pos_max_y)
+        # once the new position is calculated,, we make sure that it is inside the boundaries of the screen
+        newpos.x = clamp(newpos.x, Person.pos_min_x, self.pos_max_x)
+        newpos.y = clamp(newpos.y, Person.pos_min_y, self.pos_max_y)
         self.pos = newpos
         self.rect.x = newpos.x
         self.rect.y = newpos.y
 
     def setVel(self, vec):
         """
-            Method that update the velocity of the hero
+            Method that update the velocity of the person
             :param vec: new vector velocity
         """
         if vec != (0.,0.):
@@ -47,6 +50,41 @@ class Person(pygame.sprite.Sprite):
         else:
         #if the new velocity vector is (0,0)
             self.vel=vec
+
+    def collision_wall_y(self, wallx, wally):
+        """
+
+        :param wallx: rect.centerx of the wall object
+        :param wally: rect.centery of the wall object
+        :return:
+        """
+        dist_center_xmin = self.img_width / 2 + tile_size / 2
+        dist_center_ymin = self.img_height / 2 + tile_size / 2
+        margin = 5
+
+        if self.rect.centery > wally - dist_center_ymin and self.rect.centery < wally and self.rect.centerx > wallx - dist_center_xmin + margin and self.rect.centerx < wallx + dist_center_xmin - margin:
+            return "top"
+        elif self.rect.centery < wally + dist_center_ymin and self.rect.centery > wally and self.rect.centerx > wallx - dist_center_xmin + margin and self.rect.centerx < wallx + dist_center_xmin - margin:
+            return "bottom"
+        else:
+            return "none"
+
+    def collision_wall_x(self, wallx, wally):
+        """
+
+        :param wallx: rect.centerx of the wall object
+        :param wally: rect.centery of the wall object
+        :return:
+        """
+        dist_center_xmin = self.img_width / 2 + tile_size / 2
+        dist_center_ymin = self.img_height / 2 + tile_size / 2
+        margin = 5
+        if self.rect.centerx > wallx - dist_center_xmin and self.rect.centerx < wallx and self.rect.centery <= wally + dist_center_ymin - margin and self.rect.centery >= wally - dist_center_ymin + margin:
+            return "left"
+        elif self.rect.centerx < wallx + dist_center_xmin and self.rect.centerx > wallx and self.rect.centery <= wally + dist_center_ymin - margin and self.rect.centery >= wally - dist_center_ymin + margin:
+            return "right"
+        else:
+            return "none"
 
 def clamp(n, minn, maxn):
     """

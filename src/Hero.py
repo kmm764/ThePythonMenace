@@ -1,5 +1,6 @@
 import pygame, sys
 from pygame.locals import *
+from src.Person import Person
 
 import math
 
@@ -14,14 +15,12 @@ RED = (255, 0, 0)
 pygame.font.init()
 fontlives = pygame.font.SysFont('8-Bit Madness', 15)
 
-class Hero(pygame.sprite.Sprite):
+class Hero(Person):
 
     # set the max and min position in each axis to prevent the hero from go outside the boundaries of the screen
     speed = 150  # set the module of velocity
-    pos_max_x=WIDTH-img_width
-    pos_max_y=HEIGHT-img_height
-    pos_min_x=0
-    pos_min_y=0
+
+
     lives_ini = 5
     horrocrux_collected = 0
     hero_IMG = pygame.image.load("Hero.png")
@@ -40,13 +39,6 @@ class Hero(pygame.sprite.Sprite):
     hit_screen = pygame.image.load("red_screen.png")
     backpack_icon = pygame.image.load("backpack_icon.png")
     score_icon = pygame.image.load("score_icon.png")
-    img_width = 49
-    img_height = 43
-
-    
-
-
-
 
     def __init__(self):
         super().__init__()
@@ -66,12 +58,12 @@ class Hero(pygame.sprite.Sprite):
         self.ammo_img = Hero.bullets_6
         self.backpack_icon = Hero.backpack_icon
         self.score_icon = Hero.score_icon
+        self.img_width = 49
+        self.img_height = 43
+        self.pos_max_x = WIDTH - self.img_width
+        self.pos_max_y = HEIGHT - self.img_height
 
-        
 
-
-
-        
     def get_rot_mouse(self):
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -82,83 +74,11 @@ class Hero(pygame.sprite.Sprite):
         if self.orientation.rotate(self.angle)!= (0.0,0.0):
             self.orientation = self.orientation.rotate(-self.angle)
 
-
-
-        #self.rot_speed = 0
-        #keys = pygame.key.get_pressed()
-        #if keys[pygame .K_j]:
-            #self.rot_speed = -250
-        #if keys[pygame.K_k]:
-            #self.rot_speed = 250
-
-
-    def display(self, displayObj):
-        """
-            Method that displays the hero
-            :param displayObj --> Object display where the hero will be display on
-        """
-        displayObj.blit(self.image, (self.rect.x, self.rect.y))
-
-
-
-    def setPos(self, t):
-        """
-            Method that updates the position of the hero, based on the time passed and the velocity of the hero
-            :param t --> time passed in seconds from the last call
-        """
-        #Here, the new position vector is calculated. The attibute rect is turned into a 2d vector class to make easier the operations
-
-
-        newpos =  pygame.math.Vector2(self.rect.x, self.rect.y)+self.vel*self.speed*t
-
-        #once the new position is calculated,, we make sure that it is inside the boundaries of the screen
-        newpos.x=clamp(newpos.x,Hero.pos_min_x,Hero.pos_max_x)
-        newpos.y=clamp(newpos.y, Hero.pos_min_y, Hero.pos_max_y)
-        self.pos = newpos
-        self.rect.x = newpos.x
-        self.rect.y = newpos.y
-
     def setPos2(self, x, y):
 
         self.rect.x = x
         self.rect.y = y
 
-    def setVel(self, vec):
-        """
-            Method that update the velocity of the hero
-            :param vec: new vector velocity
-        """
-        if vec != (0.,0.):
-        #if the new velocity vector is different from (0,0) we need to turn it into a unit vector to get only the direction of the movement
-            self.vel = vec.normalize()
-        else:
-        #if the new velocity vector is (0,0)
-            self.vel=vec
-    """
-    def collision_wall(self,wallx, wally):
-
-        dist_center_xmin = self.img_width / 2 + tile_size / 2
-        dist_center_ymin = self.img_height / 2 + tile_size / 2
-        margin = 5
-        if self.rect.centerx > wallx - dist_center_xmin and self.rect.centerx < wallx and self.rect.centery <= wally + dist_center_ymin - margin and self.rect.centery >= wally - dist_center_ymin + margin: # and vel_x > 0:
-            print("left", end="")
-            print(self.vel.x)
-            return "left"
-        elif self.rect.centerx < wallx + dist_center_xmin and self.rect.centerx > wallx and self.rect.centery <= wally + dist_center_ymin - margin and self.rect.centery >= wally - dist_center_ymin + margin:# and vel_x < 0:
-            print("right", end="")
-            print(self.vel.x)
-            return "right"
-        elif self.rect.centery > wally - dist_center_ymin and self.rect.centery < wally and self.rect.centerx > wallx - dist_center_xmin + margin and self.rect.centerx < wallx + dist_center_xmin -margin: # and vel_y > 0:
-            print("top", end="")
-            print(self.vel.y)
-            return "top"
-        elif self.rect.centery < wally + dist_center_ymin and self.rect.centery > wally and self.rect.centerx > wallx - dist_center_xmin + margin and self.rect.centerx < wallx + dist_center_xmin - margin: # and vel_y < 0:
-            print("bottom",end="")
-            print(self.vel.y)
-            return "bottom"
-        else:
-            return "none"
-    """
     def under_attack_display(self, screen):
         attack_effect = fontlives.render("-250",False,RED)
         screen.blit(attack_effect,(self.rect.centerx, self.rect.centery - self.img_height-5))
@@ -169,40 +89,6 @@ class Hero(pygame.sprite.Sprite):
     def under_attack(self):
         return pygame.time.get_ticks()
 
-    def collision_wall_y(self, wallx, wally):
-        """
-
-        :param wallx: rect.centerx of the wall object
-        :param wally: rect.centery of the wall object
-        :return:
-        """
-        dist_center_xmin = self.img_width / 2 + tile_size / 2
-        dist_center_ymin = self.img_height / 2 + tile_size / 2
-        margin = 5
-
-        if self.rect.centery > wally - dist_center_ymin and self.rect.centery < wally and self.rect.centerx > wallx - dist_center_xmin + margin and self.rect.centerx < wallx + dist_center_xmin - margin:
-            return "top"
-        elif self.rect.centery < wally + dist_center_ymin and self.rect.centery > wally and self.rect.centerx > wallx - dist_center_xmin + margin and self.rect.centerx < wallx + dist_center_xmin - margin:
-            return "bottom"
-        else:
-            return "none"
-
-    def collision_wall_x(self, wallx, wally):
-        """
-
-        :param wallx: rect.centerx of the wall object
-        :param wally: rect.centery of the wall object
-        :return:
-        """
-        dist_center_xmin = self.img_width / 2 + tile_size / 2
-        dist_center_ymin = self.img_height / 2 + tile_size / 2
-        margin = 5
-        if self.rect.centerx > wallx - dist_center_xmin and self.rect.centerx < wallx and self.rect.centery <= wally + dist_center_ymin - margin and self.rect.centery >= wally - dist_center_ymin + margin:
-            return "left"
-        elif self.rect.centerx < wallx + dist_center_xmin and self.rect.centerx > wallx and self.rect.centery <= wally + dist_center_ymin - margin and self.rect.centery >= wally - dist_center_ymin + margin:
-            return "right"
-        else:
-            return "none"
 
     def update_livebar(self, num_lives):
         """
@@ -251,10 +137,3 @@ class Hero(pygame.sprite.Sprite):
         if self.rect.centerx > cp_xmin and self.rect.centerx < cp_xmax  and self.rect.centery > cp_ymin and self.rect.centery < cp_ymax:
             return True
 
-
-def clamp(n, minn, maxn):
-    """
-        Function that limit the value of a given variable between a max and a min
-        Source:https://stackoverflow.com/questions/5996881/how-to-limit-a-number-to-be-within-a-specified-range-python
-    """
-    return max(min(maxn, n), minn)

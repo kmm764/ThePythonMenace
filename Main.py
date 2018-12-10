@@ -51,6 +51,7 @@ zombie_vel = pygame.math.Vector2(0.,0.)
 horrocrux_killed = 0
 last_shot = 0
 shotgun_ammo = 0
+level = 1
 first_time = True
 second_time = False
 final_screen = False
@@ -108,8 +109,6 @@ pygame.mixer.music.play(2)
 
 game.instructions(displayObj)
 
-
-
 """----------------------INITIAL INSTANCES AND GROUPS CREATION----------------------------"""
 ourHero = Hero()
 # display the life bar on the screen
@@ -122,7 +121,7 @@ ourItems = pygame.sprite.Group()
 ourEffect = pygame.sprite.Group()
 # pygame.key.set_repeat(1, 10) #to handle the "holding key" event
 weaponType = "Pistol"
-level = 2
+
 pygame.display.flip()
 
 """-----------------------------MAP CREATION----------------------------"""
