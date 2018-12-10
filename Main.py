@@ -122,7 +122,7 @@ ourItems = pygame.sprite.Group()
 ourEffect = pygame.sprite.Group()
 # pygame.key.set_repeat(1, 10) #to handle the "holding key" event
 weaponType = "Pistol"
-level = 1
+level = 2
 pygame.display.flip()
 
 """-----------------------------MAP CREATION----------------------------"""
@@ -187,14 +187,18 @@ while play_mode:  # the main game loop
     if random.randrange(0, 100) < frecuency_Zombie:  # here, a probability of "frecuency zombie" is assigned to the appearance of a new zombie
         # if a new zombie instance is created, it is added to the sprite group
         zombie_new = Zombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height))
-        newzombie_walls_collision = pygame.sprite.spritecollide(zombie_new,ourWall,False)
+        newzombie_walls_collision = pygame.sprite.spritecollide(zombie_new, ourWall, False)
         for wall in ourWall:
             if(zombie_new.collision_wall_x(wall.rect.centerx, wall.rect.centery) != "none" or zombie_new.collision_wall_y(wall.rect.centery, wall.rect.centery) != "none"):
                 new_zombie_delete = True
-        if len(newzombie_walls_collision)==0 or new_zombie_delete == False:
-            crewZombies.add(Zombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height)))
+        if len(newzombie_walls_collision)==0 and new_zombie_delete == False:
+            crewZombies.add(zombie_new)
+
         else:
             new_zombie_delete = False
+            print("borrado")
+            print(len(newzombie_walls_collision))
+            print(new_zombie_delete)
 
 
     # ·····························GUNS································

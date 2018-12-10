@@ -99,6 +99,8 @@ class Hero(pygame.sprite.Sprite):
         """
         displayObj.blit(self.image, (self.rect.x, self.rect.y))
 
+
+
     def setPos(self, t):
         """
             Method that updates the position of the hero, based on the time passed and the velocity of the hero
@@ -116,6 +118,10 @@ class Hero(pygame.sprite.Sprite):
         self.rect.x = newpos.x
         self.rect.y = newpos.y
 
+    def setPos2(self, x, y):
+
+        self.rect.x = x
+        self.rect.y = y
 
     def setVel(self, vec):
         """
