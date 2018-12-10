@@ -11,7 +11,7 @@ HEIGHT = 768
 
 class Zombie(Person):
     speed=50 #set the module of velocity
-
+    radius_min = 100
     # set the max and min position in each axis to prevent the hero from go outside the boundaries of the screen
 
 
@@ -40,6 +40,11 @@ class Zombie(Person):
         else:
             return vel
 
+    def hero_near(self, positionHero):
+        if abs(positionHero.x - self.rect.x) < Zombie.radius_min or abs(positionHero.y - self.rect.y) < Zombie.radius_min:
+            return True
+        else:
+            return False
 
     def update(self, t):
         self.setPos(t)

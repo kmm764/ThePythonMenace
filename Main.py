@@ -5,7 +5,6 @@ import random
 import os
 from os import path
 
-from src.Game import Game
 
 from src.Hero import Hero
 from src.Zombie import Zombie
@@ -188,7 +187,7 @@ while play_mode:  # the main game loop
         zombie_new = Zombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height))
         newzombie_walls_collision = pygame.sprite.spritecollide(zombie_new, ourWall, False)
         for wall in ourWall:
-            if(zombie_new.collision_wall_x(wall.rect.centerx, wall.rect.centery) != "none" or zombie_new.collision_wall_y(wall.rect.centery, wall.rect.centery) != "none"):
+            if(zombie_new.collision_wall_x(wall.rect.centerx, wall.rect.centery) != "none" or zombie_new.collision_wall_y(wall.rect.centery, wall.rect.centery) != "none") or zombie_new.hero_near(ourHero.rect):
                 new_zombie_delete = True
         if len(newzombie_walls_collision)==0 and new_zombie_delete == False:
             crewZombies.add(zombie_new)
@@ -196,8 +195,8 @@ while play_mode:  # the main game loop
         else:
             new_zombie_delete = False
             print("borrado")
-            print(len(newzombie_walls_collision))
-            print(new_zombie_delete)
+            print(zombie_new.hero_near(ourHero.rect))
+
 
 
     # ·····························GUNS································
