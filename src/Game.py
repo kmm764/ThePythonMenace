@@ -298,7 +298,7 @@ class Game:
 
     def tutorial(self, screen):
 
-        tutorial_img = pygame.image.load("img/Menu/tutorial/tutorial_screen.jpg")
+        tutorial_img = pygame.image.load("img/Menu/tutorial_screen.jpg")
         tutorial_img_scale=pygame.transform.scale(tutorial_img, (WIDTH, HEIGHT))
         screen.blit(tutorial_img_scale, (0, 0))
         pygame.display.flip()
