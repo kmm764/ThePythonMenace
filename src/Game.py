@@ -28,6 +28,7 @@ class Game:
     def __init__(self):
         self.font = pygame.font.SysFont('8-Bit Madness', 50)
         self.font_selected = pygame.font.SysFont('8-Bit Madness', 70)
+        self.font_ending = pygame.font.SysFont('8-Bit Madness', 130)
         self.option = 1
     
     def show_start_screen(self, screen):
@@ -204,6 +205,8 @@ class Game:
         screen.fill(BLACK)
         img_ini = pygame.image.load("img/Menu/end/end_win_screen.jpg")
         screen.blit(img_ini, (0, 0))
+        self.draw_text(str(score), WHITE, WIDTH / 2, HEIGHT / 2 -147, screen, "end")
+        #screen.blit(score, (WIDTH/2, HEIGHT/2))
         pygame.display.flip()
         if self.wait_for_key_over()== "save":
             name = self.input_name_screen(screen)
@@ -273,6 +276,7 @@ class Game:
                         return "save"
                     if event.key == K_c:
                         return "continue"
+
 
     def input_name_screen(self, screen):
         screen.fill(BLACK)
@@ -382,8 +386,10 @@ class Game:
     def draw_text(self, text, color, x, y, screen, selected):
         if selected == True:
             text_surface = self.font_selected.render(text, True, color)
-        else:
+        elif selected == False:
             text_surface = self.font.render(text, True, color)
+        else:
+            text_surface = self.font_ending.render(text, True, color)
             
         text_rect = text_surface.get_rect()
         text_rect.midtop = (x, y)
