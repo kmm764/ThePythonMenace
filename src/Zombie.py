@@ -89,7 +89,7 @@ class SuperZombie(Zombie):
 
 
     def life_bar_display(self, screen):
-        screen.blit(self.lives_img, self.rect.midtop)
+        screen.blit(self.lives_img, self.rect)
 
 
     def update(self, positionHero, t):

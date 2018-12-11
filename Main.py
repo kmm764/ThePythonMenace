@@ -238,10 +238,11 @@ while play_mode:  # the main game loop
     groupBullets.draw(displayObj)
     ourEffects.draw(displayObj)
     ourItems.draw(displayObj)
-
-
     crewZombies.draw(displayObj)
     ourHero.display(displayObj)
+    for zombie in crewZombies:
+        if type(zombie) == SuperZombie:
+            zombie.life_bar_display(displayObj)
 
     if (pygame.time.get_ticks() - last_attack_time) < MAX_TIME_DISPLAY:
         ourHero.under_attack_display(displayObj)
