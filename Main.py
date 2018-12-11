@@ -7,7 +7,7 @@ from os import path
 
 
 from src.Hero import Hero
-from src.Zombie import Zombie
+from src.Zombie import *
 from src.Bullet import *
 from src.Game import Game
 from src.Walls import Walls
@@ -36,6 +36,7 @@ last_attack_time = 0.
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 frequency_Zombie = 10
+probability_superzombie = 70
 FREQUENCY_GUN = 5
 FREQUENCY_LIVES = 5
 MAX_BACKPACKS = 5
@@ -185,7 +186,10 @@ while play_mode:  # the main game loop
     # ·····························ZOMBIES································
     if random.randrange(0, 100) < frequency_Zombie:  # here, a probability of "frecuency zombie" is assigned to the appearance of a new zombie
         # if a new zombie instance is created, it is added to the sprite group
-        zombie_new = Zombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height))
+        if random.randrange(0, 100) < probability_superzombie:
+            zombie_new = SuperZombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height))
+        else:
+            zombie_new = Zombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height))
         newzombie_walls_collision = pygame.sprite.spritecollide(zombie_new, ourWall, False)
         for wall in ourWall:
             if(zombie_new.collision_wall_x(wall.rect.centerx, wall.rect.centery) != "none" or zombie_new.collision_wall_y(wall.rect.centery, wall.rect.centery) != "none") or zombie_new.hero_near(ourHero.rect):
