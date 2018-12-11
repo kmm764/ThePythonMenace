@@ -12,9 +12,7 @@ from src.Zombie import *
 from src.Bullet import *
 from src.Game import Game
 from src.Walls import Walls
-from src.Item import Shotgun
-from src.Item import Health
-from src.Item import Backpack
+from src.Item import *
 from src.Effects import *
 
 
