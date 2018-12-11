@@ -373,12 +373,13 @@ while play_mode:  # the main game loop
                         last_shot = now
                         if shotgun_ammo > 0:
                             shotgun_ammo -= 1
-                            ourHero.update_ammo(shotgun_ammo)
+
                             for x in range(10):
                                 groupBullets.add(Shotgun_Bullet(ourHero.rect))
                                 print("shotgun")
                                 print(shotgun_ammo)
                                 pygame.mixer.Sound.play(Shotgun_sound)
+                            ourHero.update_ammo(shotgun_ammo)
                         else:
                             weaponType = "Pistol"
 

@@ -24,13 +24,10 @@ class Bullet(pygame.sprite.Sprite):
 
 
         #here we set the velocity towards the position of the mouse
-        self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
+
         #self.mouse_x = random.randint(self.mouse_x-50,self.mouse_x+50)
         #self.mouse_y = random.randint(self.mouse_y - 50, self.mouse_y + 50)
-        vel = pygame.math.Vector2(self.mouse_x - self.rect.x, self.mouse_y - self.rect.y)
-        if vel != (0., 0.):
-            #we turn it into a unit vector to get just the direction of the movement
-            self.vel = vel.normalize()
+
 
 
         self.spawn_time = pygame.time.get_ticks()
@@ -62,7 +59,11 @@ class Pistol_bullet(Bullet):
         Bullet.__init__(self, positionHero)
         self.speed = 600
         self.Bullet_lifetime = 600
-
+        self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
+        vel = pygame.math.Vector2(self.mouse_x - self.rect.x, self.mouse_y - self.rect.y)
+        if vel != (0., 0.):
+            # we turn it into a unit vector to get just the direction of the movement
+            self.vel = vel.normalize()
 
 class Shotgun_Bullet(Bullet):
 
@@ -72,5 +73,10 @@ class Shotgun_Bullet(Bullet):
         self.Bullet_lifetime = 350
         self.size = self.image.get_size()
         self.image = pygame.transform.scale(self.image, (int(self.size[0]/2), int(self.size[1]/2)))
+        self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
         self.mouse_x = random.randint(self.mouse_x - 100, self.mouse_x + 100)
         self.mouse_y = random.randint(self.mouse_y - 100, self.mouse_y + 100)
+        vel = pygame.math.Vector2(self.mouse_x - self.rect.x, self.mouse_y - self.rect.y)
+        if vel != (0., 0.):
+            # we turn it into a unit vector to get just the direction of the movement
+            self.vel = vel.normalize()
