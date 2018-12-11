@@ -24,6 +24,8 @@ class Zombie(Person):
         self.img_width = 35
         self.pos_max_x = WIDTH - self.img_width
         self.pos_max_y = HEIGHT - self.img_height
+        self.lives = 1
+
 
 
     """----------------NEW CODE ----------------------------"""
@@ -45,6 +47,11 @@ class Zombie(Person):
     def setAngle(self, positionHero):
         self.rotate(positionHero.x, positionHero.y)
 
+    def updates_life(self):
+        self.lives -= 1
+        if self.lives == 0:
+            self.kill()
+            return True
 
     def update(self, positionHero, t):
         self.setAngle(positionHero)
@@ -73,12 +80,13 @@ class SuperZombie(Zombie):
         self.pos_max_x = WIDTH - self.img_width
         self.pos_max_y = HEIGHT - self.img_height
 
-    def updates_life(self, screen):
+    def updates_life(self):
         self.lives -= 1
         self.lives_img = SuperZombie.life_bar_img[self.lives - 1]
-        screen.blit(self.lives_img, self.rect.midtop)
         if self.lives == 0:
             self.kill()
+            return True
+
 
     def life_bar_display(self, screen):
         screen.blit(self.lives_img, self.rect.midtop)

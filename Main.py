@@ -310,15 +310,20 @@ while play_mode:  # the main game loop
     # ·····························ZOMBIE - BULLETS································
     if len(groupBullets.sprites()) > 0:
         for bul in groupBullets:
-            bullet_zombies_collision = pygame.sprite.spritecollide(bul, crewZombies, True)
+            bullet_zombies_collision = pygame.sprite.spritecollide(bul, crewZombies, False)
             bullet_wall_collision = pygame.sprite.spritecollide(bul, ourWall, False)
             # if there is a collision the bullets is also deleted from the group
             if len(bullet_wall_collision) > 0:
                 bul.kill()
             if len(bullet_zombies_collision) > 0:
                 bul.kill()
-                ourEffects.add(Splash(bul.rect.x, bul.rect.y))
-                ourHero.score += 1
+                for z in bullet_zombies_collision:
+                    ourEffects.add(Splash(bul.rect.x, bul.rect.y))
+                    if z.updates_life() is True:
+                        ourHero.score += 1
+
+
+
 
     hero_zombies_collision.clear()
 
