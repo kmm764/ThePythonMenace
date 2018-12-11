@@ -1,5 +1,6 @@
 import pygame, sys
 from pygame.locals import *
+from setting import *
 
 import math
 
@@ -8,16 +9,16 @@ import math
 class Walls(pygame.sprite.Sprite):
     tile_IMG = pygame.image.load('img/background/tile.png')
 
-    def __init__(self, x,y, Tile_size):
+    def __init__(self, x, y, TILE_SIZE):
 
-        Walls.tile_IMG = pygame.transform.scale(Walls.tile_IMG, (Tile_size,Tile_size))
+        Walls.tile_IMG = pygame.transform.scale(Walls.tile_IMG, (TILE_SIZE, TILE_SIZE))
         super().__init__()
         self.image = Walls.tile_IMG
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
-        self.rect.x = x*Tile_size
-        self.rect.y = y*Tile_size
+        self.rect.x = x * TILE_SIZE
+        self.rect.y = y * TILE_SIZE
 
     def display(self, displayObj):
 

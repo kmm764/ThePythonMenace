@@ -1,22 +1,14 @@
 import pygame, sys, os
 from pygame.locals import *
+from setting import *
 
 
 
-
-WIDTH = 1024
-HEIGHT = 768
-img_width = 60
-img_height = 60
-FPS = 30  # frames per second setting
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-YELLOW = (255, 255, 0)
 menu_left_margin = 180
 INTRO_X_INI=50
 INTRO_Y_INI=50
 TIME_TYPING = 100
+EXTRA_SCORE = 100
 
 #pygame.font.init()
 #myfont = pygame.font.SysFont('8-Bit Madness', 50)
@@ -203,6 +195,7 @@ class Game:
                 :param screen --> Object display where the start screen will be display on
         """
         screen.fill(BLACK)
+        score += EXTRA_SCORE  # 100 extra score when finished the game
         img_ini = pygame.image.load("img/Menu/end/end_win_screen.jpg")
         screen.blit(img_ini, (0, 0))
         self.draw_text(str(score), WHITE, WIDTH / 2, HEIGHT / 2 -147, screen, "end")

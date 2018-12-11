@@ -1,6 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 import random
+from setting import *
 
 import os
 from os import path
@@ -18,28 +19,19 @@ from src.Effects import *
 
 
 """----------------------PARAMETERS----------------------------"""
-WIDTH = 1024
-HEIGHT = 768
-img_width = 60
-img_height = 60
-Tile_size = 32
-dist_center_xmin = img_width / 2 + Tile_size / 2
-dist_center_ymin = img_height / 2 + Tile_size / 2
-GRID_WIDTH = WIDTH / Tile_size
-GRID_HEIGTH = HEIGHT / Tile_size
-FPS = 60  # frames per second setting
+
+
+#dist_center_xmin = img_width / 2 + Tile_size / 2
+#dist_center_ymin = img_height / 2 + Tile_size / 2
+GRID_WIDTH = WIDTH / TILE_SIZE
+GRID_HEIGTH = HEIGHT / TILE_SIZE
+
 LAST_HIT_TIME = 0.5
 last_hit_t = LAST_HIT_TIME  #initializes the time variable that we are going to use to limit the collisions between the hero and the zombies
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
 last_attack_time = 0.
-RED = (255, 0, 0)
-YELLOW = (255, 255, 0)
-frequency_Zombie = 10
-probability_superzombie = 70
-FREQUENCY_GUN = 5
-FREQUENCY_LIVES = 5
-MAX_BACKPACKS = 5
+frequency_Zombie = FREQUENCY_ZOMBIE
+
+
 MAX_TIME_DISPLAY = 1000
 CHECKPOINT_X_MIN = 960
 CHECKPOINT_Y_MAX = 256
@@ -72,11 +64,10 @@ game_folder = path.dirname(__file__)
 pygame.init()
 pygame.font.init()
 myfont = pygame.font.SysFont('8-Bit Madness', 35)
-Pistol_sound = pygame.mixer.Sound("snd/pistol.wav")
-Shotgun_sound = pygame.mixer.Sound("snd/shotgun.wav")
-Gun_pickup = pygame.mixer.Sound("snd/gun_pickup.wav")
-Player_sound = ["p0.wav", "p1.wav", "p2.wav", "p3.wav", "p4.wav", "p5.wav", "p6.wav"]
-Zombie_sound = ["z0.wav", "z1.wav", "z2.wav", "z3.wav", "z4.wav", "z5.wav", "z6.wav", "z7.wav"]
+
+Pistol_sound = pygame.mixer.Sound(PISTOL_SOUND)
+Shotgun_sound = pygame.mixer.Sound(SHOTGUN_SOUND)
+Gun_pickup = pygame.mixer.Sound(GUN_PICKUP_SOUND)
 
 
 for sounds in range(len(Player_sound)):
@@ -158,7 +149,7 @@ while play_mode:  # the main game loop
     for row, tiles in enumerate(maps):  # enumerate to get both index and value as row and column
         for col, tile in enumerate(tiles):
             if tile == "1":
-                ourWall.add(Walls(col, row, Tile_size))
+                ourWall.add(Walls(col, row, TILE_SIZE))
 
     if level == 1:
         background_image = pygame.image.load("img/background/level1_1024.jpg").convert()
@@ -175,18 +166,18 @@ while play_mode:  # the main game loop
     #·····························BACKPACKS································
     if first_time == True:
         for i in range(MAX_BACKPACKS):
-            ourItems.add(Backpack(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT/4 * 3)))
+            ourItems.add(Backpack(random.randrange(0, WIDTH - TILE_SIZE), random.randrange(0, HEIGHT / 4 * 3)))
         first_time = False
     else:
         for i in range(backpack_killed):
             #it keeps creating backpacks if they've been destroyed because of the collisions with the wall
-            ourItems.add(Backpack(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT / 4 * 3)))
+            ourItems.add(Backpack(random.randrange(0, WIDTH - TILE_SIZE), random.randrange(0, HEIGHT / 4 * 3)))
         backpack_killed = 0
 
     # ·····························ZOMBIES································
     if random.randrange(0, 100) < frequency_Zombie:  # here, a probability of "frecuency zombie" is assigned to the appearance of a new zombie
         # if a new zombie instance is created, it is added to the sprite group
-        if random.randrange(0, 100) < probability_superzombie:
+        if random.randrange(0, 100) < PROBABILITY_SUPERZOMBIE:
             zombie_new = SuperZombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height))
         else:
             zombie_new = Zombie(random.randrange(0, WIDTH - img_width), random.randrange(0, HEIGHT - img_height))
@@ -204,11 +195,11 @@ while play_mode:  # the main game loop
 
     # ·····························GUNS································
     if random.randrange(0, 1000) < FREQUENCY_GUN:
-        ourItems.add(Shotgun(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT-Tile_size)))
+        ourItems.add(Shotgun(random.randrange(0, WIDTH - TILE_SIZE), random.randrange(0, HEIGHT - TILE_SIZE)))
 
     # ·····························LIVES································
     if random.randrange(0, 1000) < FREQUENCY_LIVES:
-        ourItems.add(Health(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT - Tile_size)))
+        ourItems.add(Health(random.randrange(0, WIDTH - TILE_SIZE), random.randrange(0, HEIGHT - TILE_SIZE)))
 
 
 

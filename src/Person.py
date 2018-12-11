@@ -1,10 +1,6 @@
 import pygame, math
+from setting import *
 
-
-WIDTH = 1024
-HEIGHT = 768
-tile_size = 32
-RED = (255, 0, 0)
 
 
 class Person(pygame.sprite.Sprite):
@@ -68,8 +64,8 @@ class Person(pygame.sprite.Sprite):
             :param wally: rect.centery of the wall object
             :return: the type of collision: "top", "bottom" or "none"
         """
-        dist_center_xmin = self.img_width / 2 + tile_size / 2
-        dist_center_ymin = self.img_height / 2 + tile_size / 2
+        dist_center_xmin = self.img_width / 2 + TILE_SIZE / 2
+        dist_center_ymin = self.img_height / 2 + TILE_SIZE / 2
         margin = 5
 
         if self.rect.centery > wally - dist_center_ymin and self.rect.centery < wally and self.rect.centerx > wallx - dist_center_xmin + margin and self.rect.centerx < wallx + dist_center_xmin - margin:
@@ -86,8 +82,8 @@ class Person(pygame.sprite.Sprite):
             :param wally: rect.centery of the wall object
             :return: the type of collision: "right", "left" or "none"
         """
-        dist_center_xmin = self.img_width / 2 + tile_size / 2
-        dist_center_ymin = self.img_height / 2 + tile_size / 2
+        dist_center_xmin = self.img_width / 2 + TILE_SIZE / 2
+        dist_center_ymin = self.img_height / 2 + TILE_SIZE / 2
         margin = 5
         if self.rect.centerx > wallx - dist_center_xmin and self.rect.centerx < wallx and self.rect.centery <= wally + dist_center_ymin - margin and self.rect.centery >= wally - dist_center_ymin + margin:
             return "left"

@@ -1,17 +1,12 @@
 import pygame, sys
 from pygame.locals import *
 from src.Person import Person
+from setting import *
 
 import math
 
-WIDTH = 1024
-HEIGHT = 768
 INI_HERO_X = 416
 INI_HERO_Y = 224
-tile_size = 32
-img_width = 49
-img_height = 43
-RED = (255, 0, 0)
 pygame.font.init()
 fontlives = pygame.font.SysFont('8-Bit Madness', 15)
 

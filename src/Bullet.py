@@ -3,6 +3,7 @@ from pygame.locals import *
 import math
 from random import uniform
 import random
+from setting import *
 
 class Bullet(pygame.sprite.Sprite):
 

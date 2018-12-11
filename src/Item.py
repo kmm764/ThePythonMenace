@@ -1,7 +1,5 @@
 import pygame
-
-
-tile_size = 32
+from setting import *
 
 shotgun_img = pygame.image.load("img/items/shotgun.png")
 backpack_img = pygame.image.load("img/items/backpack.png")
@@ -11,9 +9,9 @@ health_img = pygame.image.load("img/items/hp.png")
 
 class Item(pygame.sprite.Sprite):
 
-    health_image = pygame.transform.scale(health_img, (tile_size, tile_size))
-    shotgun_image = pygame.transform.scale(shotgun_img, (tile_size, tile_size))
-    backpack_image = pygame.transform.scale(backpack_img, (tile_size, tile_size))
+    health_image = pygame.transform.scale(health_img, (TILE_SIZE, TILE_SIZE))
+    shotgun_image = pygame.transform.scale(shotgun_img, (TILE_SIZE, TILE_SIZE))
+    backpack_image = pygame.transform.scale(backpack_img, (TILE_SIZE, TILE_SIZE))
 
     def __init__(self, x, y):
 

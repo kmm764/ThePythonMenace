@@ -1,16 +1,14 @@
 import pygame, sys
 from pygame.locals import *
 from src.Person import Person
+from setting import *
 
 import random
 
-tile_size=32
-WIDTH = 1024
-HEIGHT = 768
 
 
 class Zombie(Person):
-    speed=50 #set the module of velocity
+    speed=150 #set the module of velocity
     radius_min = 100
     zombie_IMG = pygame.image.load('img/zombies/zombie.png')
 
@@ -62,6 +60,7 @@ class Zombie(Person):
 
 
 class SuperZombie(Zombie):
+    speed = 50
     zombie_IMG = pygame.image.load('img/zombies/bigZombie.png')
     life_bar_img = ["life_bar_empty_zombie.png", "life_bar_half_zombie.png", "life_bar_full_zombie.png"]
     for b in range(len(life_bar_img)):
