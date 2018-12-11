@@ -18,24 +18,21 @@ class Hero(Person):
 
     lives_ini = 5
 
-    hero_IMG = pygame.image.load("img/Hero/Hero.png")
+    hero_IMG = pygame.image.load(HERO_IMG)
     #life_bar_full = pygame.image.load("life_bar_full.png")
     #life_bar_3 = pygame.image.load("life_bar_3.png")
     #life_bar_half = pygame.image.load("life_bar_half.png")
     #life_bar_1 = pygame.image.load("life_bar_1.png")
     #life_bar_empty = pygame.image.load("life_bar_empty.png")
 
-    life_bar_img = ["life_bar_empty.png","life_bar_1.png","life_bar_half.png","life_bar_3.png","life_bar_full.png"]
 
-    bullets_img = ["bullets_1.png", "bullets_2.png","bullets_3.png","bullets_4.png","bullets_5.png","bullets_6.png"]
+    for z in range(len(BULLETS_IMG)):
+        BULLETS_IMG[z] = pygame.image.load("img/effects/shotgun_ammo/" + BULLETS_IMG[z])
+    for b in range(len(LIFE_BAR_IMG)):
+        LIFE_BAR_IMG[b] = pygame.image.load("img/effects/life_bar/player/" + LIFE_BAR_IMG[b])
 
-    for z in range(len(bullets_img)):
-        bullets_img[z] = pygame.image.load("img/effects/shotgun_ammo/"+bullets_img[z])
-    for b in range(len(life_bar_img)):
-        life_bar_img[b] = pygame.image.load("img/effects/life_bar/player/"+life_bar_img[b])
-
-    backpack_icon = pygame.image.load("img/effects/backpack_icon.png")
-    score_icon = pygame.image.load("img/effects/score_icon.png")
+    backpack_icon = pygame.image.load(BACKPACK_ICON_IMG)
+    score_icon = pygame.image.load(SCORE_ICON_IMG)
 
     def __init__(self):
         super().__init__()
@@ -47,9 +44,9 @@ class Hero(Person):
         self.pos = self.rect
         self.score = 0
         self.lives = Hero.lives_ini
-        self.lives_img = Hero.life_bar_img[len(Hero.life_bar_img)-1]
+        self.lives_img = LIFE_BAR_IMG[len(LIFE_BAR_IMG) - 1]
 
-        self.ammo_img = self.bullets_img[len(Hero.bullets_img)-1]
+        self.ammo_img = BULLETS_IMG[len(BULLETS_IMG) - 1]
 
         self.backpack_icon = Hero.backpack_icon
         self.score_icon = Hero.score_icon
@@ -78,11 +75,11 @@ class Hero(Person):
             Method that update the life bar image when the hero gain or lose lives
             :param num_lives : number of lifes left
         """
-        self.lives_img = Hero.life_bar_img[num_lives-1]
+        self.lives_img = LIFE_BAR_IMG[num_lives - 1]
 
     def update_ammo(self, num_bullets):
 
-        self.ammo_img = Hero.bullets_img[(num_bullets-1)]
+        self.ammo_img = BULLETS_IMG[(num_bullets - 1)]
 
 
     def update(self,t):

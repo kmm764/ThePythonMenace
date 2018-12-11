@@ -1,9 +1,9 @@
 import pygame
 from setting import *
 
-shotgun_img = pygame.image.load("img/items/shotgun.png")
-backpack_img = pygame.image.load("img/items/backpack.png")
-health_img = pygame.image.load("img/items/hp.png")
+shotgun_img = pygame.image.load(SHOTGUN_IMG)
+backpack_img = pygame.image.load(BACKPACK_IMG)
+health_img = pygame.image.load(HP_IMG)
 
 
 

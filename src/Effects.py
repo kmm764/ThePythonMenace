@@ -1,12 +1,12 @@
 import pygame
 from setting import *
 
-splash_img = pygame.image.load('img/effects/splat.png')
+splash_img = pygame.image.load(SPLAT_IMG)
 
 
 class Effects(pygame.sprite.Sprite):
     splash_image = pygame.transform.scale(splash_img, (TILE_SIZE, TILE_SIZE))
-    hit_screen = pygame.image.load("img/effects/red_screen.png")
+    hit_screen = pygame.image.load(HIT_SCREEN)
 
     def __init__(self, x, y):
         super().__init__()

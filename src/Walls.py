@@ -7,7 +7,7 @@ import math
 
 #  inspired by kidcancode@youtube
 class Walls(pygame.sprite.Sprite):
-    tile_IMG = pygame.image.load('img/background/tile.png')
+    tile_IMG = pygame.image.load(TILE_IMG)
 
     def __init__(self, x, y, TILE_SIZE):
 
