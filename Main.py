@@ -377,8 +377,6 @@ while play_mode:  # the main game loop
 
                             for x in range(10):
                                 groupBullets.add(Shotgun_Bullet(ourHero.rect))
-                                print("shotgun")
-                                print(shotgun_ammo)
                                 pygame.mixer.Sound.play(Shotgun_sound)
                             ourHero.update_ammo(shotgun_ammo)
                         else:
