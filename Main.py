@@ -426,7 +426,7 @@ while play_mode:  # the main game loop
 
     # the function update of the sprite group basically calls the update function of each sprite of the group
     # so the zombies update method changes its position, based on the position of the hero the time passed
-    crewZombies.update(time_passed_s)
+    crewZombies.update(ourHero.rect, time_passed_s)
     groupBullets.update(time_passed_s)
     ourHero.update(time_passed_s)
     ourEffects.update()

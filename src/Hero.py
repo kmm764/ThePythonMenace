@@ -24,7 +24,6 @@ class Hero(Person):
     lives_ini = 5
 
     hero_IMG = pygame.image.load("Hero.png")
-    hero_IMG = pygame.image.load("Hero.png")
     life_bar_full = pygame.image.load("life_bar_full.png")
     life_bar_3 = pygame.image.load("life_bar_3.png")
     life_bar_half = pygame.image.load("life_bar_half.png")
@@ -46,11 +45,7 @@ class Hero(Person):
         self.rect.x = INI_HERO_X
         self.rect.y = INI_HERO_Y
         self.vel = pygame.math.Vector2(0.0, 0.0) #inicialize the velocity vector to 0,0
-        self.rot = 0
-        self.rot_speed = 0
-        self.angle = 0
         self.pos = self.rect
-        self.orientation = pygame.math.Vector2(1.0, 0.0) #inicialize the orientation vector to 0,0
         self.score = 0
         self.lives = Hero.lives_ini
         self.lives_img = Hero.life_bar_full
@@ -63,16 +58,10 @@ class Hero(Person):
         self.pos_max_y = HEIGHT - self.img_height
         self.backpack_collected = 0
 
-
     def get_rot_mouse(self):
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        rel_x, rel_y = mouse_x - self.rect.x, mouse_y - self.rect.y
-        self.angle = (180 / math.pi) * -math.atan2(rel_y, rel_x)
-
-        # we change the orientation of the vector
-        if self.orientation.rotate(self.angle)!= (0.0,0.0):
-            self.orientation = self.orientation.rotate(-self.angle)
+        self.rotate(mouse_x, mouse_y)
 
     def setPos2(self, x, y):
 
@@ -82,7 +71,6 @@ class Hero(Person):
     def under_attack_display(self, screen):
         attack_effect = fontlives.render("-200",False,RED)
         screen.blit(attack_effect,(self.rect.centerx, self.rect.centery - self.img_height-5))
-
 
     def update_livebar(self, num_lives):
         """

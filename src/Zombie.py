@@ -12,18 +12,14 @@ HEIGHT = 768
 class Zombie(Person):
     speed=50 #set the module of velocity
     radius_min = 100
-    # set the max and min position in each axis to prevent the hero from go outside the boundaries of the screen
-
-
+    zombie_IMG = pygame.image.load('zombie.png')
 
     def __init__(self, x, y):
         super().__init__()
-        #image and rect are the attributes used by the methods of the superclass sprite
-        self.image = pygame.image.load('zombie.png')
+        self.image = Zombie.zombie_IMG
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.vel = pygame.math.Vector2(0.0, 0.0) #initialize the velocity vector to 0,0
         self.img_height = 43
         self.img_width = 35
         self.pos_max_x = WIDTH - self.img_width
@@ -46,6 +42,13 @@ class Zombie(Person):
         else:
             return False
 
+    def setAngle(self, positionHero):
+        self.rotate(positionHero.x, positionHero.y)
 
-    def update(self, t):
+
+    def update(self, positionHero, t):
+        self.setAngle(positionHero)
+        self.rot = (self.rot + self.rot_speed * t) % 360
+        self.image = pygame.transform.rotate(Zombie.zombie_IMG, self.angle)
+        self.rect = self.image.get_rect(center=self.rect.center)
         self.setPos(t)

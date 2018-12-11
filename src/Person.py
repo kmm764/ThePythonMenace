@@ -1,4 +1,4 @@
-import pygame
+import pygame, math
 
 
 WIDTH = 1024
@@ -13,6 +13,12 @@ class Person(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__() #calls the constructor of the superclass sprite
+        self.orientation = pygame.math.Vector2(1.0, 0.0)
+        self.vel = pygame.math.Vector2(0.0, 0.0)  # initialize the velocity vector to 0,0
+        self.rot = 0
+        self.rot_speed = 0
+        self.angle = 0
+
 
     def display(self, screen):
         """
@@ -35,6 +41,14 @@ class Person(pygame.sprite.Sprite):
         self.pos = newpos
         self.rect.x = newpos.x
         self.rect.y = newpos.y
+
+    def rotate(self, x, y):
+        rel_x, rel_y = x - self.rect.x, y - self.rect.y
+        self.angle = (180 / math.pi) * -math.atan2(rel_y, rel_x)
+
+        # we change the orientation of the vector
+        if self.orientation.rotate(self.angle) != (0.0, 0.0):
+            self.orientation = self.orientation.rotate(-self.angle)
 
     def setVel(self, vec):
         """
