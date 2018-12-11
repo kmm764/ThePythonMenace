@@ -35,12 +35,12 @@ class Hero(Person):
     bullets_img = ["bullets_1.png", "bullets_2.png","bullets_3.png","bullets_4.png","bullets_5.png","bullets_6.png"]
 
     for z in range(len(bullets_img)):
-        bullets_img[z] = pygame.image.load("img/shotgun_ammo/"+bullets_img[z])
+        bullets_img[z] = pygame.image.load("img/effects/shotgun_ammo/"+bullets_img[z])
     for b in range(len(life_bar_img)):
-        life_bar_img[b] = pygame.image.load("img/life_bar/player/"+life_bar_img[b])
+        life_bar_img[b] = pygame.image.load("img/effects/life_bar/player/"+life_bar_img[b])
 
-    backpack_icon = pygame.image.load("backpack_icon.png")
-    score_icon = pygame.image.load("score_icon.png")
+    backpack_icon = pygame.image.load("img/effects/backpack_icon.png")
+    score_icon = pygame.image.load("img/effects/score_icon.png")
 
     def __init__(self):
         super().__init__()

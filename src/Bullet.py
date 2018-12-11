@@ -13,7 +13,7 @@ class Bullet(pygame.sprite.Sprite):
         super().__init__()
         #image and rect are the attributes used by the methods of the superclass sprite
 
-        self.image = pygame.image.load('bullet.png')
+        self.image = pygame.image.load('img/bullet.png')
         self.rect = self.image.get_rect()
         #self.speed = 0
         #self.Bullet_lifetime = 0

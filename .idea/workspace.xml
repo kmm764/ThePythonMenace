@@ -2,90 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="444c8b9c-40f1-43bf-a3a5-ee5a8ea0afcd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/FirstMap.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameComplete.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hero.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hero_shotgun.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Level1.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Level2.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Level3.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Map.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SecondMap.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ThirdMap.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/arrows.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/arrows2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/background.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backpack.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bullets_0.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bullets_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bullets_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bullets_3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bullets_4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bullets_5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bullets_6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/first_aid_game.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_complete_screen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_over_screen.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gun_pickup.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hero_platform.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/instructions_screen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/keyboard.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/keyboard_keys.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/level1_1024.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/level1_hit.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/level2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/level2_hit.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/level3_begin.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/level3_begin_hit.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/level3_final.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/level3_final_hit.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/life_bar_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/life_bar_3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/life_bar_empty.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/life_bar_empty_zombie.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/life_bar_full.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/life_bar_full_zombie.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/life_bar_half.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/life_bar_half_zombie.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lifebar_score.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu_screen_game.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/p0.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/p1.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/p2.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/p3.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/p4.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/p5.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/p6.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pistol.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/platformPack_item017 2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/red_screen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shotgun.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shotgun.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/shotgun.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/snd/splat.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/snd/zombie-roar-1.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/splat.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/splat.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Effects.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Effects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backpack_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bigZombie.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bullet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/life_bar/player/life_bar_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/life_bar/player/life_bar_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/life_bar/player/life_bar_empty.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/life_bar/player/life_bar_full.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/life_bar/player/life_bar_half.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/life_bar/superzombie/life_bar_empty_zombie.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/life_bar/superzombie/life_bar_full_zombie.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/life_bar/superzombie/life_bar_half_zombie.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/shotgun_ammo/bullets_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/shotgun_ammo/bullets_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/shotgun_ammo/bullets_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/shotgun_ammo/bullets_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/shotgun_ammo/bullets_4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/shotgun_ammo/bullets_5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/shotgun_ammo/bullets_6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/score_icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Bullet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bullet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Hero.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hero.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Item.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Item.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Walls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Walls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/start_screen_game.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tile.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tutorial_screen.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/win_screen.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/z0.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/z1.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/z2.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/z3.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/z4.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/z5.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/z6.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/z7.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/zombie-roar-1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Zombie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Zombie.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weapon_machine.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zombie.png" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -95,11 +35,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="316" column="62" selection-start-line="316" selection-start-column="62" selection-end-line="316" selection-end-column="62" />
+            <state relative-caret-position="264">
+              <caret line="235" column="31" lean-forward="true" selection-start-line="235" selection-start-column="31" selection-end-line="235" selection-end-column="31" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -110,7 +50,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Person.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-583">
+            <state relative-caret-position="270">
               <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
             </state>
           </provider>
@@ -119,8 +59,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Bullet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-349">
-              <caret line="25" selection-start-line="25" selection-end-line="25" />
+            <state relative-caret-position="210">
+              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -152,8 +92,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Hero.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="31" selection-start-line="31" selection-end-line="31" />
+            <state relative-caret-position="201">
+              <caret line="36" column="37" lean-forward="true" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -161,11 +101,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Zombie.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+            <state relative-caret-position="135">
+              <caret line="13" column="20" lean-forward="true" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -182,8 +122,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Game.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="57" column="15" lean-forward="true" selection-start-line="57" selection-start-column="15" selection-end-line="57" selection-end-column="15" />
+            <state relative-caret-position="448">
+              <caret line="236" column="36" selection-start-line="236" selection-start-column="36" selection-end-line="236" selection-end-column="36" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -202,7 +142,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ourWall</find>
       <find>weapon</find>
       <find>lives_counter</find>
       <find>zombie</find>
@@ -230,8 +169,9 @@
       <find>sound</find>
       <find>splash</find>
       <find>.wav</find>
-      <find>effect</find>
       <find>keyboar</find>
+      <find>effect</find>
+      <find>icon</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -253,14 +193,14 @@
         <option value="$USER_HOME$/Desktop/ThePythonMenace-Collision-zombies-wall/ThePythonMenace-Collision-zombies-wall/src/Zombie.py" />
         <option value="$PROJECT_DIR$/src/Items.py" />
         <option value="$PROJECT_DIR$/src/Person.py" />
-        <option value="$PROJECT_DIR$/src/Zombie.py" />
-        <option value="$PROJECT_DIR$/src/Bullet.py" />
         <option value="$PROJECT_DIR$/Main.py" />
-        <option value="$PROJECT_DIR$/src/Hero.py" />
         <option value="$PROJECT_DIR$/src/Walls.py" />
         <option value="$PROJECT_DIR$/src/Item.py" />
         <option value="$PROJECT_DIR$/src/Effects.py" />
         <option value="$PROJECT_DIR$/src/Game.py" />
+        <option value="$PROJECT_DIR$/src/Zombie.py" />
+        <option value="$PROJECT_DIR$/src/Hero.py" />
+        <option value="$PROJECT_DIR$/src/Bullet.py" />
       </list>
     </option>
   </component>
@@ -535,30 +475,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Zombie.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Person.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-583">
-          <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Bullet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-349">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Item.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -576,13 +492,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Hero.py">
+    <entry file="file://$PROJECT_DIR$/src/Person.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="270">
+          <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -595,8 +508,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Game.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="57" column="15" lean-forward="true" selection-start-line="57" selection-start-column="15" selection-end-line="57" selection-end-column="15" />
+        <state relative-caret-position="448">
+          <caret line="236" column="36" selection-start-line="236" selection-start-column="36" selection-end-line="236" selection-end-column="36" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
@@ -605,11 +518,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="316" column="62" selection-start-line="316" selection-start-column="62" selection-end-line="316" selection-end-column="62" />
+        <state relative-caret-position="264">
+          <caret line="235" column="31" lean-forward="true" selection-start-line="235" selection-start-column="31" selection-end-line="235" selection-end-column="31" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Bullet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Hero.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="36" column="37" lean-forward="true" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Zombie.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="13" column="20" lean-forward="true" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
         </state>
       </provider>
     </entry>

@@ -12,7 +12,7 @@ HEIGHT = 768
 class Zombie(Person):
     speed=50 #set the module of velocity
     radius_min = 100
-    zombie_IMG = pygame.image.load('zombie.png')
+    zombie_IMG = pygame.image.load('img/zombies/zombie.png')
 
     def __init__(self, x, y):
         super().__init__()
