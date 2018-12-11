@@ -16,8 +16,6 @@ class Bullet(pygame.sprite.Sprite):
 
         self.image = pygame.image.load(BULLET_IMG)
         self.rect = self.image.get_rect()
-        #self.speed = 0
-        #self.Bullet_lifetime = 0
 
         self.rect.x = positionHero.centerx
         self.rect.y = positionHero.centery
@@ -29,12 +27,20 @@ class Bullet(pygame.sprite.Sprite):
 
 
     def display(self, displayObj):
-
+        """
+        Method that displays the Bullet
+        :param displayObj: Display object where the bullet object will be display on
+        :return:
+        """
         displayObj.blit(self.image, (self.rect.x, self.rect.y))
 
       
     def update(self, t):
-
+        """
+        Method updates the bullet class
+        :param t: time related to fpsclock.tick
+        :return:
+        """
 
         newpos = pygame.math.Vector2(self.rect.x, self.rect.y)+self.vel*self.speed*t
 
@@ -49,7 +55,9 @@ class Bullet(pygame.sprite.Sprite):
 
 
 class Pistol_bullet(Bullet):
-
+    """
+    inherit the Bullet class, and change the bullet speed, lifetime
+    """
     def __init__(self, positionHero):
         Bullet.__init__(self, positionHero)
         self.speed = 600
@@ -61,7 +69,9 @@ class Pistol_bullet(Bullet):
             self.vel = vel.normalize()
 
 class Shotgun_Bullet(Bullet):
-
+    """
+    inherit the Bullet class, and change the image size, bullet speed, lifetime, and add random bullet shooting direction
+    """
     def __init__(self, positionHero):
         Bullet.__init__(self, positionHero)
         self.speed = 600
@@ -69,6 +79,7 @@ class Shotgun_Bullet(Bullet):
         self.size = self.image.get_size()
         self.image = pygame.transform.scale(self.image, (int(self.size[0]/2), int(self.size[1]/2)))
         self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
+        # make the location for vel random between 100 and -100 from the mouse location for both x and y
         self.mouse_x = random.randint(self.mouse_x - 100, self.mouse_x + 100)
         self.mouse_y = random.randint(self.mouse_y - 100, self.mouse_y + 100)
         vel = pygame.math.Vector2(self.mouse_x - self.rect.x, self.mouse_y - self.rect.y)

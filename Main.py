@@ -93,7 +93,7 @@ play_mode = game.menu(displayObj)
 
 #initial music
 level_1_sound = pygame.mixer.music.load("snd/Level_Sound/Level1.mp3")
-#pygame.mixer.music.play(2)
+pygame.mixer.music.play(2)
 
 #to display the instruccions
 
