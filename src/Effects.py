@@ -1,14 +1,14 @@
 import pygame
 
 tile_size = 32
-splash_img = pygame.image.load('splat.png')
+splash_img = pygame.image.load('img/effects/splat.png')
 TIME_DISPLAY_SPLASH = 3000
 TIME_DISPLAY_RED = 250
 
 
 class Effects(pygame.sprite.Sprite):
     splash_image = pygame.transform.scale(splash_img, (tile_size, tile_size))
-    hit_screen = pygame.image.load("red_screen.png")
+    hit_screen = pygame.image.load("img/effects/red_screen.png")
 
     def __init__(self, x, y):
         super().__init__()

@@ -3,11 +3,10 @@ import pygame
 
 tile_size = 32
 
-shotgun_img = pygame.image.load("shotgun.png")
-backpack_img = pygame.image.load("backpack.png")
-health_img = pygame.image.load("hp.png")
-splash_img = pygame.image.load('splat.png')
-TIME_DISPLAY_SPLASH = 3000
+shotgun_img = pygame.image.load("img/items/shotgun.png")
+backpack_img = pygame.image.load("img/items/backpack.png")
+health_img = pygame.image.load("img/items/hp.png")
+
 
 
 class Item(pygame.sprite.Sprite):
@@ -15,7 +14,6 @@ class Item(pygame.sprite.Sprite):
     health_image = pygame.transform.scale(health_img, (tile_size, tile_size))
     shotgun_image = pygame.transform.scale(shotgun_img, (tile_size, tile_size))
     backpack_image = pygame.transform.scale(backpack_img, (tile_size, tile_size))
-    splash_image = pygame.transform.scale(splash_img, (tile_size, tile_size))
 
     def __init__(self, x, y):
 

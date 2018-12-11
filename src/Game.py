@@ -36,7 +36,7 @@ class Game:
                 :param screen --> Object display where the start screen will be display on
         """
         screen.fill(BLACK)
-        img_ini = pygame.image.load("start_screen_game.jpg")
+        img_ini = pygame.image.load("img/Menu/start_screen_game.jpg")
         screen.blit(img_ini, (0, 0))
         pygame.display.flip()
         while True:
@@ -53,7 +53,7 @@ class Game:
         screen.fill(BLACK)
         txt=""
         intro = ["Moodle Programming announcements:"," Thursday, 20 December 2018, 13:59PM:","","Alert to all the students. Demonstration","cancelled. Waves of zombies are invading"," the Earth. If somebody is reading this,","please, save us all.","Letting us die would be even worse than","repeating code.","Best regards.","Isaac and Thorsten"]
-        pygame.mixer.music.load("keyboard.wav")
+        pygame.mixer.music.load("snd/intro/keyboard.wav")
         pygame.mixer.music.play(4)
         lines=0
         currentline = INTRO_Y_INI
@@ -150,7 +150,7 @@ class Game:
                     self.options_draw(screen)
 
     def options_draw(self, screen):
-        img_menu = pygame.image.load("menu_screen_game.jpg")
+        img_menu = pygame.image.load("img/Menu/menu_screen_game.jpg")
         screen.blit(img_menu, (0, 0))
         if self.option==1:
             self.draw_text("PLAY", YELLOW, menu_left_margin, HEIGHT/5*2, screen,True)
@@ -167,17 +167,17 @@ class Game:
         pygame.display.flip()
 
     def instructions(self, screen):
-        img_instructions = pygame.image.load("lifebar_score.jpg")
+        img_instructions = pygame.image.load("img/Menu/intro/intro_lifebar_score.jpg")
         screen.blit(img_instructions, (0, 0))
         pygame.display.flip()
         pygame.event.clear()
         #the total time we show the screen is 10s, but every second we check if the user wants to skip it
         self.watchdog()
-        img_instructions = pygame.image.load("hero_platform.jpg")
+        img_instructions = pygame.image.load("img/Menu/intro/intro_hero_platform.jpg")
         screen.blit(img_instructions, (0, 0))
         pygame.display.flip()
         self.watchdog()
-        img_instructions = pygame.image.load("shotgun.jpg")
+        img_instructions = pygame.image.load("img/Menu/intro/intro_shotgun.jpg")
         screen.blit(img_instructions, (0, 0))
         pygame.display.flip()
         self.watchdog()
@@ -202,7 +202,7 @@ class Game:
                 :param screen --> Object display where the start screen will be display on
         """
         screen.fill(BLACK)
-        img_ini = pygame.image.load("win_screen.jpg")
+        img_ini = pygame.image.load("img/Menu/end/end_win_screen.jpg")
         screen.blit(img_ini, (0, 0))
         pygame.display.flip()
         if self.wait_for_key_over()== "save":
@@ -233,7 +233,7 @@ class Game:
                         score --> score of the current game to be store
         """
         screen.fill(BLACK)
-        img_ini = pygame.image.load("game_over_screen.jpg")
+        img_ini = pygame.image.load("img/Menu/end/end_game_over.jpg")
         screen.blit(img_ini, (0, 0))
         #self.draw_text("GAME OVER", RED, 40, HEIGHT/2, screen, True)
         #self.draw_text("press S to save your score", RED, 40, HEIGHT / 2 + 100, screen, True)
@@ -301,7 +301,7 @@ class Game:
 
     def tutorial(self, screen):
 
-        tutorial_img = pygame.image.load("tutorial_screen.jpg")
+        tutorial_img = pygame.image.load("img/Menu/tutorial/tutorial_screen.jpg")
         tutorial_img_scale=pygame.transform.scale(tutorial_img, (WIDTH, HEIGHT))
         screen.blit(tutorial_img_scale, (0, 0))
         pygame.display.flip()

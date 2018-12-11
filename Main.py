@@ -16,6 +16,7 @@ from src.Item import Health
 from src.Item import Backpack
 from src.Effects import *
 
+
 """----------------------PARAMETERS----------------------------"""
 WIDTH = 1024
 HEIGHT = 768
@@ -70,19 +71,19 @@ game_folder = path.dirname(__file__)
 pygame.init()
 pygame.font.init()
 myfont = pygame.font.SysFont('8-Bit Madness', 35)
-Pistol_sound = pygame.mixer.Sound("pistol.wav")
-Shotgun_sound = pygame.mixer.Sound("shotgun.wav")
-Gun_pickup = pygame.mixer.Sound("gun_pickup.wav")
+Pistol_sound = pygame.mixer.Sound("snd/pistol.wav")
+Shotgun_sound = pygame.mixer.Sound("snd/shotgun.wav")
+Gun_pickup = pygame.mixer.Sound("snd/gun_pickup.wav")
 Player_sound = ["p0.wav", "p1.wav", "p2.wav", "p3.wav", "p4.wav", "p5.wav", "p6.wav"]
 Zombie_sound = ["z0.wav", "z1.wav", "z2.wav", "z3.wav", "z4.wav", "z5.wav", "z6.wav", "z7.wav"]
 
 
 for sounds in range(len(Player_sound)):
-    Player_sound[sounds] = pygame.mixer.Sound(Player_sound[sounds])
+    Player_sound[sounds] = pygame.mixer.Sound("snd/Player_Sound/" + Player_sound[sounds])
     Player_sound[sounds].set_volume(2.0)
 
 for z in range(len(Zombie_sound)):
-    Zombie_sound[z] = pygame.mixer.Sound(Zombie_sound[z])
+    Zombie_sound[z] = pygame.mixer.Sound("snd/Zombie_Sound/" + Zombie_sound[z])
     Zombie_sound[z].set_volume(2.0)
 
 fpsClock = pygame.time.Clock()
@@ -102,8 +103,8 @@ game.show_intro(displayObj)
 play_mode = game.menu(displayObj)
 
 #initial music
-level_1_sound = pygame.mixer.music.load("Level1.mp3")
-pygame.mixer.music.play(2)
+level_1_sound = pygame.mixer.music.load("snd/Level_Sound/Level1.mp3")
+#pygame.mixer.music.play(2)
 
 #to display the instruccions
 
@@ -126,15 +127,15 @@ pygame.display.flip()
 
 """-----------------------------MAP CREATION----------------------------"""
 
-with open(path.join(game_folder, 'FirstMap.txt'), 'rt') as f:  # rf is read
+with open(path.join(game_folder, 'map/FirstMap.txt'), 'rt') as f:  # rf is read
     for line in f:
         map_data.append(line)
 
-with open(path.join(game_folder, 'SecondMap.txt'), 'rt') as f:  # rf is read
+with open(path.join(game_folder, 'map/SecondMap.txt'), 'rt') as f:  # rf is read
     for line in f:
         map2_data.append(line)
 
-with open(path.join(game_folder, 'ThirdMap.txt'), 'rt') as f:  # rf is read
+with open(path.join(game_folder, 'map/ThirdMap.txt'), 'rt') as f:  # rf is read
     for line in f:
         map3_data.append(line)
 
@@ -160,13 +161,13 @@ while play_mode:  # the main game loop
                 ourWall.add(Walls(col, row, Tile_size))
 
     if level == 1:
-        background_image = pygame.image.load("level1_1024.jpg").convert()
+        background_image = pygame.image.load("img/background/level1_1024.jpg").convert()
     elif level == 2:
-        background_image = pygame.image.load("level2.jpg").convert()
+        background_image = pygame.image.load("img/background/level2.jpg").convert()
     elif final_screen == False:
-        background_image = pygame.image.load("level3_begin.jpg").convert()
+        background_image = pygame.image.load("img/background/level3_begin.jpg").convert()
     else:
-        background_image = pygame.image.load("level3_final.jpg").convert()
+        background_image = pygame.image.load("img/background/level3_final.jpg").convert()
 
     displayObj.blit(background_image, [0, 0])
 
@@ -443,7 +444,7 @@ while play_mode:  # the main game loop
                 crewZombies.empty()
                 ourItems.empty()
                 pygame.mixer.music.stop()
-                pygame.mixer.music.load("Level2.mp3")
+                pygame.mixer.music.load("snd/Level_Sound/Level2.mp3")
                 pygame.mixer.music.play(0)
 
             elif level == 2:
@@ -455,12 +456,12 @@ while play_mode:  # the main game loop
                 ourHero.backpack_collected = 0
                 first_time = True
                 pygame.mixer.music.stop()
-                pygame.mixer.music.load("Level3.mp3")
+                pygame.mixer.music.load("snd/Level_Sound/Level3.mp3")
                 pygame.mixer.music.play(0)
             elif final_screen == True:
                 game_complete = True
                 pygame.mixer.music.stop()
-                pygame.mixer.music.load("GameComplete.mp3")
+                pygame.mixer.music.load("snd/Level_Sound/GameComplete.mp3")
                 pygame.mixer.music.play(0)
 
         elif level == 3 and ourHero.ifCheckpoint(FINAL_XMIN,FINAL_XMAX,FINAL_YMIN,FINAL_YMAX):

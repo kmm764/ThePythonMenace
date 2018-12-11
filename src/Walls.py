@@ -3,8 +3,10 @@ from pygame.locals import *
 
 import math
 
+
+#  inspired by kidcancode@youtube
 class Walls(pygame.sprite.Sprite):
-    tile_IMG = pygame.image.load('tile.png')
+    tile_IMG = pygame.image.load('img/background/tile.png')
 
     def __init__(self, x,y, Tile_size):
 
