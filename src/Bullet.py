@@ -21,13 +21,7 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.x = positionHero.centerx
         self.rect.y = positionHero.centery
         self.last_shot = 0
-
-
         #here we set the velocity towards the position of the mouse
-
-        #self.mouse_x = random.randint(self.mouse_x-50,self.mouse_x+50)
-        #self.mouse_y = random.randint(self.mouse_y - 50, self.mouse_y + 50)
-
 
 
         self.spawn_time = pygame.time.get_ticks()

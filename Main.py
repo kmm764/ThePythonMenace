@@ -232,8 +232,9 @@ while play_mode:  # the main game loop
 
     # ·····························SPRITE GROUPS································
     groupBullets.draw(displayObj)
-    ourItems.draw(displayObj)
     ourEffects.draw(displayObj)
+    ourItems.draw(displayObj)
+
 
     crewZombies.draw(displayObj)
     ourHero.display(displayObj)
