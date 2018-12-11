@@ -36,7 +36,6 @@ class Hero(Person):
     bullets_3 = pygame.image.load("bullets_3.png")
     bullets_2 = pygame.image.load("bullets_2.png")
     bullets_1 = pygame.image.load("bullets_1.png")
-    hit_screen = pygame.image.load("red_screen.png")
     backpack_icon = pygame.image.load("backpack_icon.png")
     score_icon = pygame.image.load("score_icon.png")
 
@@ -83,12 +82,6 @@ class Hero(Person):
     def under_attack_display(self, screen):
         attack_effect = fontlives.render("-200",False,RED)
         screen.blit(attack_effect,(self.rect.centerx, self.rect.centery - self.img_height-5))
-
-    def red_screen_display(self, screen):
-        screen.blit(self.hit_screen, (0, 0))
-
-    def under_attack(self):
-        return pygame.time.get_ticks()
 
 
     def update_livebar(self, num_lives):

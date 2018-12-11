@@ -2,36 +2,43 @@ import pygame, sys
 from pygame.locals import *
 
 import random
-Tile_size = 32
 
-class effect(pygame.sprite.Sprite):
-    def __init__(self, Zombiepos):
+tile_size = 32
+
+shotgun_img = pygame.image.load("shotgun.png")
+backpack_img = pygame.image.load("backpack.png")
+health_img = pygame.image.load("hp.png")
+splash_img = pygame.image.load('splat.png')
+TIME_DISPLAY_SPLASH = 3000
+TIME_DISPLAY_RED = 250
+
+
+class Effects(pygame.sprite.Sprite):
+
+    splash_image = pygame.transform.scale(splash_img, (tile_size, tile_size))
+    hit_screen = pygame.image.load("red_screen.png")
+
+    def __init__(self, x, y):
         super().__init__()
-        #image and rect are the attributes used by the methods of the superclass sprite
-        self.image = pygame.image.load('splat.png')
         self.rect = self.image.get_rect()
-        self.rect.x = Zombiepos.x
-        self.rect.y = Zombiepos.y
-        self.spawn_time = pygame.time.get_ticks()
-        self.splat_lifetime = 3500
-
-    def display(self, displayObj):
-
-        displayObj.blit(self.image, (self.rect.x, self.rect.y))
+        self.rect.x = x
+        self.rect.y = y
+        self.creation_time = pygame.time.get_ticks()
 
     def update(self):
-
-
-        self.rate = pygame.time.get_ticks()
-        if self.rate - self.spawn_time > self.splat_lifetime:
+        if (pygame.time.get_ticks() - self.creation_time) > self.life_time:
             self.kill()
 
+class Splash(Effects):
+    def __init__(self, x, y):
+        self.image = Effects.splash_image
+        super().__init__(x,y)
+        self.life_time = TIME_DISPLAY_SPLASH
 
-class zombie_splat(effect):
-    def __init__(self, Zombiepos):
 
-        effect.__init__(self,Zombiepos)
-        self.zombie_splat_img = pygame.image.load('splat.png')
-        self.zombie_splat_img = pygame.transform.scale(self.zombie_splat_img, (Tile_size, Tile_size))
-        self.image = self.zombie_splat_img
+class Red_screen(Effects):
+    def __init__(self):
+        self.image = Effects.hit_screen
+        super().__init__(0,0)
+        self.life_time = TIME_DISPLAY_RED
 

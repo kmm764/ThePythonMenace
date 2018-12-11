@@ -86,6 +86,9 @@ class Person(pygame.sprite.Sprite):
         else:
             return "none"
 
+    def get_time_hit(self):
+        return pygame.time.get_ticks()
+
 def clamp(n, minn, maxn):
     """
         Function that limit the value of a given variable between a max and a min

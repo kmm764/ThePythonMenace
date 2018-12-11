@@ -46,5 +46,9 @@ class Zombie(Person):
         else:
             return False
 
+    def splash_display(self):
+        splash_img = pygame.image.load('splat.png')
+        splash_img_scale = pygame.transform.scale(splash_img, (tile_size, tile_size))
+
     def update(self, t):
         self.setPos(t)

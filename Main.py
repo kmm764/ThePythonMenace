@@ -36,8 +36,8 @@ last_attack_time = 0.
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 frecuency_Zombie = 10
-FRECUENCY_GUN = 100
-FRECUENCY_LIVES = 100
+FRECUENCY_GUN = 5
+FRECUENCY_LIVES = 5
 MAX_BACKPACKS = 5
 MAX_TIME_DISPLAY = 1000
 CHECKPOINT_X_MIN = 960
@@ -119,7 +119,7 @@ crewZombies = pygame.sprite.Group()
 groupBullets = pygame.sprite.Group()
 ourWall = pygame.sprite.Group()
 ourItems = pygame.sprite.Group()
-ourEffect = pygame.sprite.Group()
+ourEffects = pygame.sprite.Group()
 # pygame.key.set_repeat(1, 10) #to handle the "holding key" event
 weaponType = "Pistol"
 
@@ -233,8 +233,8 @@ while play_mode:  # the main game loop
 
     # ·····························SPRITE GROUPS································
     groupBullets.draw(displayObj)
-    ourEffect.draw(displayObj)
     ourItems.draw(displayObj)
+    ourEffects.draw(displayObj)
 
     crewZombies.draw(displayObj)
     ourHero.display(displayObj)
@@ -242,20 +242,13 @@ while play_mode:  # the main game loop
     if (pygame.time.get_ticks() - last_attack_time) < MAX_TIME_DISPLAY:
         ourHero.under_attack_display(displayObj)
 
-    if (pygame.time.get_ticks() - last_attack_time) < MAX_TIME_DISPLAY/8:
-        ourHero.red_screen_display(displayObj)
+
 
     """---------------------------------COLLISIONS : PART 1---------------------------------"""
 
     hero_zombies_collision = pygame.sprite.spritecollide(ourHero, crewZombies, False)
     hero_wall_collision = pygame.sprite.spritecollide(ourHero, ourWall, False)
     hero_item_collision = pygame.sprite.spritecollide(ourHero, ourItems, False)
-    print(type(ourHero))
-    prueba=(type(ourHero)==Hero)
-    print(prueba)
-
-
-
 
     # ·····························ZOMBIE - HERO································
     for zombie in hero_zombies_collision:
@@ -265,7 +258,8 @@ while play_mode:  # the main game loop
             rand_sound = random.randint(0, len(Player_sound) - 1)
             pygame.mixer.Sound.play(Player_sound[rand_sound])
             ourHero.lives -= 1  # here our hero loses one life per zombie in the collisions list
-            last_attack_time = ourHero.under_attack()
+            last_attack_time = ourHero.get_time_hit()
+            ourEffects.add(Red_screen())
             ourHero.update_livebar(ourHero.lives)
             lasthit_time = 0.0  # set the time from the last collision to hero
             if ourHero.lives == 0:  # If Hero dies show Game Over screen
@@ -319,7 +313,7 @@ while play_mode:  # the main game loop
                 bul.kill()
             if len(bullet_zombies_collision) > 0:
                 bul.kill()
-                ourEffect.add(zombie_splat(bul.rect))
+                ourEffects.add(Splash(bul.rect.x, bul.rect.y))
                 ourHero.score += 1
 
     hero_zombies_collision.clear()
@@ -454,6 +448,7 @@ while play_mode:  # the main game loop
     crewZombies.update(time_passed_s)
     groupBullets.update(time_passed_s)
     ourHero.update(time_passed_s)
+    ourEffects.update()
 
 
 
@@ -466,7 +461,7 @@ while play_mode:  # the main game loop
                 #reinitializes the position of the hero and delete the zombies
                 ourHero.backpack_collected=0
                 ourHero.setPos2(48,48)
-                frecuency_Zombie = 4
+                frecuency_Zombie *=4
                 crewZombies.empty()
                 ourItems.empty()
                 pygame.mixer.music.stop()
@@ -475,7 +470,7 @@ while play_mode:  # the main game loop
 
             elif level == 2:
                 level = 3
-                frecuency_Zombie = 2
+                frecuency_Zombie /=4
                 ourHero.setPos2(48, 48)
                 crewZombies.empty()
                 ourItems.empty()
