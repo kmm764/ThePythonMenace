@@ -125,7 +125,6 @@ class Game:
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-
                     pygame.quit() # ends pygame
                     os._exit(0)
                     sys.exit()  # ends the program
@@ -149,6 +148,7 @@ class Game:
                         else:
                             self.ranking(screen)
                     self.options_draw(screen)
+
     def options_draw(self, screen):
         img_menu = pygame.image.load("menu_screen_game.jpg")
         screen.blit(img_menu, (0, 0))
@@ -202,7 +202,7 @@ class Game:
                 :param screen --> Object display where the start screen will be display on
         """
         screen.fill(BLACK)
-        img_ini = pygame.image.load("game_complete_screen.png")
+        img_ini = pygame.image.load("win_screen.jpg")
         screen.blit(img_ini, (0, 0))
         pygame.display.flip()
         if self.wait_for_key_over()== "save":
@@ -300,16 +300,10 @@ class Game:
     
 
     def tutorial(self, screen):
-        screen.fill(BLACK)
-        self.draw_text("TUTORIAL", RED, WIDTH / 8, HEIGHT / 5, screen, True)
-        img1 = pygame.image.load("arrows2.png")
-        img2 = pygame.image.load("arrows.jpg")
-        screen.blit(img1, (60, HEIGHT/3))
-        screen.blit(img2, (60 + 70, HEIGHT / 3))
-        self.draw_text("Arrows - Move the hero", WHITE, WIDTH / 4, HEIGHT / 3, screen, False)
-        self.draw_text("Mouse pointer - Rotate the hero", WHITE, WIDTH / 4, HEIGHT / 3 + 100, screen, False)
-        self.draw_text("Left mouse click - Shoot", WHITE, WIDTH / 4, HEIGHT / 3 + 200, screen, False)
-        self.draw_text("Press <- to go back to the menu", YELLOW, WIDTH / 5, HEIGHT / 3 + 300, screen, False)
+
+        tutorial_img = pygame.image.load("tutorial_screen.jpg")
+        tutorial_img_scale=pygame.transform.scale(tutorial_img, (WIDTH, HEIGHT))
+        screen.blit(tutorial_img_scale, (0, 0))
         pygame.display.flip()
         while True:
             for event in pygame.event.get():
