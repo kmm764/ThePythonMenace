@@ -11,7 +11,9 @@ from src.Zombie import Zombie
 from src.Bullet import *
 from src.Game import Game
 from src.Walls import Walls
-from src.items import Item
+from src.Item import Shotgun
+from src.Item import Health
+from src.Item import Backpack
 from src.Effects import *
 
 """----------------------PARAMETERS----------------------------"""
@@ -34,9 +36,9 @@ last_attack_time = 0.
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 frecuency_Zombie = 10
-FRECUENCY_GUN = 2
-FRECUENCY_LIVES = 5
-MAX_HORROCRUX = 5
+FRECUENCY_GUN = 100
+FRECUENCY_LIVES = 100
+MAX_BACKPACKS = 5
 MAX_TIME_DISPLAY = 1000
 CHECKPOINT_X_MIN = 960
 CHECKPOINT_Y_MAX = 256
@@ -47,7 +49,7 @@ FINAL_YMAX = 352
 FINAL_YMIN = 288
 vel_x, vel_y = 0., 0.  # inicializes the x and y components of the velocity vector of the hero
 zombie_vel = pygame.math.Vector2(0.,0.)
-horrocrux_killed = 0
+backpack_killed = 0
 last_shot = 0
 shotgun_ammo = 0
 level = 1
@@ -173,13 +175,13 @@ while play_mode:  # the main game loop
     """------------------------INSTANCES CREATION---------------------------"""
     #·····························HORROCRUXES································
     if first_time == True:
-        for i in range(MAX_HORROCRUX):
-            ourItems.add(Item(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT/4 * 3), "Horrocrux"))
+        for i in range(MAX_BACKPACKS):
+            ourItems.add(Backpack(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT/4 * 3)))
         first_time = False
     else:
-        for i in range(horrocrux_killed):
-            ourItems.add(Item(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT / 4 * 3), "Horrocrux"))
-        horrocrux_killed=0
+        for i in range(backpack_killed):
+            ourItems.add(Backpack(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT / 4 * 3)))
+        backpack_killed=0
 
     # ·····························ZOMBIES································
     if random.randrange(0, 100) < frecuency_Zombie:  # here, a probability of "frecuency zombie" is assigned to the appearance of a new zombie
@@ -194,18 +196,16 @@ while play_mode:  # the main game loop
 
         else:
             new_zombie_delete = False
-            print("borrado")
-            print(zombie_new.hero_near(ourHero.rect))
 
 
 
     # ·····························GUNS································
     if random.randrange(0, 1000) < FRECUENCY_GUN:
-        ourItems.add(Item(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT-Tile_size), "Shotgun"))
+        ourItems.add(Shotgun(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT-Tile_size)))
 
     # ·····························LIVES································
     if random.randrange(0, 1000) < FRECUENCY_LIVES:
-        ourItems.add(Item(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT - Tile_size), "Hp"))
+        ourItems.add(Health(random.randrange(0, WIDTH - Tile_size), random.randrange(0, HEIGHT - Tile_size)))
 
 
 
@@ -227,8 +227,8 @@ while play_mode:  # the main game loop
     displayObj.blit(ourHero.score_icon, (WIDTH - 200, 30))
     
     # ..........................HORROCRUX......................................
-    horrocrux_collected = myfont.render(str(ourHero.horrocrux_collected), False, (255, 255, 255))
-    displayObj.blit(horrocrux_collected, (WIDTH - 170, 60))
+    backpack_collected = myfont.render(str(ourHero.backpack_collected), False, (255, 255, 255))
+    displayObj.blit(backpack_collected, (WIDTH - 170, 60))
     displayObj.blit(ourHero.backpack_icon, (WIDTH - 200, 60))
 
     # ·····························SPRITE GROUPS································
@@ -242,7 +242,7 @@ while play_mode:  # the main game loop
     if (pygame.time.get_ticks() - last_attack_time) < MAX_TIME_DISPLAY:
         ourHero.under_attack_display(displayObj)
 
-    if (pygame.time.get_ticks() - last_attack_time) < MAX_TIME_DISPLAY/2:
+    if (pygame.time.get_ticks() - last_attack_time) < MAX_TIME_DISPLAY/8:
         ourHero.red_screen_display(displayObj)
 
     """---------------------------------COLLISIONS : PART 1---------------------------------"""
@@ -250,6 +250,12 @@ while play_mode:  # the main game loop
     hero_zombies_collision = pygame.sprite.spritecollide(ourHero, crewZombies, False)
     hero_wall_collision = pygame.sprite.spritecollide(ourHero, ourWall, False)
     hero_item_collision = pygame.sprite.spritecollide(ourHero, ourItems, False)
+    print(type(ourHero))
+    prueba=(type(ourHero)==Hero)
+    print(prueba)
+
+
+
 
     # ·····························ZOMBIE - HERO································
     for zombie in hero_zombies_collision:
@@ -271,7 +277,7 @@ while play_mode:  # the main game loop
                     ourWall.empty()
                     level = 1
                     vel_x, vel_y = 0., 0.  # inicializes the x and y components of the velocity vector of the hero
-                    horrocrux_killed = 0
+                    backpack_killed = 0
                     last_shot = 0
                     shotgun_ammo = 0
                     first_time = True
@@ -279,11 +285,11 @@ while play_mode:  # the main game loop
 
     # ·····························ITEMS - HERO································
     for hit in hero_item_collision:
-        if hit.type == "Hp" and ourHero.lives < 5:
+        if type(hit) == Health and ourHero.lives < 5:
             hit.kill()
             ourHero.lives += 1
             ourHero.update_livebar(ourHero.lives)
-        elif hit.type == "Shotgun":
+        elif type(hit) == Shotgun:
             if shotgun_ammo < 6:
                 hit.kill()
                 pygame.mixer.Sound.play(Gun_pickup)
@@ -291,16 +297,16 @@ while play_mode:  # the main game loop
                 shotgun_ammo = 6
             ourHero.update_ammo(shotgun_ammo)
             displayObj.blit(ourHero.ammo_img, (WIDTH - 110, 30))
-        elif hit.type == "Horrocrux":
-            ourHero.horrocrux_collected+=1
+        elif type(hit)==Backpack:
+            ourHero.backpack_collected+=1
             hit.kill()
 
     # ·····························ITEMS - WALL································
     for wall in ourWall:
         item_wall_collision = pygame.sprite.spritecollide(wall,ourItems,False)
         for item in item_wall_collision:
-            if item.type == "Horrocrux":
-                horrocrux_killed+=1
+            if type(item) == Backpack:
+                backpack_killed+=1
             item.kill()
 
     # ·····························ZOMBIE - BULLETS································
@@ -452,13 +458,13 @@ while play_mode:  # the main game loop
 
 
 
-    if ourHero.horrocrux_collected == MAX_HORROCRUX:
+    if ourHero.backpack_collected == MAX_BACKPACKS:
         if ourHero.ifCheckpoint(CHECKPOINT_X_MIN,WIDTH,CHECKPOINT_Y_MIN,CHECKPOINT_Y_MAX):
             if level == 1:
                 level = 2
                 first_time = True
                 #reinitializes the position of the hero and delete the zombies
-                ourHero.horrocrux_collected=0
+                ourHero.backpack_collected=0
                 ourHero.setPos2(48,48)
                 frecuency_Zombie = 4
                 crewZombies.empty()
@@ -473,7 +479,7 @@ while play_mode:  # the main game loop
                 ourHero.setPos2(48, 48)
                 crewZombies.empty()
                 ourItems.empty()
-                ourHero.horrocrux_collected = 0
+                ourHero.backpack_collected = 0
                 first_time = True
                 pygame.mixer.music.stop()
                 pygame.mixer.music.load("Level3.mp3")
@@ -496,7 +502,7 @@ while play_mode:  # the main game loop
             ourWall.empty()
             level = 1
             vel_x, vel_y = 0., 0.  # inicializes the x and y components of the velocity vector of the hero
-            horrocrux_killed = 0
+            backpack_killed = 0
             last_shot = 0
             shotgun_ammo = 0
             first_time = True

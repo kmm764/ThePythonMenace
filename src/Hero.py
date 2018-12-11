@@ -22,7 +22,7 @@ class Hero(Person):
 
 
     lives_ini = 5
-    horrocrux_collected = 0
+
     hero_IMG = pygame.image.load("Hero.png")
     hero_IMG = pygame.image.load("Hero.png")
     life_bar_full = pygame.image.load("life_bar_full.png")
@@ -62,6 +62,7 @@ class Hero(Person):
         self.img_height = 43
         self.pos_max_x = WIDTH - self.img_width
         self.pos_max_y = HEIGHT - self.img_height
+        self.backpack_collected = 0
 
 
     def get_rot_mouse(self):
@@ -80,7 +81,7 @@ class Hero(Person):
         self.rect.y = y
 
     def under_attack_display(self, screen):
-        attack_effect = fontlives.render("-250",False,RED)
+        attack_effect = fontlives.render("-200",False,RED)
         screen.blit(attack_effect,(self.rect.centerx, self.rect.centery - self.img_height-5))
 
     def red_screen_display(self, screen):

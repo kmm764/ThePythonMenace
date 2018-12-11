@@ -15,8 +15,8 @@ class Bullet(pygame.sprite.Sprite):
 
         self.image = pygame.image.load('bullet.png')
         self.rect = self.image.get_rect()
-        self.speed = 0
-        self.Bullet_lifetime = 0
+        #self.speed = 0
+        #self.Bullet_lifetime = 0
 
         self.rect.x = positionHero.centerx
         self.rect.y = positionHero.centery
