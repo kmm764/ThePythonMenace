@@ -239,11 +239,14 @@ while play_mode:  # the main game loop
         if last_hit_t >= LAST_HIT_TIME:
             rand_sound = random.randint(0, len(Player_sound) - 1)
             pygame.mixer.Sound.play(Player_sound[rand_sound])
-            our_hero.lives -= 1  # here our hero loses one life per zombie in the collisions list
             last_attack_time = our_hero.get_time_hit()
-            our_effects.add(Red_screen())
-            our_hero.update_livebar(our_hero.lives)
             last_hit_t = 0.0  # set the time from the last collision to hero
+            our_effects.add(Red_screen())
+            if GOD_MODE:
+                break
+            our_hero.lives -= 1  # here our hero loses one life per zombie in the collisions list
+            our_hero.update_livebar(our_hero.lives)
+
             if our_hero.lives == 0:  # If Hero dies show Game Over screen
                 if game.show_over_screen(displayObj, our_hero.score) == True:
                     #here we initializes all the variables, as the user has chosen to play again

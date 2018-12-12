@@ -1,6 +1,9 @@
 
 '''--------Main--------'''
 
+#God mode, to never die:
+GOD_MODE = False
+
 #Colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -34,6 +37,7 @@ LIFE_BAR_IMG = ["life_bar_empty.png", "life_bar_1.png", "life_bar_half.png", "li
 INI_HERO_X = 416
 INI_HERO_Y = 224
 LIVES_INI = 5
+
 
 
 
