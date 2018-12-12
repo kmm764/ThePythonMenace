@@ -49,6 +49,7 @@ map3_data = []
 play_mode = False
 menu_mode = False
 new_zombie_delete = False
+pause_happened = False
 game_folder = path.dirname(__file__)
 
 """----------------------PYGAME INITIALIZING---------------------------"""
@@ -302,7 +303,7 @@ while play_mode:  # the main game loop
                     if z.updates_life() is True:
                         our_hero.score += 1
 
-    """----------------------ZOMBIES EFFECTS----------------------------"""
+    """-------------------------------ZOMBIES EFFECTS----------------------------"""
 
     #sound of the roar of zombies randomized
     if len(crew_zombies.sprites()) > 0:
@@ -336,8 +337,15 @@ while play_mode:  # the main game loop
                 vel_y = -1.
             if event.key in (K_DOWN, K_s):
                 vel_y = 1.
+
+        # ····························· PAUSE SCREEN································
             if event.key == K_p:
-                pass
+                time_pause_start = pygame.time.get_ticks()
+                pygame.mixer.music.pause()
+                game.pause_screen(displayObj)
+                pause_happened=True
+                total_time_paused = pygame.time.get_ticks() - time_pause_start
+                pygame.mixer.music.unpause()
         # ····························· SHOOTING································
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
@@ -400,7 +408,11 @@ while play_mode:  # the main game loop
 
     # sets the frames per second to our clock object and store the time passed from the last call in time_passed_ms
     time_passed_ms = fpsClock.tick(FPS)
-    time_passed_s = time_passed_ms / 1000.0
+    if pause_happened:
+        time_passed_s = (time_passed_ms - total_time_paused)/1000 #if paused was pressed, we substract the time of the pause to the time passed
+        pause_happened = False
+    else:
+        time_passed_s = time_passed_ms / 1000.0
 
     # the function update of the sprite group basically calls the update function of each sprite of the group
     crew_zombies.update(our_hero.rect, time_passed_s)

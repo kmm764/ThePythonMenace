@@ -39,7 +39,7 @@ LIVES_INI = 5
 
 '''Zombies'''
 ZOMBIE_IMG = 'img/zombies/zombie.png'
-FREQUENCY_ZOMBIE = 10
+FREQUENCY_ZOMBIE = 8
 PROBABILITY_SUPERZOMBIE = 70
 Zombie_sound = ["z0.wav", "z1.wav", "z2.wav", "z3.wav", "z4.wav", "z5.wav", "z6.wav", "z7.wav"]
 

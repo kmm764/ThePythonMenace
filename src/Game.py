@@ -317,7 +317,18 @@ class Game:
                         screen.fill(BLACK)
             self.draw_text(name_input, WHITE, WIDTH / 5 * 2, HEIGHT / 3, screen, False)
             pygame.display.flip()
-    
+
+    def pause_screen(self, screen):
+        """
+            Method that displays the pause screen and waits for the user to press p to restart the game
+        :param screen: Object display where the pause screen will be displayed on
+        :return:
+        """
+        tutorial_img = pygame.image.load("img/Menu/pause_screen.png")
+        tutorial_img_scale = pygame.transform.scale(tutorial_img, (WIDTH, HEIGHT))
+        screen.blit(tutorial_img_scale, (0, 0))
+        pygame.display.flip()
+        self.waiting_for(K_p)
 
     def tutorial(self, screen):
         """
@@ -329,7 +340,7 @@ class Game:
         tutorial_img_scale=pygame.transform.scale(tutorial_img, (WIDTH, HEIGHT))
         screen.blit(tutorial_img_scale, (0, 0))
         pygame.display.flip()
-        self.waiting_for_left()
+        self.waiting_for(K_LEFT)
 
     def ranking(self,screen):
         """
@@ -342,11 +353,12 @@ class Game:
         screen.blit(tutorial_img_scale, (0, 0))
         self.ranking_draw(screen)
         pygame.display.flip()
-        self.waiting_for_left()
+        self.waiting_for(K_LEFT)
 
-    def waiting_for_left(self):
+    def waiting_for(self, key):
         """
-            Method that waits for the user to press left arrow
+            Method that waits for the user to press a given key
+            :param key: key awaited
         """
         while True:
             for event in pygame.event.get():
@@ -356,7 +368,7 @@ class Game:
                     sys.exit()  # ends the program
                     return
                 if event.type == pygame.KEYDOWN:
-                    if event.key == K_LEFT:
+                    if event.key == key:
                         return
 
     def ranking_draw(self, screen):
