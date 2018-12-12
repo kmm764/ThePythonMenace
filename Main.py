@@ -436,7 +436,7 @@ while play_mode:  # the main game loop
                 first_time = True
                 our_hero.backpack_collected=0
                 our_hero.set_pos2(48, 48)
-                frequency_Zombie *=5
+                frequency_Zombie = FREQUENCY_ZOMBIE_L2
                 crew_zombies.empty()
                 our_items.empty()
                 pygame.mixer.music.stop()
@@ -446,7 +446,7 @@ while play_mode:  # the main game loop
             elif level == 2:
                 # here we set the settings to the first screen of level 3
                 level = 3
-                frequency_Zombie /=2
+                frequency_Zombie = FREQUENCY_ZOMBIE_L3
                 our_hero.set_pos2(48, 48)
                 crew_zombies.empty()
                 our_items.empty()
