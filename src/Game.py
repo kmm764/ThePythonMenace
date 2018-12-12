@@ -349,7 +349,7 @@ class Game:
             to go back to the menu
         :param screen: Object display where the ranking screen will be displayed on
         """
-        ranking_img = pygame.image.load("img/Menu/ranking_screen.jpg")
+        ranking_img = pygame.image.load("img/Menu/ranking_screen_menu.jpg")
         ranking_img_scale = pygame.transform.scale(ranking_img, (WIDTH, HEIGHT))
         screen.blit(ranking_img_scale, (0, 0))
         self.ranking_draw(screen)
