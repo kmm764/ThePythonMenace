@@ -357,7 +357,7 @@ while play_mode:  # the main game loop
                     Bullet_Rate = 350
                     if now - last_shot > Bullet_Rate:
                         last_shot = now
-                        group_bullets.add(Pistol_bullet(our_hero.rect))
+                        group_bullets.add(PistolBullet(our_hero.rect))
                         pygame.mixer.Sound.play(pistol_sound)
 
                 elif weaponType == "Shotgun":
@@ -367,7 +367,7 @@ while play_mode:  # the main game loop
                         if shotgun_ammo > 0:
                             shotgun_ammo -= 1
                             for x in range(10):
-                                group_bullets.add(Shotgun_Bullet(our_hero.rect))
+                                group_bullets.add(ShotgunBullet(our_hero.rect))
                                 pygame.mixer.Sound.play(Shotgun_sound)
                             our_hero.update_ammo(shotgun_ammo)
                         else:
@@ -470,7 +470,7 @@ while play_mode:  # the main game loop
             our_items.empty()
             our_wall.empty()
             level = 1
-            vel_x, vel_y = 0., 0.  # inicializes the x and y components of the velocity vector of the hero
+            vel_x, vel_y = 0., 0.  # initializes the x and y components of the velocity vector of the hero
             backpack_killed = 0
             last_shot = 0
             shotgun_ammo = 0

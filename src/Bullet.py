@@ -45,7 +45,7 @@ class Bullet(pygame.sprite.Sprite):
             self.kill()
 
 
-class Pistol_bullet(Bullet):
+class PistolBullet(Bullet):
     """
     inherit the Bullet class, and change the bullet speed, lifetime
     """
@@ -59,7 +59,7 @@ class Pistol_bullet(Bullet):
             # we turn it into a unit vector to get just the direction of the movement
             self.vel = vel.normalize()
 
-class Shotgun_Bullet(Bullet):
+class ShotgunBullet(Bullet):
     """
     inherit the Bullet class, and change the image size, bullet speed, lifetime, and add random bullet shooting direction
     """
