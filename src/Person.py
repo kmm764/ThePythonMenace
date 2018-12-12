@@ -39,6 +39,11 @@ class Person(pygame.sprite.Sprite):
         self.rect.y = newpos.y
 
     def rotate(self, x, y):
+        """
+            Method that calculates the angle of rotation of the person, from its position to a given coordinates x, y
+        :param x:
+        :param y:
+        """
         rel_x, rel_y = x - self.rect.x, y - self.rect.y
         self.angle = (180 / math.pi) * -math.atan2(rel_y, rel_x)
 
@@ -95,7 +100,7 @@ class Person(pygame.sprite.Sprite):
     def get_time_hit(self):
         """
             Method that returns the moment of the last hit of the hero
-        :return:
+        :return: time of the last hit
         """
         return pygame.time.get_ticks()
 

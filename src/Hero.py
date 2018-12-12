@@ -46,18 +46,33 @@ class Hero(Person):
         self.backpack_collected = 0
 
     def get_rot_mouse(self):
+        """
+            method that uses the x, y coordinates of the position of the mouse to rotate hero
+        """
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
         self.rotate(mouse_x, mouse_y)
 
     def set_pos2(self, x, y):
+        """
+            set the position of the hero to a given x, y coordinates
+        :param x: coordinate x
+        :param y: coordinate y
+
+        """
 
         self.rect.x = x
         self.rect.y = y
 
     def under_attack_display(self, screen):
+        """
+            Method that displays "-200" over the head of the hero
+        :param screen: Display object where the text will be display on
+        :return:
+        """
+        over_head = 5
         attack_effect = font_lives.render("-200", False, RED)
-        screen.blit(attack_effect,(self.rect.centerx, self.rect.centery - self.img_height-5))
+        screen.blit(attack_effect,(self.rect.centerx, self.rect.centery - self.img_height-over_head))
 
     def update_livebar(self, num_lives):
         """
@@ -67,11 +82,19 @@ class Hero(Person):
         self.lives_img = LIFE_BAR_IMG[num_lives - 1]
 
     def update_ammo(self, num_bullets):
-
+        """
+            Method that update the shotgun bullets left image when the number of bullets changes
+        :param num_bullets: number of bullets left
+        """
         self.ammo_img = BULLETS_IMG[(num_bullets - 1)]
 
 
     def update(self,t):
+        """
+            Method that update the position and angle of the hero
+        :param t: time passed since the last update
+        """
+
         self.get_rot_mouse()
         self.rot = (self.rot + self.rot_speed * t) % 360
         self.image = pygame.transform.rotate(Hero.hero_IMG, self.angle)
@@ -79,6 +102,14 @@ class Hero(Person):
         self.set_pos(t)
 
     def if_checkpoint(self, cp_xmin, cp_xmax, cp_ymin, cp_ymax):
+        """
+            Method that check if the hero is in the "checkpoint" of the current level
+        :param cp_xmin: x coordinate when the area of the checkpoint starts
+        :param cp_xmax: x coordinate when the area of the checkpoint ends
+        :param cp_ymin: y coordinate when the area of the checkpoint starts
+        :param cp_ymax: x coordinate when the area of the checkpoint ends
+        :return:
+        """
         if self.rect.centerx > cp_xmin and self.rect.centerx < cp_xmax  and self.rect.centery > cp_ymin and self.rect.centery < cp_ymax:
             return True
 
