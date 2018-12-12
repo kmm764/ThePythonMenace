@@ -2,7 +2,7 @@
 '''--------Main--------'''
 
 #God mode, to never die:
-GOD_MODE = True
+GOD_MODE = False
 
 #Colors
 WHITE = (255, 255, 255)
@@ -43,8 +43,8 @@ LIVES_INI = 5
 
 '''Zombies'''
 ZOMBIE_IMG = 'img/zombies/zombie.png'
-FREQUENCY_ZOMBIE = 8
-PROBABILITY_SUPERZOMBIE = 70
+FREQUENCY_ZOMBIE = 7
+PROBABILITY_SUPERZOMBIE = 60
 Zombie_sound = ["z0.wav", "z1.wav", "z2.wav", "z3.wav", "z4.wav", "z5.wav", "z6.wav", "z7.wav"]
 
 
