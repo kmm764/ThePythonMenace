@@ -218,10 +218,10 @@ class Game:
         if choice == "save":
             name = self.input_name_screen(screen)
             ranking_update(score,name)
-            screen.fill(BLACK)
-            self.draw_text("Ranking", RED, WIDTH / 8, HEIGHT / 5, screen, True)
+            ranking_img = pygame.image.load("img/Menu/ranking_screen_end.jpg")
+            ranking_img_scale = pygame.transform.scale(ranking_img, (WIDTH, HEIGHT))
+            screen.blit(ranking_img_scale, (0, 0))
             self.ranking_draw(screen)
-            self.draw_text("Press C to play again", YELLOW, WIDTH / 5, HEIGHT / 3 + 300, screen, False)
             pygame.display.flip()
             while True:
                 for event in pygame.event.get():
@@ -252,10 +252,10 @@ class Game:
         if choice == "save":
             name = self.input_name_screen(screen)
             ranking_update(score,name)
-            screen.fill(BLACK)
-            self.draw_text("Ranking", RED, WIDTH / 8, HEIGHT / 5, screen, True)
+            ranking_img = pygame.image.load("img/Menu/ranking_screen_end.jpg")
+            ranking_img_scale = pygame.transform.scale(ranking_img, (WIDTH, HEIGHT))
+            screen.blit(ranking_img_scale, (0, 0))
             self.ranking_draw(screen)
-            self.draw_text("Press C to play again", YELLOW, WIDTH / 5, HEIGHT / 3 + 300, screen, False)
             pygame.display.flip()
             while True:
                 for event in pygame.event.get():
@@ -349,9 +349,9 @@ class Game:
             to go back to the menu
         :param screen: Object display where the ranking screen will be displayed on
         """
-        tutorial_img = pygame.image.load("img/Menu/ranking_screen.jpg")
-        tutorial_img_scale = pygame.transform.scale(tutorial_img, (WIDTH, HEIGHT))
-        screen.blit(tutorial_img_scale, (0, 0))
+        ranking_img = pygame.image.load("img/Menu/ranking_screen.jpg")
+        ranking_img_scale = pygame.transform.scale(ranking_img, (WIDTH, HEIGHT))
+        screen.blit(ranking_img_scale, (0, 0))
         self.ranking_draw(screen)
         pygame.display.flip()
         self.waiting_for(K_LEFT)

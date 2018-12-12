@@ -2,7 +2,7 @@
 '''--------Main--------'''
 
 #God mode, to never die:
-GOD_MODE = True
+GOD_MODE = False
 
 #Colors
 WHITE = (255, 255, 255)
