@@ -8,7 +8,7 @@ import random
 
 
 class Zombie(Person):
-    speed=150 #set the module of velocity
+    speed=100 #set the module of velocity
     radius_min = 100
     zombie_IMG = pygame.image.load(ZOMBIE_IMG)
 
