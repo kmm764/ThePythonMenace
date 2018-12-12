@@ -119,6 +119,10 @@ class Game:
             return self.ranking(screen)
 
     def wait_for_key_menu(self, screen):
+        """
+            Method that reads the keys pressed by the user to move through the options in the menu
+        :param screen: Object display where the options will be displayed on
+        """
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -139,7 +143,7 @@ class Game:
                             self.option-=1
                     if event.key == K_RETURN:
                         if self.option == 1:
-                            return True
+                            return
                         elif self.option == 2:
                             self.tutorial(screen)
                         else:

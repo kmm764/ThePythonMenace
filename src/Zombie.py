@@ -1,5 +1,5 @@
-import pygame, sys
-from pygame.locals import *
+import pygame
+
 from src.Person import Person
 from setting import *
 

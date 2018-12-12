@@ -394,7 +394,7 @@ while play_mode:  # the main game loop
         zombie.set_vel(zombie_vel) #we set the new velocity of the zombie
 
 
-    """---------------------------------UPDATES---------------------------------"""
+    """-------------------------------------UPDATES-------------------------------------"""
 
     our_hero.set_vel(pygame.math.Vector2(vel_x, vel_y)) # we set the new velocity of the hero
 
@@ -408,12 +408,14 @@ while play_mode:  # the main game loop
     our_hero.update(time_passed_s)
     our_effects.update()
 
+    """-----------------CHECK CONDITIONS TO GO TO THE NEXT LEVEL OR COMPLETE THE GAME-------------------------------"""
+
     if our_hero.backpack_collected >= MAX_BACKPACKS:
         if our_hero.if_checkpoint(CHECKPOINT_X_MIN, WIDTH, CHECKPOINT_Y_MIN, CHECKPOINT_Y_MAX):
             if level == 1:
+                #here we set the settings to level 2
                 level = 2
                 first_time = True
-                #reinitializes the position of the hero and delete the zombies
                 our_hero.backpack_collected=0
                 our_hero.set_pos2(48, 48)
                 frequency_Zombie *=4
@@ -424,6 +426,7 @@ while play_mode:  # the main game loop
                 pygame.mixer.music.play(2)
 
             elif level == 2:
+                # here we set the settings to the first screen of level 3
                 level = 3
                 frequency_Zombie /=4
                 our_hero.set_pos2(48, 48)
@@ -435,6 +438,7 @@ while play_mode:  # the main game loop
                 pygame.mixer.music.load("snd/Level_Sound/Level3.mp3")
                 pygame.mixer.music.play(2)
             elif final_screen == True:
+                # here we set the settings to the last screen of level 3
                 game_complete = True
                 pygame.mixer.music.stop()
                 pygame.mixer.music.load("snd/Level_Sound/GameComplete.mp3")

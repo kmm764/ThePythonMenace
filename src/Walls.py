@@ -1,5 +1,4 @@
-import pygame, sys
-from pygame.locals import *
+import pygame
 from setting import *
 
 import math
