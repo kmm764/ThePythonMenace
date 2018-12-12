@@ -42,13 +42,13 @@ class Game:
             Method that displays the intro of the game
                 :param screen --> Object display where the start screen will be display on
         """
-        nextline=50
+        nextline = 50
         screen.fill(BLACK)
-        txt=""
-        intro = ["Moodle Programming announcements:"," Thursday, 20 December 2018, 13:59PM:","","Alert to all the students. Demonstration","cancelled. Waves of zombies are invading"," the Earth. If somebody is reading this,","please, save us all.","Letting us die would be even worse than","repeating code.","Best regards.","Isaac and Thorsten"]
+        txt = ""
+        intro = ["Moodle Programming announcement:"," Thursday, 20 December 2018, 13:59PM:","","Alert to all the students. Demonstration","cancelled. Waves of zombies are invading"," the Earth. If somebody is reading this,","please, save us all.","Letting us die would be even worse than","repeating code.","Best regards.","Isaac and Thorsten"]
         pygame.mixer.music.load("snd/intro/keyboard.wav")
         pygame.mixer.music.play(4)
-        lines=0
+        lines = 0
         currentline = INTRO_Y_INI
         pygame.event.clear()
         for line in intro:
@@ -84,14 +84,13 @@ class Game:
                 if self.wait_for_anykey()==True:
                     pygame.mixer.music.stop()
                     return
-            lines+=1
-            currentline=INTRO_Y_INI+nextline*lines
-            txt=""
+            lines += 1
+            currentline = INTRO_Y_INI+nextline*lines
+            txt = ""
         pygame.mixer.music.stop()
         return
 
     def wait_for_anykey(self):
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit() # ends pygame
@@ -101,7 +100,6 @@ class Game:
                 if event.type == pygame.KEYUP:
                     pygame.event.clear()
                     return True
-
 
     def menu(self, screen):
         self.options_draw(screen)
@@ -114,7 +112,6 @@ class Game:
             return self.ranking(screen)
 
     def wait_for_key_menu(self, screen):
-
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -185,10 +182,6 @@ class Game:
             elif (pygame.time.get_ticks() - now > 10000):
                 return
 
-
-
-
-
     def game_complete_screen(self, screen, score):
         """
             Method that displays the start screen of the game
@@ -234,7 +227,8 @@ class Game:
         #self.draw_text("GAME OVER", RED, 40, HEIGHT/2, screen, True)
         #self.draw_text("press S to save your score", RED, 40, HEIGHT / 2 + 100, screen, True)
         pygame.display.flip()
-        if self.wait_for_key_over()== "save":
+        choice = self.wait_for_key_over()
+        if choice== "save":
             name = self.input_name_screen(screen)
             ranking_update(score,name)
             screen.fill(BLACK)
@@ -252,7 +246,7 @@ class Game:
                     if event.type == pygame.KEYUP:
                         if event.key == K_c:
                             return True
-        elif self.wait_for_key_over() == "continue":
+        elif choice == "continue":
             return True
 
 
