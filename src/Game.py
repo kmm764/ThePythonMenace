@@ -214,7 +214,8 @@ class Game:
         self.draw_text(str(score), WHITE, WIDTH / 2, HEIGHT / 2 -147, screen, "end")
         #screen.blit(score, (WIDTH/2, HEIGHT/2))
         pygame.display.flip()
-        if self.wait_for_key_over()== "save":
+        choice = self.wait_for_key_over()
+        if choice == "save":
             name = self.input_name_screen(screen)
             ranking_update(score,name)
             screen.fill(BLACK)
@@ -232,7 +233,7 @@ class Game:
                     if event.type == pygame.KEYUP:
                         if event.key == K_c:
                             return True
-        elif self.wait_for_key_over() == "continue":
+        elif choice == "continue":
             return True
     
     def show_over_screen(self, screen, score):
@@ -248,7 +249,7 @@ class Game:
         #self.draw_text("press S to save your score", RED, 40, HEIGHT / 2 + 100, screen, True)
         pygame.display.flip()
         choice = self.wait_for_key_over()
-        if choice== "save":
+        if choice == "save":
             name = self.input_name_screen(screen)
             ranking_update(score,name)
             screen.fill(BLACK)
