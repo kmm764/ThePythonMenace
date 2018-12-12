@@ -461,7 +461,6 @@ while play_mode:  # the main game loop
             game_complete = False
             frequency_Zombie = FREQUENCY_ZOMBIE
 
-    #pygame.display.update()  # updates the state of the game
 
 
 
