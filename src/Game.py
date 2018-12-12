@@ -4,11 +4,12 @@ from setting import *
 
 
 
-menu_left_margin = 180
+MENU_LEFT_MARGIN = 140
 INTRO_X_INI=50
 INTRO_Y_INI=50
 TIME_TYPING = 100
 EXTRA_SCORE = 100
+MENU_TOP_MARGIN = HEIGHT / 5 * 2 + 50
 
 #pygame.font.init()
 #myfont = pygame.font.SysFont('8-Bit Madness', 50)
@@ -153,18 +154,19 @@ class Game:
     def options_draw(self, screen):
         img_menu = pygame.image.load("img/Menu/menu_screen_game.jpg")
         screen.blit(img_menu, (0, 0))
+        new_line = 100
         if self.option==1:
-            self.draw_text("PLAY", YELLOW, menu_left_margin, HEIGHT/5*2, screen,True)
-            self.draw_text("TUTORIAL", WHITE, menu_left_margin, HEIGHT/5*2 +100, screen,False)
-            self.draw_text("RANKING", WHITE, menu_left_margin, HEIGHT/5*2 +200, screen,False)
+            self.draw_text("PLAY", YELLOW, MENU_LEFT_MARGIN, MENU_TOP_MARGIN, screen, True)
+            self.draw_text("TUTORIAL", WHITE, MENU_LEFT_MARGIN, MENU_TOP_MARGIN + new_line, screen, False)
+            self.draw_text("RANKING", WHITE, MENU_LEFT_MARGIN, MENU_TOP_MARGIN + new_line*2, screen, False)
         elif self.option==2:
-            self.draw_text("PLAY", WHITE, menu_left_margin, HEIGHT/5*2, screen,False)
-            self.draw_text("TUTORIAL", YELLOW, menu_left_margin, HEIGHT/5*2 +100, screen,True)
-            self.draw_text("RANKING", WHITE, menu_left_margin, HEIGHT/5*2 +200, screen,False)
+            self.draw_text("PLAY", WHITE, MENU_LEFT_MARGIN, MENU_TOP_MARGIN, screen, False)
+            self.draw_text("TUTORIAL", YELLOW, MENU_LEFT_MARGIN, MENU_TOP_MARGIN + new_line, screen, True)
+            self.draw_text("RANKING", WHITE, MENU_LEFT_MARGIN, MENU_TOP_MARGIN + new_line*2, screen, False)
         else:
-            self.draw_text("PLAY", WHITE, menu_left_margin, HEIGHT/5*2, screen,False)
-            self.draw_text("TUTORIAL", WHITE, menu_left_margin, HEIGHT/5*2 +100, screen,False)
-            self.draw_text("RANKING", YELLOW, menu_left_margin, HEIGHT/5*2 +200, screen,True)
+            self.draw_text("PLAY", WHITE, MENU_LEFT_MARGIN, MENU_TOP_MARGIN, screen, False)
+            self.draw_text("TUTORIAL", WHITE, MENU_LEFT_MARGIN, MENU_TOP_MARGIN + new_line, screen, False)
+            self.draw_text("RANKING", YELLOW, MENU_LEFT_MARGIN, MENU_TOP_MARGIN + new_line*2, screen, True)
         pygame.display.flip()
 
     def instructions(self, screen):
