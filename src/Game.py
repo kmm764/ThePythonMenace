@@ -59,7 +59,6 @@ class Game:
                         txt += "_"
                         self.draw_text(txt, WHITE, INTRO_X_INI, currentline, screen, False)
                         pygame.display.flip()
-                        print(txt)
                         pygame.time.delay(TIME_TYPING)
                         txt = txt[:-1]
                         screen.fill(BLACK)
@@ -67,7 +66,6 @@ class Game:
                             self.draw_text(intro[j], WHITE, INTRO_X_INI, INTRO_Y_INI + nextline * j, screen, False)
                         self.draw_text(txt, WHITE, INTRO_X_INI, currentline, screen, False)
                         pygame.display.flip()
-                        print(txt)
                         pygame.time.delay(TIME_TYPING)
                     txt += "."
                     self.draw_text(txt, WHITE, INTRO_X_INI, currentline, screen, False)
@@ -91,17 +89,26 @@ class Game:
         return
 
     def wait_for_anykey(self):
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit() # ends pygame
-                    os._exit(0)
-                    sys.exit()  # ends the program
-                    return False
-                if event.type == pygame.KEYUP:
-                    pygame.event.clear()
-                    return True
+        """
+            Method that waits for any key to be pressed
+        :return: False if "quit" is pressed and True if any other key is pressed
+        """
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit() # ends pygame
+                os._exit(0)
+                sys.exit()  # ends the program
+                return False
+            if event.type == pygame.KEYUP:
+                pygame.event.clear()
+                return True
 
     def menu(self, screen):
+        """
+            Method that displays the menu
+        :param screen:
+        :return: True if the option "Play" is selected.
+        """
         self.options_draw(screen)
         self.wait_for_key_menu(screen)
         if self.option == 1:
@@ -267,7 +274,6 @@ class Game:
 
     def input_name_screen(self, screen):
         screen.fill(BLACK)
-        print("name")
         name_input = ""
         while True:
             self.draw_text("Input your name and press enter", RED, 40, HEIGHT / 6, screen, True)
@@ -291,7 +297,11 @@ class Game:
     
 
     def tutorial(self, screen):
-
+        """
+            Method
+        :param screen:
+        :return:
+        """
         tutorial_img = pygame.image.load("img/Menu/tutorial_screen.jpg")
         tutorial_img_scale=pygame.transform.scale(tutorial_img, (WIDTH, HEIGHT))
         screen.blit(tutorial_img_scale, (0, 0))
@@ -299,21 +309,19 @@ class Game:
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit() # ends pygame
+                    pygame.quit()
                     os._exit(0)
-                    sys.exit()  # ends the program
+                    sys.exit()
                     return
                 if event.type == pygame.KEYDOWN:
                     if event.key == K_LEFT:
                         return
-                        
 
-    
     def ranking(self,screen):
-        screen.fill(BLACK)
-        self.draw_text("Ranking", RED, WIDTH / 8, HEIGHT / 5, screen, True)
+        tutorial_img = pygame.image.load("img/Menu/ranking_screen.jpg")
+        tutorial_img_scale = pygame.transform.scale(tutorial_img, (WIDTH, HEIGHT))
+        screen.blit(tutorial_img_scale, (0, 0))
         self.ranking_draw(screen)
-        self.draw_text("Press <- to go back to the menu", YELLOW, WIDTH / 5, HEIGHT / 3 + 300, screen, False)
         pygame.display.flip()
         while True:
             for event in pygame.event.get():
@@ -326,9 +334,13 @@ class Game:
                     if event.key == K_LEFT:
                         return
 
-    def ranking_draw(self,screen):
+    def ranking_draw(self, screen):
+        """
+            Method that read the files of the names and scores and display the 3 firsts (or less names if there are less than 3 names)
+        :param screen: Object display where the ranking will be display on
+        :return:
+        """
         try:
-            print("Abiertos lectura 1")
             file_scores_r = open("Ranking/scores.txt", 'r')
             file_names_r = open("Ranking/names.txt", 'r')
         except FileNotFoundError:
@@ -337,8 +349,8 @@ class Game:
 
         scores = []
         names = []
-        k=0
-        txt=""
+        k = 0
+        txt = ""
 
         for lines in file_scores_r.readlines():  # WE STORE THE POINTS
             scores += [lines]
@@ -349,35 +361,39 @@ class Game:
         # CLEAN THE LISTS
         for i in range(0, len(names)):
             names[i] = names[i][:len(names[i]) - 1]
-        print(names)
 
         for i in range(0, len(scores)):
             scores[i] = int(scores[i][:len(scores[i]) - 1])
-        print(scores)
         # close the files
         file_scores_r.close()
         file_names_r.close()
-        if len(scores)<=3:
+        if len(scores) <= 3:
             k = len(scores)
         else:
             k = Game.top_ranking
-        for i in range(0,k):
+        for i in range(0, k):
             txt=names[i]+" - "+str(scores[i])
-            print(txt)
-            print(k)
             self.draw_text(txt, WHITE, WIDTH / 4, HEIGHT / 3 + 100*i, screen, True)
         pygame.display.flip()
 
 
-    
     def draw_text(self, text, color, x, y, screen, selected):
+        """
+
+        :param text: text to be drawn
+        :param color: color of the text
+        :param x: x coordinate when the position of the text starts
+        :param y: y coordinate when the position of the text starts
+        :param screen: Object display where the text will be display on
+        :param selected: value that indicates the font object to be used
+        :return:
+        """
         if selected == True:
             text_surface = self.font_selected.render(text, True, color)
         elif selected == False:
             text_surface = self.font.render(text, True, color)
         else:
             text_surface = self.font_ending.render(text, True, color)
-            
         text_rect = text_surface.get_rect()
         text_rect.midtop = (x, y)
         screen.blit(text_surface, (x,y))
@@ -385,22 +401,19 @@ class Game:
 
 def ranking_update(newscore, newname):
     """
-        This function save the name and the score in two files "names" and "scores", and order the lines from higher to lower score
+        This function saves the name and the score in two files "names" and "scores", and order the lines from higher to lower score
     :param newscore: score obtained in the last game
     :param newname: name introduced by the user
     """
     # if the files do not exist we create them and write on the the name and score directly
     try:
-        print("Abiertos lectura 1")
         file_scores_r = open("Ranking/scores.txt", 'r')
         file_names_r = open("Ranking/names.txt", 'r')
     except FileNotFoundError:
-        print("Abiertos escritura 1")
         file_scores_w = open("Ranking/scores.txt", 'a+')
         file_names_w = open("Ranking/names.txt", 'a+')
         file_scores_w.write(str(newscore) + "\n")
         file_names_w.write(newname + "\n")
-        print("Cerrados escritura 1")
         file_scores_w.close()
         file_names_w.close()
         return
@@ -420,23 +433,17 @@ def ranking_update(newscore, newname):
 
     for i in range(0, len(scores)):
         scores[i] = int(scores[i][:len(scores[i]) - 1])
-        print(scores[i])
         if newscore > scores[i]:
-            print(i)
-            print(newscore_pos)
             # we make sure we only fix the position of the new score once
             if newscore_pos == -1:
                 newscore_pos = i
             newindex += [i + 1]  # new scorw position
         else:
             newindex += [i]  # new order for the current data in the file
-    print("Cerrados lectura 3")
     file_scores_r.close()
     file_names_r.close()
     newscores = [0] * (len(scores) + 1)
     newnames = [0] * (len(scores) + 1)
-    print(newscore)
-    print(newscore_pos)
     if newscore_pos != -1:
         # we reorder the names and the scores
         newscores[newscore_pos] = str(newscore) + "\n"
@@ -446,21 +453,17 @@ def ranking_update(newscore, newname):
             newnames[newindex[i]] = names[i] + "\n"
 
         # we open the files to overwrite the content in mode "w"
-        print("Abiertos escritura 3")
         file_scores_w = open("Ranking/scores.txt", 'w')
         file_names_w = open("Ranking/names.txt", 'w')
         file_scores_w.writelines(newscores)
         file_names_w.writelines(newnames)
-        print("Cerrados escritura 3")
         file_scores_w.close()
         file_names_w.close()
     else:
         if len(scores) < 3:
             file_scores_w = open("Ranking/scores.txt", 'a+')
             file_names_w = open("Ranking/names.txt", 'a+')
-            print("Abiertos escritura 2")
             file_scores_w.write(str(newscore) + "\n")
             file_names_w.write(newname + "\n")
-            print("Cerrados escritura 2")
             file_scores_w.close()
             file_names_w.close()
