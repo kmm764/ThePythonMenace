@@ -264,6 +264,8 @@ while play_mode:  # the main game loop
                     first_time = True
                     second_time = False
                     frequency_Zombie = FREQUENCY_ZOMBIE
+                    level_1_sound = pygame.mixer.music.load("snd/Level_Sound/Level1.mp3")
+                    pygame.mixer.music.play(2)
 
     # ·····························COLLISIONS: ITEMS - HERO································
     for hit in hero_item_collision:
@@ -480,6 +482,8 @@ while play_mode:  # the main game loop
             final_screen = False
             game_complete = False
             frequency_Zombie = FREQUENCY_ZOMBIE
+            level_1_sound = pygame.mixer.music.load("snd/Level_Sound/Level1.mp3")
+            pygame.mixer.music.play(2)
 
 
 
