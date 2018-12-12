@@ -26,7 +26,7 @@ class Game:
     def show_start_screen(self, screen):
         """
             Method that displays the start screen of the game
-                :param screen --> Object display where the start screen will be display on
+                :param screen --> Object display where the start screen will be displayed on
         """
         screen.fill(BLACK)
         img_ini = pygame.image.load("img/Menu/start_screen_game.jpg")
@@ -40,7 +40,7 @@ class Game:
     def show_intro(self, screen):
         """
             Method that displays the intro of the game
-                :param screen --> Object display where the start screen will be display on
+                :param screen --> Object display where the intro will be displayed on
         """
         nextline = 50
         screen.fill(BLACK)
@@ -106,7 +106,7 @@ class Game:
     def menu(self, screen):
         """
             Method that displays the menu
-        :param screen:
+        :param screen: Object display where the menu will be displayed on
         :return: True if the option "Play" is selected.
         """
         self.options_draw(screen)
@@ -164,6 +164,12 @@ class Game:
         pygame.display.flip()
 
     def instructions(self, screen):
+        """
+            Method that display the 3 screens of instructions, for 10 seconds each, and allow the user to skip each one of
+            them pressing any key
+        :param screen: Object display where the instructions will be displayed on
+        :return:
+        """
         img_instructions = pygame.image.load("img/Menu/intro/intro_lifebar_score.jpg")
         screen.blit(img_instructions, (0, 0))
         pygame.display.flip()
@@ -180,6 +186,9 @@ class Game:
         self.watchdog()
 
     def watchdog(self):
+        """
+            Method that returns if no key is pressed in 10 seconds
+        """
         now = pygame.time.get_ticks()
         pygame.event.clear()
         while True:
@@ -192,7 +201,7 @@ class Game:
     def game_complete_screen(self, screen, score):
         """
             Method that displays the start screen of the game
-                :param screen --> Object display where the start screen will be display on
+                :param screen --> Object display where the game complete screen will be displayed on
         """
         screen.fill(BLACK)
         score += EXTRA_SCORE  # 100 extra score when finished the game
@@ -225,7 +234,7 @@ class Game:
     def show_over_screen(self, screen, score):
         """
                 Method that displays the geame over screen of the game and update the ranking
-                :param  screen  --> Object display where the start screen will be display on
+                :param  screen  --> Object display where the game over will be displayed on
                         score --> score of the current game to be store
         """
         screen.fill(BLACK)
@@ -258,6 +267,10 @@ class Game:
 
 
     def wait_for_key_over(self):
+        """
+            Method that waits for the user to press "c" to continue or "s" to save the score when they finish the game
+        :return: False if the user press quit, "save" if the user press 's', "continue" is the user press 'c'
+        """
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -273,6 +286,12 @@ class Game:
 
 
     def input_name_screen(self, screen):
+        """
+            Methods that waits for the user to input their name, while it displays the inputs. It stops when
+            the user press Enter.
+        :param screen: Object display where the input name screen will be displayed on
+        :return: a string with the name the user has input
+        """
         screen.fill(BLACK)
         name_input = ""
         while True:
@@ -298,31 +317,33 @@ class Game:
 
     def tutorial(self, screen):
         """
-            Method
-        :param screen:
+            Method that displays the tutorial screen and waits for the user to press left arrow to go back to the menu
+        :param screen: Object display where the tutorial will be displayed on
         :return:
         """
         tutorial_img = pygame.image.load("img/Menu/tutorial_screen.jpg")
         tutorial_img_scale=pygame.transform.scale(tutorial_img, (WIDTH, HEIGHT))
         screen.blit(tutorial_img_scale, (0, 0))
         pygame.display.flip()
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    os._exit(0)
-                    sys.exit()
-                    return
-                if event.type == pygame.KEYDOWN:
-                    if event.key == K_LEFT:
-                        return
+        self.waiting_for_left()
 
     def ranking(self,screen):
+        """
+            Method that displays the background of the ranking, draw it, and wait for the user to press left arrow
+            to go back to the menu
+        :param screen: Object display where the ranking screen will be displayed on
+        """
         tutorial_img = pygame.image.load("img/Menu/ranking_screen.jpg")
         tutorial_img_scale = pygame.transform.scale(tutorial_img, (WIDTH, HEIGHT))
         screen.blit(tutorial_img_scale, (0, 0))
         self.ranking_draw(screen)
         pygame.display.flip()
+        self.waiting_for_left()
+
+    def waiting_for_left(self):
+        """
+            Method that waits for the user to press left arrow
+        """
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -336,8 +357,9 @@ class Game:
 
     def ranking_draw(self, screen):
         """
-            Method that read the files of the names and scores and display the 3 firsts (or less names if there are less than 3 names)
-        :param screen: Object display where the ranking will be display on
+            Method that read the files of the names and scores and display the 3 firsts (or less names if there
+            are less than 3 names)
+        :param screen: Object display where the ranking will be displayed on
         :return:
         """
         try:
@@ -379,12 +401,12 @@ class Game:
 
     def draw_text(self, text, color, x, y, screen, selected):
         """
-
+            Method that displays text
         :param text: text to be drawn
         :param color: color of the text
         :param x: x coordinate when the position of the text starts
         :param y: y coordinate when the position of the text starts
-        :param screen: Object display where the text will be display on
+        :param screen: Object display where the text will be displayed on
         :param selected: value that indicates the font object to be used
         :return:
         """
