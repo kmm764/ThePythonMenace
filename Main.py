@@ -30,20 +30,14 @@ last_attack_time = 0.
 frequency_Zombie = FREQUENCY_ZOMBIE
 
 
-MAX_TIME_DISPLAY = 1000
-CHECKPOINT_X_MIN = 960
-CHECKPOINT_Y_MAX = 256
-CHECKPOINT_Y_MIN = 224
-FINAL_XMAX = 480
-FINAL_XMIN = 416
-FINAL_YMAX = 352
-FINAL_YMIN = 288
+
 vel_x, vel_y = 0., 0.  # inicializes the x and y components of the velocity vector of the hero movement intention
 zombie_vel = pygame.math.Vector2(0., 0.)
 backpack_killed = 0
 last_shot = 0
 shotgun_ammo = 0
 level = 1
+weaponType = "Pistol"
 first_time = True
 second_time = False
 final_screen = False
@@ -52,7 +46,6 @@ maps = []
 map_data = []
 map2_data = []
 map3_data = []
-margin = 5 # we add a margin to make the movements more natural, as our hero image has transparents borders
 play_mode = False
 menu_mode = False
 new_zombie_delete = False
@@ -96,13 +89,11 @@ level_1_sound = pygame.mixer.music.load("snd/Level_Sound/Level1.mp3")
 pygame.mixer.music.play(2)
 
 #to display the instruccions
-
 game.instructions(displayObj)
 
 """----------------------INITIAL INSTANCES AND GROUPS CREATION----------------------------"""
 ourHero = Hero()
-# display the life bar on the screen
-displayObj.blit(ourHero.lives_img, (WIDTH - 200, 0))
+
 # here we create a sprite group to make easier to manage our zombies instances
 crewZombies = pygame.sprite.Group()
 groupBullets = pygame.sprite.Group()
@@ -110,7 +101,7 @@ ourWall = pygame.sprite.Group()
 ourItems = pygame.sprite.Group()
 ourEffects = pygame.sprite.Group()
 # pygame.key.set_repeat(1, 10) #to handle the "holding key" event
-weaponType = "Pistol"
+
 
 pygame.display.flip()
 
@@ -270,6 +261,7 @@ while play_mode:  # the main game loop
                     shotgun_ammo = 0
                     first_time = True
                     second_time = False
+                    frequency_Zombie = FREQUENCY_ZOMBIE
 
     # ·····························ITEMS - HERO································
     for hit in hero_item_collision:
@@ -410,13 +402,13 @@ while play_mode:  # the main game loop
                 zombie_vel.y = 0.
             elif coly_zombie == "bottom" and zombie_vel.y < 0:
                 zombie_vel.y = 0.
-        zombie.setVel(zombie_vel)
+        zombie.set_vel(zombie_vel)
 
 
     """---------------------------------UPDATES---------------------------------"""
 
     # sets the frames per second to our clock object and store the time passed from the last call in time_passed_ms
-    ourHero.setVel(pygame.math.Vector2(vel_x, vel_y))
+    ourHero.set_vel(pygame.math.Vector2(vel_x, vel_y))
     time_passed_ms = fpsClock.tick(FPS)
 
     # converts the time to seconds
@@ -431,38 +423,38 @@ while play_mode:  # the main game loop
     ourEffects.update()
 
     if ourHero.backpack_collected >= MAX_BACKPACKS:
-        if ourHero.ifCheckpoint(CHECKPOINT_X_MIN,WIDTH,CHECKPOINT_Y_MIN,CHECKPOINT_Y_MAX):
+        if ourHero.if_checkpoint(CHECKPOINT_X_MIN, WIDTH, CHECKPOINT_Y_MIN, CHECKPOINT_Y_MAX):
             if level == 1:
                 level = 2
                 first_time = True
                 #reinitializes the position of the hero and delete the zombies
                 ourHero.backpack_collected=0
-                ourHero.setPos2(48,48)
+                ourHero.set_pos2(48, 48)
                 frequency_Zombie *=4
                 crewZombies.empty()
                 ourItems.empty()
                 pygame.mixer.music.stop()
                 pygame.mixer.music.load("snd/Level_Sound/Level2.mp3")
-                pygame.mixer.music.play(0)
+                pygame.mixer.music.play(2)
 
             elif level == 2:
                 level = 3
                 frequency_Zombie /=4
-                ourHero.setPos2(48, 48)
+                ourHero.set_pos2(48, 48)
                 crewZombies.empty()
                 ourItems.empty()
                 ourHero.backpack_collected = 0
                 first_time = True
                 pygame.mixer.music.stop()
                 pygame.mixer.music.load("snd/Level_Sound/Level3.mp3")
-                pygame.mixer.music.play(0)
+                pygame.mixer.music.play(2)
             elif final_screen == True:
                 game_complete = True
                 pygame.mixer.music.stop()
                 pygame.mixer.music.load("snd/Level_Sound/GameComplete.mp3")
-                pygame.mixer.music.play(0)
+                pygame.mixer.music.play(2)
 
-        elif level == 3 and ourHero.ifCheckpoint(FINAL_XMIN,FINAL_XMAX,FINAL_YMIN,FINAL_YMAX):
+        elif level == 3 and ourHero.if_checkpoint(FINAL_XMIN, FINAL_XMAX, FINAL_YMIN, FINAL_YMAX):
             final_screen = True
 
     if game_complete == True:
@@ -481,6 +473,7 @@ while play_mode:  # the main game loop
             second_time = False
             final_screen = False
             game_complete = False
+            frequency_Zombie = FREQUENCY_ZOMBIE
 
 
 

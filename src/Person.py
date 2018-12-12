@@ -23,7 +23,7 @@ class Person(pygame.sprite.Sprite):
         """
         screen.blit(self.image, (self.rect.x, self.rect.y))
 
-    def setPos(self, t):
+    def set_pos(self, t):
         """
             Method that updates the position of the person, based on the time passed and the velocity of the person
             :param t --> time passed in seconds from the last call
@@ -46,7 +46,7 @@ class Person(pygame.sprite.Sprite):
         if self.orientation.rotate(self.angle) != (0.0, 0.0):
             self.orientation = self.orientation.rotate(-self.angle)
 
-    def setVel(self, vec):
+    def set_vel(self, vec):
         """
             Method that update the velocity of the person
             :param vec: new vector velocity

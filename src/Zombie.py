@@ -42,7 +42,7 @@ class Zombie(Person):
         else:
             return False
 
-    def setAngle(self, positionHero):
+    def set_angle(self, positionHero):
         self.rotate(positionHero.x, positionHero.y)
 
     def updates_life(self):
@@ -52,11 +52,11 @@ class Zombie(Person):
             return True
 
     def update(self, positionHero, t):
-        self.setAngle(positionHero)
+        self.set_angle(positionHero)
         self.rot = (self.rot + self.rot_speed * t) % 360
         self.image = pygame.transform.rotate(Zombie.zombie_IMG, self.angle)
         self.rect = self.image.get_rect(center=self.rect.center)
-        self.setPos(t)
+        self.set_pos(t)
 
 
 class SuperZombie(Zombie):
@@ -92,8 +92,8 @@ class SuperZombie(Zombie):
 
 
     def update(self, positionHero, t):
-        self.setAngle(positionHero)
+        self.set_angle(positionHero)
         self.rot = (self.rot + self.rot_speed * t) % 360
         self.image = pygame.transform.rotate(SuperZombie.zombie_IMG, self.angle)
         self.rect = self.image.get_rect(center=self.rect.center)
-        self.setPos(t)
+        self.set_pos(t)

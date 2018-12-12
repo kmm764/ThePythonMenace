@@ -16,10 +16,26 @@ img_width = 60
 img_height = 60
 TILE_SIZE = 32
 
+#game platform coordinates
+MAX_TIME_DISPLAY = 1000
+CHECKPOINT_X_MIN = 960
+CHECKPOINT_Y_MAX = 256
+CHECKPOINT_Y_MIN = 224
+FINAL_XMAX = 480
+FINAL_XMIN = 416
+FINAL_YMAX = 352
+FINAL_YMIN = 288
+
 '''Hero'''
 Player_sound = ["p0.wav", "p1.wav", "p2.wav", "p3.wav", "p4.wav", "p5.wav", "p6.wav"]
 HERO_IMG = "img/Hero/Hero.png"
 LIFE_BAR_IMG = ["life_bar_empty.png", "life_bar_1.png", "life_bar_half.png", "life_bar_3.png", "life_bar_full.png"]
+
+#initial settings
+INI_HERO_X = 416
+INI_HERO_Y = 224
+LIVES_INI = 5
+
 
 
 '''Zombies'''

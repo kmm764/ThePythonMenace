@@ -26,16 +26,16 @@ while True:  # the main game loop
     #displayObj.blit(ourHero.Img, (ourHero.x, ourHero.y))  #add the img to the display object on the x,y coordinates
 
     if key_left == True and ourHero.pos.x >= 0:
-        ourHero.setVel(pygame.math.Vector2(-1., 0.))
+        ourHero.set_vel(pygame.math.Vector2(-1., 0.))
         #ourHero.move_x("n")
     if key_right == True and ourHero.pos.x <= 940:
-        ourHero.setVel(pygame.math.Vector2(1., 0.))
+        ourHero.set_vel(pygame.math.Vector2(1., 0.))
         #ourHero.move_x("p")
     if key_up == True and ourHero.pos.y >= 0:
-        ourHero.setVel(pygame.math.Vector2(0., -1.))
+        ourHero.set_vel(pygame.math.Vector2(0., -1.))
         #ourHero.move_y("n")
     if key_down == True and ourHero.pos.y <= 540:
-        ourHero.setVel(pygame.math.Vector2(0., 1.))
+        ourHero.set_vel(pygame.math.Vector2(0., 1.))
         #ourHero.move_y("p")
 
     for event in pygame.event.get():
