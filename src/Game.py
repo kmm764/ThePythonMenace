@@ -20,7 +20,7 @@ class Game:
     def __init__(self):
         self.font = pygame.font.SysFont('8-Bit Madness', 50)
         self.font_selected = pygame.font.SysFont('8-Bit Madness', 70)
-        self.font_ending = pygame.font.SysFont('8-Bit Madness', 130)
+        self.font_ending = pygame.font.SysFont('8-Bit Madness', 135)
         self.option = 1
     
     def show_start_screen(self, screen):
@@ -426,11 +426,11 @@ class Game:
         :param selected: value that indicates the font object to be used
         :return:
         """
-        if selected:
+        if selected is True:
             text_surface = self.font_selected.render(text, True, color)
-        elif selected == False:
+        elif selected is False:
             text_surface = self.font.render(text, True, color)
-        else:
+        elif selected == "end":
             text_surface = self.font_ending.render(text, True, color)
         text_rect = text_surface.get_rect()
         text_rect.midtop = (x, y)

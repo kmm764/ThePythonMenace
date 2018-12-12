@@ -81,6 +81,7 @@ pygame.display.set_caption('Game')
 """----------------------GAME OBJECT: display start screen, intro, menu----------------------------"""
 
 game = Game()
+
 game.show_start_screen(displayObj)
 game.show_intro(displayObj)
 play_mode = game.menu(displayObj)
