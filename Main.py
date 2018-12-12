@@ -153,7 +153,7 @@ while play_mode:  # the main game loop
     """------------------------------------INSTANCES CREATION------------------------------------"""
 
     #·········································BACKPACKS·······································
-    if first_time == True:
+    if first_time:
         for i in range(MAX_BACKPACKS):
             our_items.add(Backpack(random.randrange(0, WIDTH - TILE_SIZE), random.randrange(0, HEIGHT / 4 * 3)))
         first_time = False
@@ -248,7 +248,7 @@ while play_mode:  # the main game loop
             our_hero.update_livebar(our_hero.lives)
 
             if our_hero.lives == 0:  # If Hero dies show Game Over screen
-                if game.show_over_screen(displayObj, our_hero.score) == True:
+                if game.show_over_screen(displayObj, our_hero.score):
                     #here we initializes all the variables, as the user has chosen to play again
                     our_hero = Hero()
                     crew_zombies.empty()
@@ -452,7 +452,7 @@ while play_mode:  # the main game loop
                 pygame.mixer.music.stop()
                 pygame.mixer.music.load("snd/Level_Sound/Level3.mp3")
                 pygame.mixer.music.play(2)
-            elif final_screen == True:
+            elif final_screen:
                 # here we set the settings to the last screen of level 3
                 game_complete = True
                 pygame.mixer.music.stop()
@@ -462,8 +462,8 @@ while play_mode:  # the main game loop
         elif level == 3 and our_hero.if_checkpoint(FINAL_XMIN, FINAL_XMAX, FINAL_YMIN, FINAL_YMAX):
             final_screen = True
 
-    if game_complete == True:
-        if game.game_complete_screen(displayObj, our_hero.score) == True:
+    if game_complete:
+        if game.game_complete_screen(displayObj, our_hero.score):
             our_hero = Hero()
             crew_zombies.empty()
             group_bullets.empty()

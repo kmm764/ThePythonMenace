@@ -426,7 +426,7 @@ class Game:
         :param selected: value that indicates the font object to be used
         :return:
         """
-        if selected == True:
+        if selected:
             text_surface = self.font_selected.render(text, True, color)
         elif selected == False:
             text_surface = self.font.render(text, True, color)
