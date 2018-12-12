@@ -344,7 +344,7 @@ while play_mode:  # the main game loop
                 pygame.mixer.music.pause()
                 game.pause_screen(displayObj)
                 pause_happened=True
-                total_time_paused = pygame.time.get_ticks() - time_pause_start
+                total_time_paused = pygame.time.get_ticks() - time_pause_start #we store the time of the pause
                 pygame.mixer.music.unpause()
         # ····························· SHOOTING································
         if event.type == pygame.MOUSEBUTTONDOWN:
