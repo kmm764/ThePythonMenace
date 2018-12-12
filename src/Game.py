@@ -45,7 +45,7 @@ class Game:
         nextline = 50
         screen.fill(BLACK)
         txt = ""
-        intro = ["Moodle Programming announcement:"," Thursday, 20 December 2018, 13:59PM:","","Alert to all the students. Demonstration","cancelled. Waves of zombies are invading"," the Earth. If somebody is reading this,","please, save us all.","Letting us die would be even worse than","repeating code.","Best regards.","Isaac and Thorsten"]
+        intro = ["Moodle Programming announcements"," Thursday, 20 December 2018, 13:59PM:","","Alert to all the students. Demonstration","cancelled. Waves of zombies are invading"," the Earth. If somebody is reading this,","please, save us all.","Letting us die would be even worse than","repeating code.","Best regards.","Isaac and Thorsten"]
         pygame.mixer.music.load("snd/intro/keyboard.wav")
         pygame.mixer.music.play(4)
         lines = 0
@@ -177,7 +177,7 @@ class Game:
         img_instructions = pygame.image.load("img/Menu/intro/intro_lifebar_score.jpg")
         screen.blit(img_instructions, (0, 0))
         pygame.display.flip()
-        pygame.event.clear()
+        pygame.time.delay(500) #this if to avoid that the function watchdog reads inmediately the previous event and skip it directly
         #the total time we show the screen is 10s, but every second we check if the user wants to skip it
         self.watchdog()
         img_instructions = pygame.image.load("img/Menu/intro/intro_hero_platform.jpg")
